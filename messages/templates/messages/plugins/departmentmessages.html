@@ -1,0 +1,33 @@
+<div class="clear department-container tabs-container" id="tabbox_c">
+    <a class="arrow" href="#">
+        <img src="{{ MEDIA_URL }}img/left.gif">
+    </a>
+    <a class="arrow_r" href="#">
+        <img src="{{ MEDIA_URL }}img/right.gif">
+    </a>
+    <ul class="tabs" id="tabs3">
+        {% for dep in department_message_categories %}
+            <li>
+                <a href="#">{{ dep.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="tab_conbox" id="tab_conbox3">
+        {% for dep in department_message_categories %}
+            <li class="tab_con" style="display: list-item">
+               <div class="term" >
+                   {% for cat in dep.message_categories %}
+                       <dl class="{% cycle 'one_fourth' 'one_fourth' 'one_fourth' 'one_fourth' %}">
+                        <dt>{{ cat.name }}</dt>
+                       {% for msg in cat.messages %}
+                           <dd>
+                               <a target="_blank" class="page-item" href="{% url zh-CN:messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                           </dd>
+                       {% endfor %}
+                       </dl>
+                   {% endfor %}
+               </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

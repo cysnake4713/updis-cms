@@ -1,0 +1,16 @@
+{% load i18n %}
+<div id="news">
+    {% for cat in message_categories %}
+        <div class="{% cycle 'one_third' 'one_third' 'one_third_last'%}">
+            <h2>{{ cat.name }}</h2>
+            <ul style="list-style:none;padding-left:10px;">
+                {% for msg in cat.messages %}
+                    <li>
+                        <a target="_blank" class="page-item" href="{% url zh-CN:messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <p><a class="ka_button small_button" href="{% url zh-CN:category_messages category_id=cat.id %}"><span>更多..</span></a></p>
+        </div>
+    {% endfor %}
+</div>

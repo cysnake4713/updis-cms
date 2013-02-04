@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load message_tags humanize %}
+{% block content %}
+    <h1>{{ message.name }}</h1>
+    <span>{{ message.message_meta_display|safe }}</span>
+    <p>{{ message.content|safe }}</p>
+    <div class="blog-tab-box">
+        <ol id="post-comments" class="comment-ol">
+            {% for comment in comments %}
+                <li>
+                    <div class="comment-wrap">
+                        <div class="comment-content">
+                            <div class="comment-gravatar">
+                                <img width="60" height="60" class="avatar avatar-60 photo"
+                                     src="data:image/png;base64,{{ comment.image_small }}"/>
+                            </div>
+                            <div class="comment-text">
+                                <span class="comment-author">
+                                    {% if comment.is_anonymous %}匿名用户 {% else %}{{ comment.author_id|last }}{% endif %}
+                                </span>
+                                <span class="comment-date">{{ comment.date|to_date|naturaltime }}</span>
+                                <br>
+
+                                <p>{{ comment.body|safe }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% if comment.subject %}
+                    <h2>{{ comment.subject }}</h2>
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </div>
+
+    <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
+        {% csrf_token %}
+        <p class="comment-textarea-wrap">
+            <label for="id_body" class="comment-label">评论内容</label>
+            <textarea id="id_body" rows="5" cols="40" name="body" class="comment-textarea"></textarea>
+        </p>
+
+        <p>
+            <input type="checkbox" tabindex="2" id="id_is_anonymous"
+                   name="is_anonymous">
+            <label for="id_is_anonymous">
+                匿名评论
+            </label>
+        </p>
+
+        <p>
+            <label for="id_attachment" class="comment-label">添加附件</label>
+            {{ form.attachment }}
+        </p>
+
+        <p><input type="submit" id="ka-submit" value="Add Comment" style="opacity: 1;"></p>
+
+    </form>
+{% endblock %}
