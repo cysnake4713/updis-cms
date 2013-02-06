@@ -1,8 +1,13 @@
 from django.conf.urls import patterns, include, url
+from tastypie.api import Api
+from messages.api.resources import MessageResource, CategoryResource
 
 import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+api_v1 = Api()
+api_v1.register(MessageResource())
+api_v1.register(CategoryResource())
 
 admin.autodiscover()
 
@@ -19,6 +24,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/',include(api_v1.urls)),
     url(r'^', include('cms.urls')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
 )

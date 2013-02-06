@@ -18,24 +18,29 @@ def get_messages_categories(position, request):
         })
     return message_categories
 
+
 def get_department_message_categories(request):
     message_category_obj = request.erpsession.get_model("message.category")
     hr_department_obj = request.erpsession.get_model("hr.department")
     message_obj = request.erpsession.get_model("message.message")
 
-    departments = hr_department_obj.search_read([('display_in_front','=',True),('deleted','=',False),('is_in_use','=',True)],
-    ['name','sequence'],order="sequence")
+    departments = hr_department_obj.search_read(
+        [('display_in_front', '=', True), ('deleted', '=', False), ('is_in_use', '=', True)],
+        ['name', 'sequence'], order="sequence")
     for dep in departments:
-        message_categories = message_category_obj.search_read([('display_in_departments','=',dep['id'])],
-            ['name', 'default_message_count', 'sequence','display_fbbm'], order='sequence')
+        message_categories = message_category_obj.search_read([('display_in_departments', '=', dep['id'])],
+            ['name', 'default_message_count', 'sequence', 'display_fbbm'], order='sequence')
         for cat in message_categories:
-            messages = message_obj.search_read([('category_id', '=', cat['id']),('department_id','=',dep['id'])],
-                ['name','write_date','write_uid','sequence','department_id','fbbm','category_message_title_meta_display'], limit=6)
+            messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
+                ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
+                 'category_message_title_meta_display'], limit=6)
             cat.update({
                 'messages': messages
             })
         dep['message_categories'] = message_categories
     return departments
+
+
 class ShortcutMessageCategoriesPlugin(CMSPluginBase):
     model = MessageCategories
     name = _("Shortcut")
@@ -82,6 +87,8 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
             'message_categories': message_categories
         })
         return context
+
+
 class DepartmentMessageCategoriesPlugin(CMSPluginBase):
     model = MessageCategories
     name = _("Department message categories")
@@ -96,6 +103,7 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
             'department_message_categories': department_message_categories
         })
         return context
+
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentLeftMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentRightMessageCategoriesPlugin)

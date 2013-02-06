@@ -149,6 +149,8 @@ INSTALLED_APPS = (
     'cms.plugins.picture',
     'cms.plugins.teaser',
     'cms.plugins.twitter',
+
+    'tastypie',
     )
 
 # A sample logging configuration. The only tangible logging
@@ -195,7 +197,7 @@ LANGUAGES = [
 
 ERP_HOST = "113.108.103.13"
 ERP_PORT = 8069
-ERP_LOGIN = 'admin'
+ERP_LOGIN = 'upcms'
 ERP_PASSWORD = 'Freeborders#1'
 ERP_DATABASE = 'updis'
 
