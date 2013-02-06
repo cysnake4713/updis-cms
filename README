@@ -1,1 +1,4 @@
-This file was created by PyCharm 2.6.3 for binding GitHub repository
+requirements:
+django-tastypie
+django-haystack
+django-cms
