@@ -195,23 +195,8 @@ LANGUAGES = [
     ('zh-CN','Chinese'),
     ]
 
-ERP_HOST = "113.108.103.13"
+ERP_HOST = "192.168.10.13"
 ERP_PORT = 8069
 ERP_LOGIN = 'upcms'
 ERP_PASSWORD = 'Freeborders#1'
 ERP_DATABASE = 'updis'
-
-if DEBUG:
-    CACHES = {
-        'default':{
-            'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
-            'LOCATION':os.path.join(PROJECT_PATH,'cache'),
-            }
-    }
-else:
-    CACHES = {
-        'default':{
-            'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
-            'LOCATION':'192.168.40.129:11211',
-        }
-    }

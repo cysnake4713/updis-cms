@@ -75,6 +75,7 @@ class XmlRPCConnector(Connector):
         :param hostname: The hostname of the computer holding the instance of OpenERP.
         :param port: The port used by the OpenERP instance for XMLRPC (default to 8069).
         """
+        hostname = '192.168.10.14'
         self.url = 'http://%s:%d/xmlrpc' % (hostname, port)
 
     def send(self, service_name, method, *args):
