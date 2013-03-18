@@ -1,4 +1,7 @@
-requirements:
-django-tastypie
-django-haystack
-django-cms
+使用前下载以下依赖:
+    django-tastypie
+    django-haystack
+    django-cms
+
+cms_home：
+    在admin中一个页面的高级设置里一定要配置标识为cms_home

@@ -24,7 +24,7 @@ content_blog
         <div class="blog_wrap">
                 <div class="post_title">
                     <h1>
-                        <a target="_blank" href="{% url zh-CN:messages_detail message_id=msg.id %}"> {{ msg.name }}</a>
+                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}"> {{ msg.name }}</a>
                     </h1>
                     <p class="posted-by-text">
                         <span>发布者</span>
@@ -35,7 +35,7 @@ content_blog
             {% if msg.image_medium %}
             <div class="post_thumb">
                 <div class="post_thumb_load">
-                    <a target="_blank" href="{% url zh-CN:messages_detail message_id=msg.id %}" class="attachment-fadeIn" style="display: inline">
+                    <a target="_blank" href="{% url messages_detail message_id=msg.id %}" class="attachment-fadeIn" style="display: inline">
                         <img src="data:image/png;base64,{{ msg.image_medium }}" height="218" width="538"/>
                     </a>
                 </div>
@@ -44,7 +44,7 @@ content_blog
             <div class="" style="min-height: 50px">
                 {{ msg.content|truncatewords_html:20|safe }}
             </div>
-            <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}" href="{% url zh-CN:messages_detail message_id=msg.id %}">
+            <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}" href="{% url messages_detail message_id=msg.id %}">
                 <span>阅读</span>
             </a>
             <div class="post_date">
@@ -53,7 +53,7 @@ content_blog
                 <span class="month">{{ msg.write_date|to_date|date:'M' }}</span>
             </div>
             <div class="post_comments">
-                <a href="{% url zh-CN:messages_detail message_id=msg.id %}#post-comments">
+                <a href="{% url messages_detail message_id=msg.id %}#post-comments">
                     <span>{{ msg.message_ids|length }}</span>
                 </a>
             </div>
@@ -61,7 +61,7 @@ content_blog
                 <div class="post_cats">
                     <p>
                         <span>分类：</span>
-                        <a href="{%  url zh-CN:category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
+                        <a href="{%  url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
                     </p>
                 </div>
             </div>

@@ -100,7 +100,7 @@ def by_category(req, category_id):
 
 
 def login(request):
-    default_url = reverse('zh-CN:messages_index')
+    default_url = reverse('messages_index')
     redirect_url = request.GET.get('redirect_url',default_url)
     if request.method == 'POST':
         form = LoginForm(request.POST,request=request)

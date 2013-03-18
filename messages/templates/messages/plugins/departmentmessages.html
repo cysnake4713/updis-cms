@@ -21,7 +21,7 @@
                         <dt>{{ cat.name }}</dt>
                        {% for msg in cat.messages %}
                            <dd>
-                               <a target="_blank" class="page-item" href="{% url zh-CN:messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                               <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                            </dd>
                        {% endfor %}
                        </dl>
