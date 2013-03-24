@@ -195,8 +195,8 @@ LANGUAGES = [
     ('zh-CN','Chinese'),
     ]
 
-ERP_HOST = "192.168.10.13"
+ERP_HOST = "localhost"
 ERP_PORT = 8069
-ERP_LOGIN = 'upcms'
-ERP_PASSWORD = 'Freeborders#1'
-ERP_DATABASE = 'updis'
+ERP_LOGIN = 'admin'
+ERP_PASSWORD = 'admin'
+ERP_DATABASE = 'developer'

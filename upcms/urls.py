@@ -27,7 +27,7 @@ urlpatterns = patterns('',
     url(r'^api/',include(api_v1.urls)),
     url(r'^', include('cms.urls')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
-    url(r'',include('messages.urls')),
+    url(r'^',include('messages.urls')),
 )
 if settings.DEBUG:
     urlpatterns = patterns('',
