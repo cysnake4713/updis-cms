@@ -1058,14 +1058,14 @@ p strong {color: #555;}
 .post_thumb_load {width:556px; height: 255px;background: url(../img/_global/preload.gif) center center no-repeat;}
 .post_thumb img {margin: 8px 0 0 9px;}
 .comment-wrap {float:left;padding-top:10px;margin-bottom: 3px;width: 100%;}
-.comment-content {float: left;width: 620px;background: #FFF url(../img/_global/bg-blog-comments-content.jpg) 0 0 repeat-x;border: 1px solid #D8D8D6;
+.comment-content {float: left;width: 880px;background: #FFF url(../img/_global/bg-blog-comments-content.jpg) 0 0 repeat-x;border: 1px solid #D8D8D6;
     /*padding: 20px 20px 30px 20px;*/
 }
-.comment-gravatar {background: url(../img/_global/global-sprite.png) -731px -529px no-repeat;width: 80px;height: 80px;float: left;margin: 15px 0 0 15px;}
+.comment-gravatar {background: url(../img/_global/global-sprite.png) -731px -529px no-repeat;width: 80px;height: 80px;float: left;margin: 5px 0 0 15px;}
 .comment-gravatar img {margin: 10px 0 0 10px;}
 #about-author-wrap .comment-content, .bypostauthor .comment-content {background: #E8E9E7 url(../img/_global/bg-blog-comments-content-author.jpg) 0 0 repeat-x;border: 1px solid #C6C7C4;color: #555;}
 #about-author-wrap .comment-gravatar {background: url(../img/_global/global-sprite.png) -821px -530px no-repeat;width: 100px;height: 100px;float: left;margin: 0 0 0 15px;}
-.comment-text {width: 458px;float: left;margin: 6px 0 0 20px;padding: 0 0 15px 10px;}
+.comment-text {width: 690px;float: left;margin: 6px 0 0 20px;padding: 0 0 15px 10px;}
 .comment-text p {padding-top: 10px !important;}
 #content .comment-author a, #content .comment-author{font-size: 16px;color: #333;font-weight: bold;}
 .comment-author-about{font-size:12px;letter-spacing: 0.5px;color: #333;text-transform:uppercase;font-weight: bold;}
@@ -1094,11 +1094,11 @@ p strong {color: #555;}
 .comment-input-wrap {float: left;}
 .pad {width: 225px;}
 .comment-label {display:block;padding: 0 0 3px 3px;}
-.comment-input, .comment-textarea {width: 164px;height: 39px;background: url(../img/_global/global-sprite.png) 0 -669px no-repeat;border:0;padding:0 12px 0 30px;font:12px "lucida grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;}
+.comment-input, .comment-textarea {width: 164px;height: 39px;border:0;padding:0 12px 0 30px;font:12px "lucida grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;}
 .comment-email {background-position: -223px -669px;}
 .comment-website {background-position: -454px -669px;}
-.comment-textarea {width: 630px;height: 80px;background-position: 0 -709px;border:0;padding:15px;line-height:20px;}
-.comment-textarea-wrap {margin-top: 15px;}
+.comment-textarea {width: 850px;height: 80px;border:0;padding:15px;line-height:20px;}
+.comment-textarea-wrap {margin-top: 150px;}
 .related_posts  {padding:0 0 40px 0;}
 .related_posts ul {margin:0;padding:0;}
 .comment-textarea {resize: none;}
