@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load message_tags humanize %}
 {% block content %}
-    <h1 style="vertical-align:middle">{{ message.name }}</h1>
-    <span>{{ message.message_meta_display|safe }}</span>
+    <h1 style="text-align: center">{{ message.name }}</h1>
+    <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
     <p>{{ message.content|safe }}</p>
     <div class="blog-tab-box">
         <ol id="post-comments" class="comment-ol">
