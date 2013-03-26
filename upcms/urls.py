@@ -24,10 +24,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^',include('messages.urls')),
     url(r'^api/',include(api_v1.urls)),
     url(r'^', include('cms.urls')),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
-    url(r'^',include('messages.urls')),
 )
 if settings.DEBUG:
     urlpatterns = patterns('',

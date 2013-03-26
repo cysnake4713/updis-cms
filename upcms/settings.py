@@ -199,4 +199,4 @@ ERP_HOST = "localhost"
 ERP_PORT = 8069
 ERP_LOGIN = 'admin'
 ERP_PASSWORD = 'admin'
-ERP_DATABASE = 'developer'
+ERP_DATABASE = 'test'
