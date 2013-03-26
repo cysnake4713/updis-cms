@@ -12,13 +12,6 @@ content_blog
         </div>
     </div>
 {% endblock %}
-{% block sidebar %}
-    <div id="sidebar" class="sidebar_blog">
-        <div class="sidebar-widget">
-
-        </div>
-    </div>
-{% endblock %}
 {% block content %}
     {% for msg in messages %}
         <div class="blog_wrap">
@@ -36,13 +29,13 @@ content_blog
             <div class="post_thumb">
                 <div class="post_thumb_load">
                     <a target="_blank" href="{% url messages_detail message_id=msg.id %}" class="attachment-fadeIn" style="display: inline">
-                        <img src="data:image/png;base64,{{ msg.image_medium }}" height="218" width="538"/>
+                        <img src="data:image/png;base64,{{ msg.image_medium }}" height="218" width="700"/>
                     </a>
                 </div>
             </div>
             {% endif %}
             <div class="" style="min-height: 50px">
-                {{ msg.content|truncatewords_html:20|safe }}
+                <p>{{ msg.content|truncatewords_html:20|safe }}</p>
             </div>
             <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}" href="{% url messages_detail message_id=msg.id %}">
                 <span>阅读</span>
