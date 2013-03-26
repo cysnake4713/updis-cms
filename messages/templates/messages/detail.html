@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load message_tags humanize %}
 {% block content %}
-    <h1>{{ message.name }}</h1>
+    <h1 style="vertical-align:middle">{{ message.name }}</h1>
     <span>{{ message.message_meta_display|safe }}</span>
     <p>{{ message.content|safe }}</p>
     <div class="blog-tab-box">
