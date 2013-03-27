@@ -1,22 +1,57 @@
 from cms.plugin_base import CMSPluginBase
 from django.utils.translation import ugettext_lazy as _
 from messages.models import MessageCategories
+import re
 
 __author__ = 'Zhou Guangwen'
-from cms.plugin_pool import  plugin_pool
+from cms.plugin_pool import plugin_pool
+
+
+def _get_last_image(messages):
+    for message in messages:
+        content = message['content']
+        if content:
+            #TODO:regx still got problem
+            match = re.compile(r'.*<img\s*id="target"\s*src="(.*?)">.*').match(content)
+            if match:
+                return match.group(1), message
+    return None
+
 
 def get_messages_categories(position, request):
     erpsession = request.session.get('erpsession')
     message_category_obj = erpsession.get_model("message.category")
     message_obj = request.session.get('erpsession').get_model("message.message")
     message_categories = message_category_obj.search_read([('display_position', '=', position)],
-        ['name', 'default_message_count', 'sequence'], order='sequence')
+                                                          ['name', 'default_message_count', 'sequence'],
+                                                          order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-            ['category_message_title_meta_display', 'message_ids'], limit=6)
+                                           ['category_message_title_meta_display', 'message_ids'], limit=6)
         cat.update({
             'messages': messages
         })
+    return message_categories
+
+
+def get_messages_categories_with_image(position, request):
+    erpsession = request.session.get('erpsession')
+    message_category_obj = erpsession.get_model("message.category")
+    message_obj = request.session.get('erpsession').get_model("message.message")
+    message_categories = message_category_obj.search_read([('display_position', '=', position)],
+                                                          ['name', 'default_message_count', 'sequence'],
+                                                          order='sequence')
+    for cat in message_categories:
+        messages = message_obj.search_read([('category_id', '=', cat['id'])],
+                                           ['category_message_title_meta_display', 'message_ids', 'content', 'name'],
+                                           limit=50)
+        cat.update({
+            'messages': messages[:6]
+        })
+        top_message = _get_last_image(messages)
+        if top_message:
+            top_message[1]['content'] = top_message[1]['content'][:20]
+            cat['top_message'] = top_message
     return message_categories
 
 
@@ -30,11 +65,12 @@ def get_department_message_categories(request):
         ['name', 'sequence', 'have_image'], order="sequence")
     for dep in departments:
         message_categories = message_category_obj.search_read([('display_in_departments', '=', dep['id'])],
-            ['name', 'default_message_count', 'sequence', 'display_fbbm'], order='sequence')
+                                                              ['name', 'default_message_count', 'sequence',
+                                                               'display_fbbm'], order='sequence')
         for cat in message_categories:
             messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
-                ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
-                 'category_message_title_meta_display'], limit=6)
+                                               ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
+                                                'category_message_title_meta_display'], limit=6)
             cat.update({
                 'messages': messages
             })
@@ -65,7 +101,7 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        message_categories = get_messages_categories('content_left', context.get('request'))
+        message_categories = get_messages_categories_with_image('content_left', context.get('request'))
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -81,7 +117,7 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        message_categories = get_messages_categories('content_right', context.get('request'))
+        message_categories = get_messages_categories_with_image('content_right', context.get('request'))
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -104,6 +140,7 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
             'department_message_categories': department_message_categories
         })
         return context
+
 
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentLeftMessageCategoriesPlugin)
