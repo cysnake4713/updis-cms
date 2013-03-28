@@ -1,4 +1,5 @@
 from cms.plugin_base import CMSPluginBase
+from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from messages.models import MessageCategories
 import re
@@ -12,7 +13,7 @@ def _get_last_image(messages):
         content = message['content']
         if content:
             #TODO:regx still got problem
-            match = re.compile(r'.*<img\s*id="target"\s*src="(.*?)">.*').match(content)
+            match = re.compile(r'.*<img.*?src="(.*?)".*').match(content.replace('\n',' '))
             if match:
                 return match.group(1), message
     return None
@@ -101,7 +102,11 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        message_categories = get_messages_categories_with_image('content_left', context.get('request'))
+        if cache.get('left_category_cache'):
+            message_categories = cache.get('left_category_cache')
+        else:
+            message_categories = get_messages_categories_with_image('content_left', context.get('request'))
+            cache.set('left_category_cache', message_categories, 60 * 15)
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -117,7 +122,12 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        message_categories = get_messages_categories_with_image('content_right', context.get('request'))
+        #cache top message
+        if cache.get('right_category_cache'):
+            message_categories = cache.get('right_category_cache')
+        else:
+            message_categories = get_messages_categories_with_image('content_right', context.get('request'))
+            cache.set('right_category_cache', message_categories, 60 * 15)
         context.update({
             'object': instance,
             'placeholder': placeholder,

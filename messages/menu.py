@@ -1,8 +1,6 @@
-from django.core.urlresolvers import reverse
 from menus.base import Menu, NavigationNode
 from menus.menu_pool import menu_pool
-from django.utils.translation import ugettext_lazy as _
-from openerplib import get_connection, Service
+from openerplib import get_connection
 
 __author__ = 'Zhou Guangwen'
 

@@ -11,16 +11,16 @@
         {% for cat in message_categories %}
             <li class="tab_con" style="display: list-item">
                 <div class="nr">
+
+                    {% if cat.top_message %}
+                        <div>
+                            <img height="80" width="80" src="{{ cat.top_message.0|safe }}" />
+                            <h2>{{ cat.top_message.1.name|safe }}</h2>
+                            <p>{{ cat.top_message.1.content|safe }}</p>
+                        </div>
+                    {% endif %}
+
                     {% for msg in cat.messages %}
-
-                        {% if cat.top_message %}
-                            <div>
-                                <img height="80" width="80" src="{{ cat.top_message.0|safe }}" />
-                                <h2>{{ cat.top_message.1.name|safe }}</h2>
-                                <p>{{ cat.top_message.1.content|safe }}</p>
-                            </div>
-                        {% endif %}
-
                         <p style="padding: 0">
                             <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                         </p>
