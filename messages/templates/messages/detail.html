@@ -11,8 +11,13 @@
                     <div class="comment-wrap">
                         <div class="comment-content">
                             <div class="comment-gravatar">
-                                <img width="60" height="60" class="avatar avatar-60 photo"
-                                     src="data:image/png;base64,{{ comment.image_small }}"/>
+                                {% if comment.is_anonymous %}
+                                    <img width="60" height="60" class="avatar avatar-60 photo"
+                                         src="{{ MEDIA_URL }}img/anonymous.png"/>
+                                {% else %}
+                                    <img width="60" height="60" class="avatar avatar-60 photo"
+                                         src="{% url get_employee_image employee_id=comment.author_id.0 %}"/>
+                                {% endif %}
                             </div>
                             <div class="comment-text">
                                 <span class="comment-author">

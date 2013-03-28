@@ -36,8 +36,8 @@ def detail(req, message_id):
                                        ['name', 'message_meta_display', 'content', 'message_ids', 'message_summary'])
     message = messages[0]
     comments = comment_obj.read(message['message_ids'], ['body', 'date', 'subject', 'author_id', 'is_anonymous'])
-    for comment in comments:
-        comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
+    # for comment in comments:
+    #     comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
     if req.method == 'POST':
         form = CommentForm(req.POST, req.FILES)
         if form.is_valid():
@@ -112,7 +112,6 @@ def login(request):
         form = LoginForm(request=request)
     return render_to_response("messages/login.html", {'form': form}, context_instance=RequestContext(request))
 
-# @cache_page(60 * 15)
 def get_department_image(request, department_id):
     erp_session = request.erpsession
 
@@ -123,4 +122,14 @@ def get_department_image(request, department_id):
     response = HttpResponse(hr_department['image_medium'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
-    # return  HttpResponse(message_category['image'])
+
+def get_employee_image(request, employee_id):
+    erp_session = request.erpsession
+
+    employee_id = int(employee_id)
+    employee_obj = erp_session.get_model("res.partner")
+
+    hr_employee = employee_obj.search_read([('id', '=', employee_id)], ['image_small'])[0]
+    response = HttpResponse(hr_employee['image_small'].decode('base64'))
+    response['Content-Type'] = 'image/png'
+    return response
