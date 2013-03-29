@@ -10,6 +10,31 @@
         <link rel="stylesheet" media="screen" href="{{ MEDIA_URL }}css/karma-teal-grey.css">
     {% endaddtoblock %}
     {% render_block "css" %}
+    <style>
+        div.bizmail_column {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        div.bizmail_SubmitArea {
+            display: inline-block;
+        } a,input {
+            margin-left: 10px;
+        }
+        div.bizmail_inputArea {
+            display: inline-block;
+        } input.text {
+            width: 80px;
+            background-color: lightgrey;
+        }
+        div.bizmail_LoginBox form {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        div.bizmail_LoginBox h3 {
+            display: none;
+
+        }
+    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -21,7 +46,19 @@
                     <ul>
                         <li><a id="link_home" href="#">Backoffice</a></li>
                     </ul>
+                    <ul>
+                        <div class="login">
+                            <script type="text/javascript"
+                                    src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js"
+                                    charset="gb18030"></script>
+                            <script type="text/javascript">
+                                writeLoginPanel({domainlist: "upr.cn", mode: "vertical"});
+                            </script>
+                        </div>
+                    </ul>
                 </div>
+
+
                 <!-- ***************** - END Top Toolbar Left Side - ***************** -->
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
                 <div class="oe_topbar sub-nav2" style="background-image:none;background-color:#000;width:auto;">
