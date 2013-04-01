@@ -14,21 +14,21 @@ admin.autodiscover()
 from cms.sitemaps import CMSSitemap
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'upcms.views.home', name='home'),
-    # url(r'^upcms/', include('upcms.foo.urls')),
+                       # Examples:
+                       # url(r'^$', 'upcms.views.home', name='home'),
+                       # url(r'^upcms/', include('upcms.foo.urls')),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                       # Uncomment the admin/doc line below to enable admin documentation:
+                       # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^message/',include('messages.urls')),
-    url(r'^api/',include(api_v1.urls)),
-    url(r'^', include('cms.urls')),
-    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
-)
+                       # Uncomment the next line to enable the admin:
+                       # url(r'^admin/', include(admin.site.urls)),
+                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^', include('cms.urls')),
+                       url(r'^message/',include('messages.urls')),
+                       url(r'^api/',include(api_v1.urls)),
+                       url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': {'cmspages': CMSSitemap}}),
+                       )
 if settings.DEBUG:
     urlpatterns = patterns('',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
