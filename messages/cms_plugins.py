@@ -13,7 +13,7 @@ def _get_last_image(messages):
         content = message['content']
         if content:
             #TODO:regx still got problem
-            match = re.compile(r'.*<img.*?src="(.*?)".*').match(content.replace('\n',' '))
+            match = re.compile(r'.*?<[img|IMG].*?[src|SRC]="(.*?)".*?').match(content.replace('\n',' '))
             if match:
                 return match.group(1), message
     return None
@@ -45,13 +45,13 @@ def get_messages_categories_with_image(position, request):
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
                                            ['category_message_title_meta_display', 'message_ids', 'content', 'name'],
-                                           limit=50)
+                                           limit=10)
         cat.update({
             'messages': messages[:6]
         })
         top_message = _get_last_image(messages)
         if top_message:
-            top_message[1]['content'] = top_message[1]['content'][:20]
+            top_message[1]['content'] = top_message[1]['content']
             cat['top_message'] = top_message
     return message_categories
 
@@ -106,7 +106,8 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('left_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_left', context.get('request'))
-            cache.set('left_category_cache', message_categories, 60 * 15)
+            cache.set('left_category_cache', message_categories, 60 * 10)
+        # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -127,7 +128,8 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('right_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_right', context.get('request'))
-            cache.set('right_category_cache', message_categories, 60 * 15)
+            cache.set('right_category_cache', message_categories, 60 * 10)
+        # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -143,7 +145,11 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        department_message_categories = get_department_message_categories(context.get('request'))
+        if cache.get('department_message_category_cache'):
+            department_message_categories =  cache.get('department_message_category_cache')
+        else:
+            department_message_categories = get_department_message_categories(context.get('request'))
+            cache.set('department_message_category_cache', department_message_categories, 60 * 60)
         context.update({
             'object': instance,
             'placeholder': placeholder,

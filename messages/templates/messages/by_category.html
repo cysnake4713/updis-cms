@@ -21,7 +21,11 @@ content_blog
                     </h1>
                     <p class="posted-by-text">
                         <span>发布者</span>
-                        <a href="#">{{ msg.write_uid|last }}</a>
+                        {% if msg.is_display_name %}
+                            <a href="#">{{ msg.write_uid|last }}</a>
+                        {% else %}
+                            匿名用户
+                        {% endif %}
                     </p>
                 </div>
         <div class="post_content">
@@ -35,7 +39,7 @@ content_blog
             </div>
             {% endif %}
             <div class="" style="min-height: 50px">
-                <p>{{ msg.content|truncatewords_html:20|safe }}</p>
+                <p>{{ msg.content|striptags|truncatewords:100|safe }}</p>
             </div>
             <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}" href="{% url messages_detail message_id=msg.id %}">
                 <span>阅读</span>

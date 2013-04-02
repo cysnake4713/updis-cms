@@ -16,7 +16,7 @@
                     <div>
                         <img height="80" width="80" src="{{ cat.top_message.0|safe }}" />
                         <h2>{{ cat.top_message.1.name|safe }}</h2>
-                        <p>{{ cat.top_message.1.content|safe }}</p>
+                        <p>{{ cat.top_message.1.content|striptags|truncatewords:20|safe }}</p>
                     </div>
                 {% endif %}
 

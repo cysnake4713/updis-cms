@@ -86,7 +86,7 @@ def by_category(req, category_id):
     per_page = int(req.GET.get('per_page', 8))
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
                                       ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
-                                       'write_date', 'category_id']), per_page)
+                                       'write_date', 'category_id', 'is_display_name']), per_page)
     page = req.GET.get('page')
     try:
         messages = paginator.page(page)
