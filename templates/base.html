@@ -1,4 +1,5 @@
-{% load cms_tags sekizai_tags menu_tags placeholder_tags %}
+{% load cms_tags sekizai_tags menu_tags placeholder_tags message_tags %}
+{% load_menu as menus %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,6 @@
                         <img alt="UPDIS" src="{{ MEDIA_URL }}img/logo.gif">
                     </a>
                     <ul id="menu-main-nav">
-                        {% show_menu 0 100 100 100 %}
                     </ul>
                 </div>
             </div>
