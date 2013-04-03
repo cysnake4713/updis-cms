@@ -2,13 +2,14 @@
 import base64
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.cache import cache_page
 from sekizai.context import SekizaiContext
 from messages.forms import CommentForm, LoginForm
 from openerplib import AuthenticationError
+
 
 class MessageList(object):
     def __init__(self, erpsession, domain, fields):
@@ -32,11 +33,11 @@ def detail(req, message_id):
     attachment_obj = req.erpsession.get_model('ir.attachment')
 
     messages = message_obj.search_read([('id', '=', message_id)],
-        ['name', 'message_meta_display', 'content', 'message_ids', 'message_summary'])
+                                       ['name', 'message_meta_display', 'content', 'message_ids', 'message_summary'])
     message = messages[0]
     comments = comment_obj.read(message['message_ids'], ['body', 'date', 'subject', 'author_id', 'is_anonymous'])
-    for comment in comments:
-        comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
+    # for comment in comments:
+    #     comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
     if req.method == 'POST':
         form = CommentForm(req.POST, req.FILES)
         if form.is_valid():
@@ -71,7 +72,7 @@ def detail(req, message_id):
         context_instance=RequestContext(req))
 
 
-# @cache_page(60 * 15)
+# @cache_page(60 * 5)
 def index(req):
     return render_to_response("messages/index.html", context_instance=RequestContext(req))
 
@@ -84,7 +85,8 @@ def by_category(req, category_id):
     message_category = message_category_obj.search_read([('id', '=', category_id)])[0]
     per_page = int(req.GET.get('per_page', 8))
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
-        ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium', 'write_date', 'category_id']), per_page)
+                                      ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
+                                       'write_date', 'category_id', 'is_display_name']), per_page)
     page = req.GET.get('page')
     try:
         messages = paginator.page(page)
@@ -94,18 +96,40 @@ def by_category(req, category_id):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         messages = paginator.page(paginator.num_pages)
-    #    messages = message_obj.search_read([],['name','category_message_title_meta_display'],limit=10)
+        #    messages = message_obj.search_read([],['name','category_message_title_meta_display'],limit=10)
     return render_to_response("messages/by_category.html", {'category': message_category, 'messages': messages},
-        context_instance=RequestContext(req))
+                              context_instance=RequestContext(req))
 
 
 def login(request):
     default_url = reverse('messages_index')
-    redirect_url = request.GET.get('redirect_url',default_url)
+    redirect_url = request.GET.get('redirect_url', default_url)
     if request.method == 'POST':
-        form = LoginForm(request.POST,request=request)
+        form = LoginForm(request.POST, request=request)
         if form.is_valid():
-                return HttpResponseRedirect(redirect_url)
+            return HttpResponseRedirect(redirect_url)
     else:
         form = LoginForm(request=request)
-    return render_to_response("messages/login.html", {'form':form}, context_instance=RequestContext(request))
+    return render_to_response("messages/login.html", {'form': form}, context_instance=RequestContext(request))
+
+def get_department_image(request, department_id):
+    erp_session = request.erpsession
+
+    department_id = int(department_id)
+    message_category_obj = erp_session.get_model("hr.department")
+
+    hr_department = message_category_obj.search_read([('id', '=', department_id)], ['image_medium'])[0]
+    response = HttpResponse(hr_department['image_medium'].decode('base64'))
+    response['Content-Type'] = 'image/png'
+    return response
+
+def get_employee_image(request, employee_id):
+    erp_session = request.erpsession
+
+    employee_id = int(employee_id)
+    employee_obj = erp_session.get_model("res.partner")
+
+    hr_employee = employee_obj.search_read([('id', '=', employee_id)], ['image_small'])[0]
+    response = HttpResponse(hr_employee['image_small'].decode('base64'))
+    response['Content-Type'] = 'image/png'
+    return response

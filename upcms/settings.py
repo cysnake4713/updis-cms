@@ -149,7 +149,6 @@ INSTALLED_APPS = (
     'cms.plugins.picture',
     'cms.plugins.teaser',
     'cms.plugins.twitter',
-
     'tastypie',
     )
 
@@ -195,8 +194,8 @@ LANGUAGES = [
     ('zh-CN','Chinese'),
     ]
 
-ERP_HOST = "localhost"
+ERP_HOST = "10.100.100.14"
 ERP_PORT = 8069
-ERP_LOGIN = 'admin'
-ERP_PASSWORD = 'admin'
-ERP_DATABASE = 'developer'
+ERP_LOGIN = 'cmsreader'
+ERP_PASSWORD = 'cmsreader'
+ERP_DATABASE = 'develop'

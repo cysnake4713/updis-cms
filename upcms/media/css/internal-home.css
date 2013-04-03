@@ -101,7 +101,6 @@
 	padding: 0;
 	list-style-type: none;
 	height: 24px;
-	width: 20000px;
 }
 .tabs li {
 	height: 24px;
@@ -273,6 +272,8 @@
 }
 .department-container .tabs {
 	margin-left: 18px;
+    width: 20000px;
+    overflow-y: hidden;
 }
 .page-meta{
 	color: gray;

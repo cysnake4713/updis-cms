@@ -35,7 +35,7 @@ $(document).ready(function() {
         var pos = content.position().left - 500;
 
         if (width + pos < tab_window_width) {
-            pos = -width + tab_window_width;
+            pos = -width + tab_window_width - 200;
         }
         content.animate({ left: pos }, 1000);
     });

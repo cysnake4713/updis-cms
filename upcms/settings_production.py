@@ -5,6 +5,6 @@ DEBUG = TEMPLATE_DEBUG = True
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '192.168.10.14:11211',
-    }
+        'LOCATION': 'localhost:11211',
+        }
 }

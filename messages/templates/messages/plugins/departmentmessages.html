@@ -15,9 +15,14 @@
     <ul class="tab_conbox" id="tab_conbox3">
         {% for dep in department_message_categories %}
             <li class="tab_con" style="display: list-item">
-               <div class="term" >
+                <div class="term" >
+
+                    {% if dep.have_image %}
+                        <img src="{% url get_department_image department_id=dep.id %}"/>
+                   {% endif %}
+
                    {% for cat in dep.message_categories %}
-                       <dl class="{% cycle 'one_fourth' 'one_fourth' 'one_fourth' 'one_fourth' %}">
+                       <dl class="one_fourth">
                         <dt>{{ cat.name }}</dt>
                        {% for msg in cat.messages %}
                            <dd>
