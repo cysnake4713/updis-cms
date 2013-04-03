@@ -72,7 +72,7 @@ def detail(req, message_id):
         context_instance=RequestContext(req))
 
 
-# @cache_page(60 * 15)
+# @cache_page(60 * 5)
 def index(req):
     return render_to_response("messages/index.html", context_instance=RequestContext(req))
 

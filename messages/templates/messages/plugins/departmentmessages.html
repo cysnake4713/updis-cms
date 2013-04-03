@@ -22,7 +22,7 @@
                    {% endif %}
 
                    {% for cat in dep.message_categories %}
-                       <dl class="{% cycle 'one_third' 'one_third' 'one_forth' %}">
+                       <dl class="one_fourth">
                         <dt>{{ cat.name }}</dt>
                        {% for msg in cat.messages %}
                            <dd>

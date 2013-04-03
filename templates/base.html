@@ -16,21 +16,29 @@
             display: inline-block;
             margin-left: 10px;
         }
+
         div.bizmail_SubmitArea {
             display: inline-block;
-        } a,input {
+        }
+
+        a, input {
             margin-left: 10px;
         }
+
         div.bizmail_inputArea {
             display: inline-block;
-        } input.text {
+        }
+
+        input.text {
             width: 80px;
             background-color: lightgrey;
         }
+
         div.bizmail_LoginBox form {
             display: inline-block;
             margin-left: 20px;
         }
+
         div.bizmail_LoginBox h3 {
             display: none;
 
@@ -79,6 +87,20 @@
                         <img alt="UPDIS" src="{{ MEDIA_URL }}img/logo.gif">
                     </a>
                     <ul id="menu-main-nav">
+                        {#                        {{ menus.keys }}#}
+                        {% for k, v in menus.items %}
+                            {% if  v.parent_id.1 == 'Top menu' %}
+                                <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
+                                    <ul class="sub-menu">
+                                        {% for cv in v.children %}
+                                            <li><a href="
+                                                    {% if cv.action %}{{ cv.action }}{% endif %}"><span>{{ cv.name }}</span></a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -103,7 +125,20 @@
             <div class="footer-area">
                 <div class="footer-wrapper">
                     <div class="footer-holder">
+                        {% for k, v in menus.items %}
+                            {% if  v.parent_id.1 == 'Footer Menu' %}
+                                <div class="one_fifth">
+                                    <h3>{{ v.name }}</h3>
+                                    <ul>
+                                        {% for cv in v.children %}
+                                            <li><a class="oe_menu_leaf" href="{% if cv.action %}{{ cv.action }}{% endif %}">{{ cv.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
