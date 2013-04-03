@@ -28,6 +28,7 @@ def _get_menu(context):
             menu_items_map[parent].setdefault('children', []).append(menu_item)
     for menu_item in menu_items:
         menu_item.setdefault('children', []).sort(key=operator.itemgetter('sequence'))
+    return menu_items_map
 
 
 @register.assignment_tag(takes_context=True)
