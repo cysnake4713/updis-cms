@@ -1807,3 +1807,27 @@ div.oe_post_oe_post_title {
     display: block;
 }
 
+div.home-message-top {
+    margin-top: -20px;
+    border-color: #e0e0e0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 110px;
+    width: 400px;
+    margin-bottom: 30px;
+}
+
+div.home-message-image {
+    width: 35%;
+    position:relative;
+    display: block;
+    float: left;
+}
+
+div.home-message-content {
+    width: 65%;
+    position:relative;
+    display: block;
+    float: right;
+}
+

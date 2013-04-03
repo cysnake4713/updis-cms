@@ -43,7 +43,7 @@ content_blog
             </div>
             {% endif %}
             <div class="" style="min-height: 50px">
-                <p>{{ msg.content|striptags|truncatewords:100|safe }}</p>
+                <p>{{ msg.content|striptags|truncatehanzi:'100'|safe }}</p>
             </div>
             <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}" href="{% url messages_detail message_id=msg.id %}">
                 <span>阅读</span>

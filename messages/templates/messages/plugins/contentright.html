@@ -1,4 +1,6 @@
+{% load message_tags %}
 {% load i18n %}
+
 <div class="one_half_last" id="tabbox2">
     <ul id="tabs2" class="tabs">
         {% for cat in message_categories %}
@@ -13,10 +15,16 @@
                 <div class="nr">
 
                     {% if cat.top_message %}
-                        <div>
-                            <img height="80" width="80" src="{{ cat.top_message.0|safe }}" />
-                            <h2>{{ cat.top_message.1.name|safe }}</h2>
-                            <p>{{ cat.top_message.1.content|striptags|truncatewords:20|safe }}</p>
+                        <div class="home-message-top">
+                            <div class="home-message-image">
+                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}" />
+                            </div>
+                            <div class="home-message-content">
+                                <h2><a href="{% url messages_detail message_id=cat.top_message.1.id %}">{{ cat.top_message.1.name|striptags|truncatehanzi:'20'|safe }}</a></h2>
+                                {% if  cat.top_message.1.content|striptags|truncatehanzi:'20'|safe %}
+                                    <p class="top-message">{{ cat.top_message.1.content|striptags|truncatehanzi:'20'|safe }}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     {% endif %}
 
@@ -25,7 +33,7 @@
                             <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                         </p>
                     {% endfor %}
-                    <p><a class="" href="{% url category_messages category_id=cat.id %}"><span><h4>更多..</h4></span></a></p>
+                    <a href="{% url category_messages category_id=cat.id %}"><span><h4 style="padding: 0;color: #5A7C87;margin-left: 10px;">更多..</h4></span></a>
                 </div>
             </li>
         {% endfor %}
