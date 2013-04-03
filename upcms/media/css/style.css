@@ -1802,3 +1802,8 @@ border-radius: 5px;
 a.oe_menu_leaf {
     margin: 0;
 }
+
+div.oe_post_oe_post_title {
+    display: block;
+}
+

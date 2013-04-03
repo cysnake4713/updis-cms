@@ -8,6 +8,10 @@ content_blog
         <div class="holder">
             <div class="frame">
                 <h1>{{ category.name }}</h1>
+                <p class="breadcrumb">
+                    <a href="{% page_url 'cms_home' %}">首页</a>
+                    <span class="current_crumb">{{ category.name }}</span>
+                </p>
             </div>
         </div>
     </div>
@@ -17,14 +21,14 @@ content_blog
         <div class="blog_wrap">
                 <div class="post_title">
                     <h1>
-                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}"> {{ msg.name }}</a>
+                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}" title="{{ msg.name }}"> {{ msg.name }}</a>
                     </h1>
                     <p class="posted-by-text">
                         <span>发布者</span>
                         {% if msg.is_display_name %}
-                            <a href="#">{{ msg.write_uid|last }}</a>
+                            &nbsp;&nbsp;{{ msg.write_uid|last }}
                         {% else %}
-                            匿名用户
+                            &nbsp;&nbsp;匿名用户
                         {% endif %}
                     </p>
                 </div>

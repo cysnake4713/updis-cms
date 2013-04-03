@@ -30,10 +30,12 @@ def detail(req, message_id):
     message_obj = req.erpsession.get_model('message.message')
     comment_obj = req.erpsession.get_model('mail.message')
     partner_obj = req.erpsession.get_model('res.partner')
+    message_category_obj = req.erpsession.get_model("message.category")
     attachment_obj = req.erpsession.get_model('ir.attachment')
 
     messages = message_obj.search_read([('id', '=', message_id)],
-                                       ['name', 'message_meta_display', 'content', 'message_ids', 'message_summary'])
+                                       ['name', 'message_meta_display', 'content', 'message_ids',
+                                        'category_id', 'message_summary'])
     message = messages[0]
     comments = comment_obj.read(message['message_ids'], ['body', 'date', 'subject', 'author_id', 'is_anonymous'])
     # for comment in comments:
@@ -69,7 +71,7 @@ def detail(req, message_id):
                                                        'comments': comments,
                                                        'form': form,
     },
-        context_instance=RequestContext(req))
+                              context_instance=RequestContext(req))
 
 
 # @cache_page(60 * 5)
@@ -112,6 +114,7 @@ def login(request):
         form = LoginForm(request=request)
     return render_to_response("messages/login.html", {'form': form}, context_instance=RequestContext(request))
 
+
 def get_department_image(request, department_id):
     erp_session = request.erpsession
 
@@ -122,6 +125,7 @@ def get_department_image(request, department_id):
     response = HttpResponse(hr_department['image_medium'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
+
 
 def get_employee_image(request, employee_id):
     erp_session = request.erpsession
