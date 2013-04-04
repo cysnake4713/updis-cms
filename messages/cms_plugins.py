@@ -46,13 +46,18 @@ def get_messages_categories_with_image(position, request):
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
                                            ['category_message_title_meta_display', 'message_ids', 'content', 'name'],
                                            limit=10)
-        cat.update({
-            'messages': messages[:6]
-        })
         top_message = _get_last_image(messages)
         if top_message:
             top_message[1]['content'] = top_message[1]['content']
             cat['top_message'] = top_message
+        if top_message:
+            cat.update({
+                'messages': messages[:3]
+            })
+        else:
+            cat.update({
+                'messages': messages[:8]
+            })
     return message_categories
 
 

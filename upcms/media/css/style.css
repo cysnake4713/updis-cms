@@ -1831,3 +1831,6 @@ div.home-message-content {
     float: right;
 }
 
+div.home-message-content #title {
+    margin-top: 5px;
+}

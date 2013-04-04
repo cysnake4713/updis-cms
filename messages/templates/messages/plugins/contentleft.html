@@ -16,11 +16,13 @@
                     {% if cat.top_message %}
                         <div class="home-message-top">
                             <div class="home-message-image">
-                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}" />
+                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}"/>
                             </div>
                             <div class="home-message-content">
-                                <h2><a href="{% url messages_detail message_id=cat.top_message.1.id %}">{{ cat.top_message.1.name|striptags|truncatehanzi:'20'|safe }}</a></h2>
-                                {% if  cat.top_message.1.content|striptags|truncatehanzi:'20'|safe %}
+                                <h2 id="title">
+                                    <a href="{% url messages_detail message_id=cat.top_message.1.id %}">{{ cat.top_message.1.name|striptags|truncatehanzi:'16'|safe }}</a>
+                                </h2>
+                                {% if  cat.top_message.1.content|striptags|truncatehanzi:'16'|safe %}
                                     <p class="top-message">{{ cat.top_message.1.content|striptags|truncatehanzi:'20'|safe }}</p>
                                 {% endif %}
                             </div>
@@ -33,7 +35,8 @@
                                 {{ msg.category_message_title_meta_display|safe }}</a>
                         </p>
                     {% endfor %}
-                    <a href="{% url category_messages category_id=cat.id %}"><span><h4 style="padding: 0;color: #5A7C87;margin-left: 10px;">更多..</h4></span></a>
+                    <a href="{% url category_messages category_id=cat.id %}"><span><h4
+                            style="padding: 0;color: #5A7C87;margin-left: 10px;">更多..</h4></span></a>
                 </div>
             </li>
         {% endfor %}
