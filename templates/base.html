@@ -93,8 +93,10 @@
                                 <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
                                     <ul class="sub-menu">
                                         {% for cv in v.children %}
-                                            <li>{% if cv.action %}<a href="{{ cv.action.url }}"{% endif %}>
-                                            <span>{{ cv.name }}</span></a>
+                                            <li><a target="_blank" {% if cv.action %}
+                                                   href="{{ cv.action.url }}"{% endif %}>
+                                                <span {% if not cv.action %}
+                                                    style="text-align: right;" {% endif %}>{{ cv.name }}</span></a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -131,8 +133,9 @@
                                     <h3>{{ v.name }}</h3>
                                     <ul>
                                         {% for cv in v.children %}
-                                            <li><a class="oe_menu_leaf"
-                                                   {% if cv.action %}href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
+                                            <li><a target="_blank"
+                                                    {% if cv.action %} class="oe_menu_leaf"
+                                                   href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
