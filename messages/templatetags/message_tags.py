@@ -17,8 +17,14 @@ def to_date(value):
 def _get_menu(context):
     request = context['request']
     menu_obj = request.erpsession.get_model("internal.home.menu")
-    menu_items = menu_obj.search_read([],
-        ['name', 'sequence', 'parent_id', 'action', 'needaction_enabled', 'needaction_counter'])
+    ir_action_obj = request.erpsession.get_model("ir.actions.act_url")
+    menu_items = menu_obj.search_read([], ['name', 'sequence', 'parent_id',
+                                           'action', 'needaction_enabled', 'needaction_counter'])
+    for menu_item in menu_items:
+        if menu_item['action']:
+            url = ir_action_obj.search_read([('id', '=', menu_item['action'].split(',')[1])],
+                                            ['name', 'url'])
+            menu_item['action'] = url[0]
     menu_items_map = dict((menu_item['id'], menu_item) for menu_item in menu_items)
     for menu_item in menu_items:
         if menu_item['parent_id']:
@@ -41,6 +47,7 @@ def load_menu(context):
         cache.set('homepage_menu', menu_items_map, 60 * 24)
     return menu_items_map
 
+
 @stringfilter
 def truncatehanzi(value, arg):
     """
@@ -61,5 +68,6 @@ def truncatehanzi(value, arg):
 
     except (ValueError, TypeError):
         return value # Fail silently.
+
 
 register.filter('truncatehanzi', truncatehanzi)

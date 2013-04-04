@@ -71,11 +71,11 @@
                 <!-- ***************** - END Top Toolbar Left Side - ***************** -->
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
                 <div class="oe_topbar sub-nav2" style="background-image:none;background-color:#000;width:auto;">
-{#                    {% if request.erpsession.login == 'upcms' %}#}
-                        <a href="{% url login %}">登录</a>
-{#                    {% else %}#}
-{#                        <strong>{{ request.erpsession.login }}</strong>#}
-{#                    {% endif %}#}
+                    {#                    {% if request.erpsession.login == 'upcms' %}#}
+                    <a href="{% url login %}">登录</a>
+                    {#                    {% else %}#}
+                    {#                        <strong>{{ request.erpsession.login }}</strong>#}
+                    {#                    {% endif %}#}
                 </div>
                 <!-- end sub-nav2 -->
             </div>
@@ -93,8 +93,8 @@
                                 <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
                                     <ul class="sub-menu">
                                         {% for cv in v.children %}
-                                            <li><a href="
-                                                    {% if cv.action %}{{ cv.action }}{% endif %}"><span>{{ cv.name }}</span></a>
+                                            <li>{% if cv.action %}<a href="{{ cv.action.url }}"{% endif %}>
+                                            <span>{{ cv.name }}</span></a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -131,7 +131,8 @@
                                     <h3>{{ v.name }}</h3>
                                     <ul>
                                         {% for cv in v.children %}
-                                            <li><a class="oe_menu_leaf" href="{% if cv.action %}{{ cv.action }}{% endif %}">{{ cv.name }}</a>
+                                            <li><a class="oe_menu_leaf"
+                                                   {% if cv.action %}href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
