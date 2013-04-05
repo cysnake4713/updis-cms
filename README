@@ -5,3 +5,8 @@
 
 cms_home：
     在admin中一个页面的高级设置里一定要配置标识为cms_home
+
+
+
+static:
+    production model 每次记得跑一遍./manage.py collectstatic
