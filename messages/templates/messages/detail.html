@@ -39,7 +39,7 @@
                             <div class="comment-gravatar">
                                 {% if comment.is_anonymous %}
                                     <img width="60" height="60" class="avatar avatar-60 photo"
-                                         src="{{ MEDIA_URL }}img/anonymous.png"/>
+                                         src="{{ STATIC_URL }}img/anonymous.png"/>
                                 {% else %}
                                     <img width="60" height="60" class="avatar avatar-60 photo"
                                          src="{% url get_employee_image employee_id=comment.author_id.0 %}"/>

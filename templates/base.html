@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% addtoblock "css" %}
-        <link rel="stylesheet" media="screen" href="{{ MEDIA_URL }}css/style.css">
-        <link rel="stylesheet" media="screen" href="{{ MEDIA_URL }}css/internal-home.css">
-        <link rel="stylesheet" media="screen" href="{{ MEDIA_URL }}css/karma-teal-grey.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/internal-home.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-teal-grey.css">
     {% endaddtoblock %}
     {% render_block "css" %}
     <style>
@@ -84,7 +84,7 @@
             <div class="rays">
                 <div class="header-area">
                     <a class="logo" href="{% page_url 'cms_home' %}">
-                        <img alt="UPDIS" src="{{ MEDIA_URL }}img/logo.gif">
+                        <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
                     <ul id="menu-main-nav">
                         {#                        {{ menus.keys }}#}
@@ -151,10 +151,10 @@
 </div>
 
 {% addtoblock "js" %}
-    <script src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js"></script>
-    <script src="{{ MEDIA_URL }}js/updis.js"></script>
-    <script src="{{ MEDIA_URL }}js/karma.js"></script>
-    <script src="{{ MEDIA_URL }}js/tab.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/updis.js"></script>
+    <script src="{{ STATIC_URL }}js/karma.js"></script>
+    <script src="{{ STATIC_URL }}js/tab.js"></script>
 {% endaddtoblock %}
 {% render_block "js" %}
 </body>
