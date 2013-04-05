@@ -1,5 +1,5 @@
 *.pyc
 .idea
 *.sqlite
-upcms/sitestatic/*
+upcms/static/*
 upcms/media/*
