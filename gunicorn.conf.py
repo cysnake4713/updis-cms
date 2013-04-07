@@ -1,4 +1,4 @@
 bind = "127.0.0.1:8001"
-logfile = "/home/cysnake4713/gunicorn.log"
-workers = 3
+logfile = "/home/updisadmin/gunicorn.log"
+workers = 4
 timeout = 60

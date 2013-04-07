@@ -1813,7 +1813,7 @@ div.home-message-top {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     height: 110px;
-    width: 400px;
+    /*width: 400px;*/
     margin-bottom: 30px;
 }
 
