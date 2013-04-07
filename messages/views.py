@@ -137,3 +137,15 @@ def get_employee_image(request, employee_id):
     response = HttpResponse(hr_employee['image_small'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
+
+
+def get_department_image_big(request, department_id):
+    erp_session = request.erpsession
+
+    department_id = int(department_id)
+    message_category_obj = erp_session.get_model("hr.department")
+
+    hr_department = message_category_obj.search_read([('id', '=', department_id)], ['image'])[0]
+    response = HttpResponse(hr_department['image'].decode('base64'))
+    response['Content-Type'] = 'image/png'
+    return response
