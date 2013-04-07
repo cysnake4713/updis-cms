@@ -1,8 +1,11 @@
 __author__ = 'Zhou Guangwen'
-from settings import *
+import  settings
+settings.ERP_HOST = "10.100.100.14"
 
+
+
+from settings import *
 DEBUG = TEMPLATE_DEBUG = False
-ERP_HOST = "10.100.100.14"
 
 CACHES = {
     'default': {
