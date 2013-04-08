@@ -256,6 +256,7 @@
 	background: #fff;
 	height:30px;
 	left: 0px;
+    margin-left: 0px;
 }
 .tabs-container .arrow_r{
 	position: absolute;

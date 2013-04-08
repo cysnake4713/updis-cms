@@ -1,7 +1,12 @@
 __author__ = 'Zhou Guangwen'
-from settings import *
+import  settings
+settings.ERP_HOST = "10.100.100.14"
 
-DEBUG = TEMPLATE_DEBUG = True
+
+
+from settings import *
+DEBUG = TEMPLATE_DEBUG = False
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',

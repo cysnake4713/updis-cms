@@ -96,7 +96,7 @@ Stylesheet Guide
 
 * {font-size: 100%;}
 html {font-size: 62.5%;margin:0;padding:0;}
-body {margin:0;background:#f4f4f2;font:1.2em/19px "helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
+body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
 
 
 
@@ -1801,4 +1801,36 @@ border-radius: 5px;
 
 a.oe_menu_leaf {
     margin: 0;
+}
+
+div.oe_post_oe_post_title {
+    display: block;
+}
+
+div.home-message-top {
+    margin-top: -20px;
+    border-color: #e0e0e0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 110px;
+    /*width: 400px;*/
+    margin-bottom: 30px;
+}
+
+div.home-message-image {
+    width: 35%;
+    position:relative;
+    display: block;
+    float: left;
+}
+
+div.home-message-content {
+    width: 65%;
+    position:relative;
+    display: block;
+    float: right;
+}
+
+div.home-message-content #title {
+    margin-top: 5px;
 }
