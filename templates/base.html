@@ -113,8 +113,22 @@
     </div>
     <div id="main">
         <div class="main-area">
+            <div id="search-area">
+                        <span class="text">
+                         <input type="text" name="search_context" id="id_search_context" value="搜索主题"
+                                onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
+                                onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
+                            <input type="submit" class="submit" value="搜索" id="searchsubmit" style="opacity: 1;">
+                        </span>
+
+            </div>
+
+
+
             {% block tools %}
             {% endblock %}
+
+
             <div class="main-holder">
                 <div id="content" class="{% block content_class %} content_full_width {% endblock %}">
 
@@ -158,6 +172,18 @@
     <script src="{{ STATIC_URL }}js/updis.js"></script>
     <script src="{{ STATIC_URL }}js/karma.js"></script>
     <script src="{{ STATIC_URL }}js/tab.js"></script>
+    <script>
+        $(function () {
+            $("#searchsubmit").bind("click", function () {
+                searchtext = $("#id_search_context")[0].value;
+                if (searchtext != '') {
+                    window.location.href = '/message/search/' + searchtext
+                }
+            })
+
+        })
+
+    </script>
 {% endaddtoblock %}
 {% render_block "js" %}
 </body>

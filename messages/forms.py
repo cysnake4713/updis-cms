@@ -28,3 +28,7 @@ class LoginForm(forms.Form):
             erpsession.login = old_login
             erpsession.password = old_password
             raise forms.ValidationError(u"登录失败")
+
+
+class SearchForm(forms.Form):
+    search_context = forms.CharField(max_length=200,widget=forms.TextInput)

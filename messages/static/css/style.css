@@ -123,9 +123,9 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Gra
 #header .header-area {width:980px;margin:0 auto;padding:38px 0 33px 0;}
 #header .header-area:after {clear:both;display:block;content:"";}
 #main {background:url(../img/_global/bg-main.gif) repeat-x;display:table-footer-group;position:relative;width:100%;}
-#main .main-area {width:980px;margin:0 auto;padding:43px 0 5px 0;}
+#main .main-area {width:980px;margin:0 auto;padding:0 0 5px 0;}
 .tools .place {float:right;}
-.main-holder {height:1%;overflow:hidden;padding-top:45px;}
+.main-holder {height:1%;overflow:hidden;padding-top:20px;}
 .carousel-holder {width:315px !important;}
 
 
@@ -1833,4 +1833,10 @@ div.home-message-content {
 
 div.home-message-content #title {
     margin-top: 5px;
+}
+
+.main-area #search-area {
+    position: relative;
+    width: 300px;
+    float: right;
 }
