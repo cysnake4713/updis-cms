@@ -1,5 +1,5 @@
 {% load i18n %}
-<div id="news" style="padding-top: 15px">
+<div id="news" style="margin-top:-15px;padding-top: 15px">
     {% for cat in message_categories %}
         <div class="{% cycle 'one_third' 'one_third' 'one_third_last'%}">
             <h2>{{ cat.name }}</h2>

@@ -14,39 +14,6 @@
         <link rel="icon" type="image/gif" href="{{ STATIC_URL }}img/animated_favicon1.gif">
     {% endaddtoblock %}
     {% render_block "css" %}
-    <style>
-        div.bizmail_column {
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        div.bizmail_SubmitArea {
-            display: inline-block;
-        }
-
-        a, input {
-            margin-left: 10px;
-        }
-
-        div.bizmail_inputArea {
-            display: inline-block;
-        }
-
-        input.text {
-            width: 80px;
-            background-color: lightgrey;
-        }
-
-        div.bizmail_LoginBox form {
-            display: inline-block;
-            margin-left: 20px;
-        }
-
-        div.bizmail_LoginBox h3 {
-            display: none;
-
-        }
-    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -59,7 +26,7 @@
                         <li><a id="link_home" href="#">管理系统</a></li>
                     </ul>
                     <ul>
-                        <div class="login">
+                        <div class="mail-login">
                             <script type="text/javascript"
                                     src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js"
                                     charset="gb18030"></script>
@@ -112,19 +79,16 @@
         </div>
     </div>
     <div id="main">
+        <div id="search-area">
+            <span class="text">
+             <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context" value="搜索主题"
+                    onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
+                    onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
+                <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
+                   style="opacity: 1;"><span>搜索</span></a>
+            </span>
+        </div>
         <div class="main-area">
-            <div id="search-area">
-                        <span class="text">
-                         <input type="text" name="search_context" id="id_search_context" value="搜索主题"
-                                onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
-                                onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
-                            <input type="submit" class="submit" value="搜索" id="searchsubmit" style="opacity: 1;">
-                        </span>
-
-            </div>
-
-
-
             {% block tools %}
             {% endblock %}
 
@@ -174,10 +138,20 @@
     <script src="{{ STATIC_URL }}js/tab.js"></script>
     <script>
         $(function () {
-            $("#searchsubmit").bind("click", function () {
+            $("#searchsubmit").bind("click", function (event) {
                 searchtext = $("#id_search_context")[0].value;
                 if (searchtext != '') {
+                    event.preventDefault();
                     window.location.href = '/message/search/' + searchtext
+                }
+            })
+            $("#id_search_context").bind("keydown", function (event) {
+                if (event.keyCode == 13) {
+                    searchtext = $("#id_search_context")[0].value;
+                    if (searchtext != '') {
+                        event.preventDefault();
+                        window.location.href = '/message/search/' + searchtext
+                    }
                 }
             })
 
