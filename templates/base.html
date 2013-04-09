@@ -140,16 +140,16 @@
         $(function () {
             $("#searchsubmit").bind("click", function (event) {
                 searchtext = $("#id_search_context")[0].value;
-                if (searchtext) searchtext = searchtext.trim();
+                searchtext = $.trim(searchtext)
                 if (searchtext != '' && searchtext != "搜索主题") {
                     event.preventDefault();
-                    window.location.href = '/message/search/' + searchtext.trim()
+                    window.location.href = '/message/search/' + encodeURIComponent(searchtext)
                 }
             })
             $("#id_search_context").bind("keydown", function (event) {
                 if (event.keyCode == 13) {
                     searchtext = $("#id_search_context")[0].value;
-                    if (searchtext) searchtext = searchtext.trim();
+                    searchtext = $.trim(searchtext)
                     if (searchtext != '' && searchtext != "搜索主题") {
                         event.preventDefault();
                         window.location.href = '/message/search/' + encodeURIComponent(searchtext)

@@ -107,7 +107,7 @@ def search(request, search_context):
     erpsession = request.erpsession
     # message_message_obj = erpsession.get_model("message.message")
     per_page = int(request.GET.get('per_page', 8))
-    paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context)],
+    paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context.replace(' ', '%'))],
                                       ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
                                        'write_date', 'category_id', 'is_display_name']), per_page)
     page = request.GET.get('page')
