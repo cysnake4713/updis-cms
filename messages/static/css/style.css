@@ -1940,3 +1940,13 @@ div.bizmail_LoginBox h3 {
 #news {
     overflow:hidden;
 }
+
+.publish-message {
+    float: right;
+    margin-right: 30px;
+    font-size: 14px;
+}
+
+#news a.publish-message {
+    display: inline-block;
+}
