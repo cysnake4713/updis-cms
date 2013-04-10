@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load cms_tags message_tags humanize sekizai_tags%}
+{% load tz %}
 {% block tools %}
     <div class="tools">
         <div class="holder">
@@ -18,7 +19,9 @@
     <div class="oe_post_title">
 {#        <h1 style="text-align: center">{{ message.name }}</h1>#}
     </div>
-    <div><span>{{ message.message_meta_display|safe }}</span></div>
+    <div  style="text-align: center"><span >{{ message.message_meta_display|safe }}</span></div>
+    <br/>
+    <br/>
     <p>{{ message.content|safe }}</p>
 
         <div class="post_footer">

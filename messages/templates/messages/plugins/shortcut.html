@@ -1,9 +1,9 @@
 {% load i18n %}
-<div id="news">
+<div id="news" style="margin-top:-15px;padding-top: 15px">
     {% for cat in message_categories %}
         <div class="{% cycle 'one_third' 'one_third' 'one_third_last'%}">
             <h2>{{ cat.name }}</h2>
-            <ul style="list-style:none;padding-left:10px;">
+            <ul style="list-style:none;padding-left:0px;">
                 {% for msg in cat.messages %}
                     <li>
                         <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>

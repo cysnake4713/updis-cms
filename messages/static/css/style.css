@@ -1834,3 +1834,109 @@ div.home-message-content {
 div.home-message-content #title {
     margin-top: 5px;
 }
+
+#search-area {
+    position: relative;
+    width: 350px;
+    height: 40px;
+    float: right;
+    display: block;
+    margin-right: 100px;
+}
+
+#search-area .mc_input{
+    -webkit-appearance: textfield;
+    -webkit-border-image: none;
+    -webkit-rtl-ordering: logical;
+    -webkit-user-select: text;
+    -webkit-writing-mode: horizontal-tb;
+    background-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-style: inset;
+    border-bottom-width: 2px;
+    border-left-color: rgb(238, 238, 238);
+    border-left-style: inset;
+    border-left-width: 2px;
+    border-right-color: rgb(238, 238, 238);
+    border-right-style: inset;
+    border-right-width: 2px;
+    border-top-color: rgb(238, 238, 238);
+    border-top-style: inset;
+    border-top-width: 2px;
+    color: rgb(34, 34, 34);
+    cursor: auto;
+    display: inline-block;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 14px;
+    letter-spacing: normal;
+    line-height: normal;
+    margin: 2px 0 0 2px;
+    padding: 5px;
+    text-align: start;
+    text-indent: 0px;
+    text-shadow: none;
+    text-transform: none;
+    vertical-align: middle;
+    width: 201px;
+    word-spacing: 0px;
+    writing-mode: lr-tb;
+}
+
+.main-holder {
+    width: 980px;
+    padding-top:20px !important;
+
+}
+
+#main .main-area {padding-top:60px !important;}
+
+.post_title {margin-top: 5px !important;}
+
+.blog_wrap {
+    margin-bottom: 40px;
+}
+
+div.bizmail_column {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+div.bizmail_SubmitArea {
+    display: inline-block;
+}
+
+a, input {
+    margin-left: 10px;
+}
+
+div.bizmail_inputArea {
+    display: inline-block;
+}
+
+input.text {
+    width: 80px;
+    background-color: lightgrey;
+}
+
+div.bizmail_LoginBox form {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+div.bizmail_LoginBox h3 {
+    display: none;
+
+}
+.mail-login {
+    display: block;
+    vertical-align: middle;
+    margin-left: 120px;
+}
+
+#news {
+    overflow:hidden;
+}

@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.cache import cache_page
 from sekizai.context import SekizaiContext
-from messages.forms import CommentForm, LoginForm
+from messages.forms import CommentForm, LoginForm, SearchForm
 from openerplib import AuthenticationError
 
 
@@ -101,6 +101,27 @@ def by_category(req, category_id):
         #    messages = message_obj.search_read([],['name','category_message_title_meta_display'],limit=10)
     return render_to_response("messages/by_category.html", {'category': message_category, 'messages': messages},
                               context_instance=RequestContext(req))
+
+
+def search(request, search_context):
+    erpsession = request.erpsession
+    # message_message_obj = erpsession.get_model("message.message")
+    per_page = int(request.GET.get('per_page', 8))
+    paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context.replace(' ', '%'))],
+                                      ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
+                                       'write_date', 'category_id', 'is_display_name']), per_page)
+    page = request.GET.get('page')
+
+    try:
+        messages = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        messages = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        messages = paginator.page(paginator.num_pages)
+    return render_to_response("messages/search_result.html", {'messages': messages, 'search_context': search_context},
+                              context_instance=RequestContext(request))
 
 
 def login(request):
