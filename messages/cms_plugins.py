@@ -13,7 +13,7 @@ def _get_last_image(messages):
         content = message['content']
         if content:
             #TODO:regx still got problem
-            match = re.compile(r'.*?<[img|IMG].*?[src|SRC]="(.*?)".*?').match(content.replace('\n',' '))
+            match = re.compile(r'.*?<[img|IMG].*?[src|SRC]="(.*?)".*?').match(content.replace('\n', ' '))
             if match:
                 return match.group(1), message
     return None
@@ -112,11 +112,11 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
         else:
             message_categories = get_messages_categories_with_image('content_left', context.get('request'))
             cache.set('left_category_cache', message_categories, 60 * 10)
-        # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
+            # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
         context.update({
             'object': instance,
             'placeholder': placeholder,
-            'message_categories': message_categories
+            'message_categories': message_categories,
         })
         return context
 
@@ -134,11 +134,12 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
         else:
             message_categories = get_messages_categories_with_image('content_right', context.get('request'))
             cache.set('right_category_cache', message_categories, 60 * 10)
-        # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
+            # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
+
         context.update({
             'object': instance,
             'placeholder': placeholder,
-            'message_categories': message_categories
+            'message_categories': message_categories,
         })
         return context
 
@@ -151,7 +152,7 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
         if cache.get('department_message_category_cache'):
-            department_message_categories =  cache.get('department_message_category_cache')
+            department_message_categories = cache.get('department_message_category_cache')
         else:
             department_message_categories = get_department_message_categories(context.get('request'))
             cache.set('department_message_category_cache', department_message_categories, 60 * 60)

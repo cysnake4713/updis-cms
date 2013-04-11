@@ -48,6 +48,60 @@ def load_menu(context):
     return menu_items_map
 
 
+def _get_message_publish_url(context):
+    request = context['request']
+
+    ir_data_obj = request.session.get('erpsession').get_model("ir.model.data")
+    ids = {}
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_notice')],
+                                     ['res_id'], limit=1)
+    ids['notice'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_food')],
+                                     ['res_id'], limit=1)
+    ids['food'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_service')],
+                                     ['res_id'], limit=1)
+    ids['service'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_chat')],
+                                     ['res_id'], limit=1)
+    ids['chat'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_life')],
+                                     ['res_id'], limit=1)
+    ids['life'] = notice[0]['res_id']
+    cache.set('message_publish_url', ids, 60 * 3600)
+    return ids
+
+
+@register.simple_tag(name='message_publish_url', takes_context=True)
+def message_publish_url(context, name):
+    if cache.get('message_publish_url'):
+        url = cache.get('message_publish_url')
+    else:
+        url = _get_message_publish_url(context)
+        cache.set('message_publish_url', url, 60 * 3600)
+    text = u'''<a class="publish-message" target="_blank" href="http://%s/#view_type=form&model=message.message&menu_id=277&action=%s">\u53d1\u5e03</a>'''
+    from  upcms import settings
+
+    if settings.ERP_PORT == 80:
+        host = settings.ERP_HOST
+    else:
+        host = settings.ERP_HOST + ':' + str(settings.ERP_PORT)
+
+        # name = unicode(name, 'ascii')
+
+        if name == u'\u7545\u6240\u6b32\u8a00':
+            return text % (host, url['chat'])
+    if name == u'\u901a\u77e5':
+        return text % (host, url['notice'])
+    if name == u'\u4e1a\u4f59\u751f\u6d3b':
+        return text % (host, url['life'])
+    if name == u'\u670d\u52a1\u7533\u62a5':
+        return text % (host, url['service'])
+    if name == u'\u9910\u8bba':
+        return text % (host, url['food'])
+    return ''
+
+
 @stringfilter
 def truncatehanzi(value, arg):
     """

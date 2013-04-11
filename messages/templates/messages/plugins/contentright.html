@@ -28,6 +28,8 @@
                         </div>
                     {% endif %}
 
+                    {% message_publish_url name=cat.name %}
+
                     {% for msg in cat.messages %}
                         <p style="padding: 0">
                             <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
