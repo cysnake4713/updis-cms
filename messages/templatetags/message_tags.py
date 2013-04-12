@@ -71,6 +71,9 @@ def _get_message_publish_url(context):
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_share')],
                                      ['res_id'], limit=1)
     ids['share'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_news')],
+                                     ['res_id'], limit=1)
+    ids['news'] = notice[0]['res_id']
     cache.set('message_publish_url', ids, 60 * 3600)
     return ids
 
@@ -103,7 +106,9 @@ def message_publish_url(context, name):
     if name == u'\u9910\u8bba':
         return text % (host, url['food'])
     if name == u'\u5171\u4eab\u8d44\u6e90':
-        return text % (host, url['food'])
+        return text % (host, url['share'])
+    if name == u'\u5404\u6240\u5feb\u8baf':
+        return text % (host, url['news'])
     return ''
 
 
