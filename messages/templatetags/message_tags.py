@@ -68,6 +68,12 @@ def _get_message_publish_url(context):
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_life')],
                                      ['res_id'], limit=1)
     ids['life'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_share')],
+                                     ['res_id'], limit=1)
+    ids['share'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_news')],
+                                     ['res_id'], limit=1)
+    ids['news'] = notice[0]['res_id']
     cache.set('message_publish_url', ids, 60 * 3600)
     return ids
 
@@ -89,8 +95,8 @@ def message_publish_url(context, name):
 
         # name = unicode(name, 'ascii')
 
-        if name == u'\u7545\u6240\u6b32\u8a00':
-            return text % (host, url['chat'])
+    if name == u'\u7545\u6240\u6b32\u8a00':
+        return text % (host, url['chat'])
     if name == u'\u901a\u77e5':
         return text % (host, url['notice'])
     if name == u'\u4e1a\u4f59\u751f\u6d3b':
@@ -99,6 +105,10 @@ def message_publish_url(context, name):
         return text % (host, url['service'])
     if name == u'\u9910\u8bba':
         return text % (host, url['food'])
+    if name == u'\u5171\u4eab\u8d44\u6e90':
+        return text % (host, url['share'])
+    if name == u'\u5404\u6240\u5feb\u8baf':
+        return text % (host, url['news'])
     return ''
 
 

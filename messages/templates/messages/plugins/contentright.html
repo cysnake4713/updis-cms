@@ -28,6 +28,7 @@
                         </div>
                     {% endif %}
 
+                    <a class="message_more" href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
                     {% message_publish_url name=cat.name %}
 
                     {% for msg in cat.messages %}
@@ -35,7 +36,6 @@
                             <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                         </p>
                     {% endfor %}
-                    <a href="{% url category_messages category_id=cat.id %}"><span><h4 style="padding: 0;color: #5A7C87;margin-left: 10px;">更多..</h4></span></a>
                 </div>
             </li>
         {% endfor %}

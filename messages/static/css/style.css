@@ -96,7 +96,7 @@ Stylesheet Guide
 
 * {font-size: 100%;}
 html {font-size: 62.5%;margin:0;padding:0;}
-body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
+body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
 
 
 
@@ -1799,6 +1799,14 @@ border-radius: 5px;
 
 
 
+#menu-main-nav {
+    font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
+}
+
+.footer-holder {
+    font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
+}
+
 a.oe_menu_leaf {
     margin: 0;
 }
@@ -1835,13 +1843,19 @@ div.home-message-content #title {
     margin-top: 5px;
 }
 
+.search-holder {
+    width: 980px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #search-area {
     position: relative;
     width: 350px;
     height: 40px;
     float: right;
     display: block;
-    margin-right: 100px;
 }
 
 #search-area .mc_input{
@@ -1850,7 +1864,7 @@ div.home-message-content #title {
     -webkit-rtl-ordering: logical;
     -webkit-user-select: text;
     -webkit-writing-mode: horizontal-tb;
-    background-color: rgb(255, 255, 255);
+    background-color: #f4f4f2;
     border-bottom-color: rgb(238, 238, 238);
     border-bottom-style: inset;
     border-bottom-width: 2px;
@@ -1941,12 +1955,36 @@ div.bizmail_LoginBox h3 {
     overflow:hidden;
 }
 
+#news li {
+    margin-top: 5px;
+}
+
+.post-cats {
+    margin-top: 16px;
+}
+
+#news a {
+    margin-left: 0px !important;
+}
+
 .publish-message {
     float: right;
-    margin-right: 30px;
-    font-size: 13px;
+    margin-right: 5px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.message_more {
+    float: right;
+    /*margin-right: 30px;*/
 }
 
 #news a.publish-message {
     display: inline-block;
+    /*font-size: 12px;*/
+}
+
+.tab_con {
+    background-color: #f7f7f7 !important;
+    min-height: 250px !important;
 }

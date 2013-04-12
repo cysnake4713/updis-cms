@@ -79,7 +79,8 @@
         </div>
     </div>
     <div id="main">
-        <div id="search-area">
+        <div class="search-holder">
+            <div id="search-area">
             <span class="text">
              <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context" value="搜索主题"
                     onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
@@ -87,6 +88,7 @@
                 <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
                    style="opacity: 1;"><span>搜索</span></a>
             </span>
+            </div>
         </div>
         <div class="main-area">
             {% block tools %}
