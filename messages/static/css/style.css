@@ -1856,7 +1856,7 @@ div.home-message-content #title {
     -webkit-rtl-ordering: logical;
     -webkit-user-select: text;
     -webkit-writing-mode: horizontal-tb;
-    background-color: rgb(255, 255, 255);
+    background-color: #f4f4f2;
     border-bottom-color: rgb(238, 238, 238);
     border-bottom-style: inset;
     border-bottom-width: 2px;
@@ -1961,4 +1961,8 @@ div.bizmail_LoginBox h3 {
 
 #news a.publish-message {
     display: inline-block;
+}
+
+.tab_con {
+    background-color: #f7f7f7 !important;
 }
