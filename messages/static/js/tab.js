@@ -13,9 +13,9 @@ $(document).ready(function() {
 	
 	};
 	/*调用方法如下：*/
-    $.jqtab("#tabs","#tab_conbox","click");
-    $.jqtab("#tabs2","#tab_conbox2","click");
-    $.jqtab("#tabs3","#tab_conbox3","click");
+    $.jqtab("#tabs","#tab_conbox","mouseover");
+    $.jqtab("#tabs2","#tab_conbox2","mouseover");
+    $.jqtab("#tabs3","#tab_conbox3","mouseover");
 
     $(".tabs-container .arrow").click(function(e){
         e.preventDefault();
@@ -24,7 +24,7 @@ $(document).ready(function() {
         if (pos>0) {
             pos=0;
         }
-        content.animate({ left: pos }, 1000);
+        content.animate({ left: pos }, 350);
     });
     $(".tabs-container .arrow_r").click(function(ev){
         ev.preventDefault();
@@ -35,8 +35,8 @@ $(document).ready(function() {
         var pos = content.position().left - 500;
 
         if (width + pos < tab_window_width) {
-            pos = -width + tab_window_width - 200;
+            pos = -width + tab_window_width - 100;
         }
-        content.animate({ left: pos }, 1000);
+        content.animate({ left: pos }, 350);
     });
 });
