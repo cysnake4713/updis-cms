@@ -1965,4 +1965,5 @@ div.bizmail_LoginBox h3 {
 
 .tab_con {
     background-color: #f7f7f7 !important;
+    min-height: 250px !important;
 }
