@@ -29,7 +29,7 @@
                         </div>
                     {% endif %}
 
-                    <a class="message_more" href="{% url category_messages category_id=cat.id %}"><span>更多..</span></a>
+                    <a class="message_more" href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
                     {% message_publish_url name=cat.name %}
 
                     {% for msg in cat.messages %}
