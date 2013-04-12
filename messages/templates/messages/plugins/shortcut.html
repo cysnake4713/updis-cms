@@ -3,7 +3,9 @@
 <div id="news" style="margin-top:-15px;padding-top: 15px">
     {% for cat in message_categories %}
         <div class="{% cycle 'one_third' 'one_third' 'one_third_last'%}">
-            <h2 style="display: inline-block">{{ cat.name }}</h2>{% message_publish_url name=cat.name %}
+            <h2 style="display: inline-block">{{ cat.name }}</h2>
+            <a class="message_more" href="{% url category_messages category_id=cat.id %}"><span>更多..</span></a>
+            {% message_publish_url name=cat.name %}
             <ul style="list-style:none;padding-left:0px;">
                 {% for msg in cat.messages %}
                     <li>
@@ -11,7 +13,6 @@
                     </li>
                 {% endfor %}
             </ul>
-            <p><a class="" href="{% url category_messages category_id=cat.id %}"><span><h4>更多..</h4></span></a></p>
         </div>
     {% endfor %}
 </div>

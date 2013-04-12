@@ -1835,13 +1835,19 @@ div.home-message-content #title {
     margin-top: 5px;
 }
 
+.search-holder {
+    width: 980px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #search-area {
     position: relative;
     width: 350px;
     height: 40px;
     float: right;
     display: block;
-    margin-right: 100px;
 }
 
 #search-area .mc_input{
@@ -1942,6 +1948,12 @@ div.bizmail_LoginBox h3 {
 }
 
 .publish-message {
+    float: right;
+    margin-right: 5px;
+    font-size: 13px;
+}
+
+.message_more {
     float: right;
     margin-right: 30px;
     font-size: 13px;
