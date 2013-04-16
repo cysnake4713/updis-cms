@@ -163,8 +163,17 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
         })
         return context
 
+class Android2DImagePlugin(CMSPluginBase):
+    name = _("Android 2D Image plugin")
+    render_template = "messages/plugins/phone2d.html"
+    admin_preview = False
+
+    def render(self, context, instance, placeholder):
+        return context
+
 
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentLeftMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentRightMessageCategoriesPlugin)
 plugin_pool.register_plugin(DepartmentMessageCategoriesPlugin)
+plugin_pool.register_plugin(Android2DImagePlugin)

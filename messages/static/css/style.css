@@ -1852,7 +1852,7 @@ div.home-message-content #title {
 
 #search-area {
     position: relative;
-    width: 350px;
+    width: 550px;
     height: 40px;
     float: right;
     display: block;
@@ -1895,7 +1895,7 @@ div.home-message-content #title {
     text-shadow: none;
     text-transform: none;
     vertical-align: middle;
-    width: 201px;
+    width: 400px;
     word-spacing: 0px;
     writing-mode: lr-tb;
 }
@@ -1987,4 +1987,34 @@ div.bizmail_LoginBox h3 {
 .tab_con {
     background-color: #f7f7f7 !important;
     min-height: 250px !important;
+}
+
+#phone2d {
+    float: left;
+    position: relative;
+    padding: 20px;
+    /*border-width: 1px;*/
+    /*border-color: #40585f;*/
+    /*border-style: solid;*/
+}
+
+#phone2d .phone_text {
+    float: right;
+    display: block;
+    margin-left: 5px;
+    position: relative;
+}
+#phone2d span {
+    float: left;
+    position: relative;
+    display: inline-block;
+}
+#phone2d img {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+#phone2d a {
+    color: #FF6600;
 }
