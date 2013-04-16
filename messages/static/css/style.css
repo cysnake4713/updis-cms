@@ -2002,7 +2002,11 @@ div.bizmail_LoginBox h3 {
     float: right;
     display: block;
     margin-left: 5px;
+    width: 240px;
     position: relative;
+}
+#phone2d h4 {
+    margin-left: 30px;
 }
 #phone2d span {
     float: left;
