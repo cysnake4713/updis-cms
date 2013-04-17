@@ -30,6 +30,9 @@
             <a style="background: none;" href="?page={{ messages.next_page_number }}">下一页</a>
         {% endif %}
         <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
+        <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
+        跳转到<input id="jump_to_page_top">页
+        <button id="jump_to_top">go</button>
     </div>
     {% for msg in messages %}
         <div class="blog_wrap">
@@ -99,6 +102,34 @@
             <a style="background: none;" href="?page={{ messages.next_page_number }}">下一页</a>
         {% endif %}
         <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
-        跳转到<input width="10px">页<button>go</button>
+        跳转到<input id="jump_to_page_bottom">页
+        <button id="jump_to_bottom">go</button>
     </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $(function () {
+            $('#jump_to_bottom').bind("click", function (event) {
+                var reg = new RegExp("^[0-9]+$");
+                event.preventDefault();
+                var pageNum = $("#jump_to_page_bottom")[0].value;
+                if (reg.test(pageNum)) {
+                    window.location.href = '?page=' + encodeURIComponent(pageNum)
+                } else {
+                    alert("请输入数字！")
+                }
+            })
+            $('#jump_to_top').bind("click", function (event) {
+                var reg = new RegExp("^[0-9]+$");
+                event.preventDefault();
+                var pageNum = $("#jump_to_page_top")[0].value;
+                if (reg.test(pageNum)) {
+                    window.location.href = '?page=' + encodeURIComponent(pageNum)
+                } else {
+                    alert("请输入数字！")
+                }
+            })
+        })
+    </script>
 {% endblock %}

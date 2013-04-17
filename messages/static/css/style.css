@@ -2043,6 +2043,9 @@ div.bizmail_LoginBox h3 {
 .karma-pages input {
     width: 29px;
 }
+.karma-pages-top input {
+    width: 29px;
+}
 
 .karma-pages-top {
     margin-bottom: 40px;
