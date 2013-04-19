@@ -17,10 +17,13 @@
                     {% if cat.top_message %}
                         <div class="home-message-top">
                             <div class="home-message-image">
-                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}" />
+                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}"/>
                             </div>
                             <div class="home-message-content">
-                                <h2 id="title"><a href="{% url messages_detail message_id=cat.top_message.1.id %}">{{ cat.top_message.1.name|striptags|truncatehanzi:'16'|safe }}</a></h2>
+                                <h2 id="title">
+                                    <a target="_blank"
+                                       href="{% url messages_detail message_id=cat.top_message.1.id %}">{{ cat.top_message.1.name|striptags|truncatehanzi:'16'|safe }}</a>
+                                </h2>
                                 {% if  cat.top_message.1.content|striptags|truncatehanzi:'16'|safe %}
                                     <p class="top-message">{{ cat.top_message.1.content|striptags|truncatehanzi:'20'|safe }}</p>
                                 {% endif %}
@@ -33,7 +36,8 @@
 
                     {% for msg in cat.messages %}
                         <p style="padding: 0">
-                            <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                            <a target="_blank" class="page-item"
+                               href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                         </p>
                     {% endfor %}
                 </div>

@@ -1049,7 +1049,7 @@ p strong {color: #555;}
 .post_date .day {font-weight: bold;color:#FFF;font-size:30px;margin:12px 0 0 0;display: block;text-align: center;}
 .post_date .month {color:#A2A3A4;font-size:16px;text-transform:uppercase;display: block;margin:-14px 0 0 0;text-align: center;}
 .post_comments {width:36px;height:32px;position:absolute;top: 71px;right: 48px;}
-.post_comments span {display: block;color:#FFF;font-size:13px;font-weight: bold;margin: 5px 1px 0 0;text-align:right;}
+.post_comments span {display: block;color:#FFF;font-size:13px;font-weight: bold;margin: -12px 3px 0 0;text-align:right;}
 .sharelink_small {width:65px;height:30px;position:absolute;top: 115px;right: 18px;text-indent:-9999em;outline:none;display:block;background: url(../img/_global/global-sprite.png) 0 0 no-repeat;}
 .sharelink_big {width:92px;height:30px;text-indent:-9999em;outline:none;display:block;background: url(../img/_global/global-sprite.png) -66px 0 no-repeat;}
 .shareme {float: left;padding:0 0 30px 0;}
@@ -1852,7 +1852,7 @@ div.home-message-content #title {
 
 #search-area {
     position: relative;
-    width: 350px;
+    width: 550px;
     height: 40px;
     float: right;
     display: block;
@@ -1895,7 +1895,7 @@ div.home-message-content #title {
     text-shadow: none;
     text-transform: none;
     vertical-align: middle;
-    width: 201px;
+    width: 400px;
     word-spacing: 0px;
     writing-mode: lr-tb;
 }
@@ -1931,9 +1931,22 @@ div.bizmail_inputArea {
     display: inline-block;
 }
 
+div.bizmail_SubmitArea input {
+    width: 40px !important;
+    background-color: #909090;
+    border: 0px;
+
+
+}
+
 input.text {
     width: 80px;
-    background-color: lightgrey;
+    background-color: #19292e;
+    color: #ffffff;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: dimgrey;
+
 }
 
 div.bizmail_LoginBox form {
@@ -1946,9 +1959,9 @@ div.bizmail_LoginBox h3 {
 
 }
 .mail-login {
-    display: block;
-    vertical-align: middle;
-    margin-left: 120px;
+    display: inline-block;
+    /*vertical-align: middle;*/
+    /*margin-left: 120px;*/
 }
 
 #news {
@@ -1987,4 +2000,61 @@ div.bizmail_LoginBox h3 {
 .tab_con {
     background-color: #f7f7f7 !important;
     min-height: 250px !important;
+}
+
+#phone2d {
+    float: left;
+    position: relative;
+    padding: 20px;
+    /*border-width: 1px;*/
+    /*border-color: #40585f;*/
+    /*border-style: solid;*/
+}
+
+#phone2d .phone_text {
+    float: right;
+    display: block;
+    margin-left: 5px;
+    width: 240px;
+    position: relative;
+}
+#phone2d h4 {
+    margin-left: 30px;
+}
+#phone2d span {
+    float: left;
+    position: relative;
+    display: inline-block;
+}
+#phone2d img {
+    position: relative;
+    display: inline-block;
+    float: left;
+}
+
+#phone2d a {
+    color: #FF6600;
+}
+
+.karma-pages a {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+.karma-pages input {
+    width: 29px;
+}
+.karma-pages-top input {
+    width: 29px;
+}
+
+.karma-pages-top {
+    margin-bottom: 40px;
+}
+
+.karma-pages-top a {
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #666 !important;
+    outline-style: none !important;
+    text-decoration: none!important;
 }
