@@ -43,11 +43,11 @@
 
                 <p class="posted-by-text">
                     <span>发布者</span>
-                    {% if msg.is_display_name %}
-                        &nbsp;&nbsp;{{ msg.write_uid|last }}
-                    {% else %}
-                        &nbsp;&nbsp;匿名用户
-                    {% endif %}
+{#                    {% if msg.is_display_name %}#}
+                        &nbsp;&nbsp;{{ msg.name_for_display|safe }}
+{#                    {% else %}#}
+{#                        &nbsp;&nbsp;匿名用户#}
+{#                    {% endif %}#}
                 </p>
             </div>
             <div class="post_content">
