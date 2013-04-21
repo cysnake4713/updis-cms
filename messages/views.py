@@ -5,10 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.decorators.cache import cache_page
-from sekizai.context import SekizaiContext
-from messages.forms import CommentForm, LoginForm, SearchForm
-from openerplib import AuthenticationError
+from messages.forms import CommentForm, LoginForm
 
 
 class MessageList(object):
@@ -35,8 +32,9 @@ def detail(req, message_id):
 
     messages = message_obj.search_read([('id', '=', message_id)],
                                        ['name', 'message_meta_display', 'content', 'message_ids',
-                                        'category_id', 'message_summary'])
+                                        'category_id', 'message_summary', 'read_times'])
     message = messages[0]
+    message_obj.write([message_id], {'read_times': message['read_times'] + 1})
     comments = comment_obj.read(message['message_ids'], ['body', 'date', 'subject', 'author_id', 'is_anonymous'])
     # for comment in comments:
     #     comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
