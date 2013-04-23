@@ -120,8 +120,9 @@
                                     <ul>
                                         {% for cv in v.children %}
                                             <li><a target="_blank"
-                                                    {% if cv.action %} class="oe_menu_leaf"
-                                                   href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
+                                                    {% if cv.action %}
+                                                   href="{{ cv.action.url }}"
+                                                   {% else%}class="oe_menu_leaf"{% endif %}>{{ cv.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
