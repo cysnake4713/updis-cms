@@ -1923,7 +1923,7 @@ div.bizmail_SubmitArea {
     display: inline-block;
 }
 
-a, input {
+a.oe_menu_leaf, input {
     margin-left: 10px;
 }
 
