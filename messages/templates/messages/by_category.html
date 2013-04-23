@@ -70,9 +70,9 @@
                 </a>
 
                 <div class="post_date">
-                    <span class="day">{{ msg.write_date|to_date|date:'d' }}</span>
+                    <span class="day">{{ msg.create_date|to_date|date:'d' }}</span>
                     <br>
-                    <span class="month">{{ msg.write_date|to_date|date:'M' }}</span>
+                    <span class="month">{{ msg.create_date|to_date|date:'M' }}</span>
                 </div>
                 <div class="post_comments">
                     <a href="{% url messages_detail message_id=msg.id %}#post-comments">
