@@ -223,6 +223,8 @@ class Connection(object):
         """
         self.database, self.login, self.password = database, login, password
 
+        if user_id:
+            user_id = int(user_id)
         self.user_id = user_id
         
     def check_login(self, force=True):
