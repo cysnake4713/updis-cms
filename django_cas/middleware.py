@@ -9,7 +9,7 @@ from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
 
 from django_cas.views import login as cas_login, logout as cas_logout, _login_url, _redirect_url, _service_url
-from messages.middleware import get_erpsession
+from messages.middleware import get_user_erpsession
 
 __all__ = ['CASMiddleware']
 
@@ -34,8 +34,8 @@ class CASMiddleware(object):
                 pass
             else:
                 request.session['cas']=None
-                request.erpsession =  get_erpsession(request)
-                request.session['erpsession']=request.erpsession
+                request.usererpsession =  get_user_erpsession(request)
+                request.session['usererpsession']=request.usererpsession
                 auth.logout(request)
 
         else:

@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
         self.request = kwargs.pop('request', None)
         super(LoginForm,self).__init__(*args,**kwargs)
     def clean(self):
-        erpsession = self.request.erpsession
+        erpsession = self.request.usererpsession
         old_login = erpsession.login
         old_password = erpsession.password
         try:

@@ -173,7 +173,7 @@ class CASBackend(object):
         username, attributes = _verify(ticket, service)
         if attributes:
             request.session['attributes'] = attributes
-            request.erpsession.set_login_info(attributes['db'],attributes['username'],attributes['password'],int(attributes['id']))
+            request.usererpsession.set_login_info(attributes['db'],attributes['username'],attributes['password'],int(attributes['id']))
         if not username:
             return None
         try:
