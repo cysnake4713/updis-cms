@@ -13,6 +13,7 @@ from messages.middleware import get_user_erpsession
 
 __all__ = ['CASMiddleware']
 
+
 class CASMiddleware(object):
     """Middleware that allows CAS authentication on admin pages"""
 
@@ -24,23 +25,25 @@ class CASMiddleware(object):
                  "setting to insert 'django.contrib.auth.middleware."
                  "AuthenticationMiddleware'.")
         assert hasattr(request, 'user'), error
-        if request.path.startswith("/accounts"):
-            return
-        cas_ctx = request.session.get("cas",None)
-        if cas_ctx:
-            from django.contrib import auth
-            user = auth.authenticate(ticket=cas_ctx['ticket'], service=cas_ctx['service'], request=request)
-            if user is not None:
-                pass
-            else:
-                request.session['cas']=None
-                request.usererpsession =  get_user_erpsession(request)
-                request.session['usererpsession']=request.usererpsession
-                auth.logout(request)
+        # if request.path.startswith("/accounts"):
+        #     return None
 
-        else:
-            next_page = _redirect_url(request)
-            return HttpResponseRedirect(_login_url(_service_url(request, next_page)))
+        # cas_ctx = request.session.get("cas", None)
+        # if cas_ctx:
+        #     from django.contrib import auth
+        #
+        #     user = auth.authenticate(ticket=cas_ctx['ticket'], service=cas_ctx['service'], request=request)
+        #     if user is not None:
+        #         pass
+        #     else:
+        #         request.session['cas'] = None
+        #         request.usererpsession = get_user_erpsession(request)
+        #         request.session['usererpsession'] = request.usererpsession
+        #         auth.logout(request)
+        #
+        # elif request.path.startswith("/accounts"):
+        #     next_page = _redirect_url(request)
+        #     return HttpResponseRedirect(_login_url(_service_url(request, next_page)))
 
 
     def process_view(self, request, view_func, view_args, view_kwargs):
