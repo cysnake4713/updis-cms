@@ -23,6 +23,7 @@ def get_user_erpsession(request):
         conn = get_connection(settings.ERP_HOST, port=settings.ERP_PORT, database=attributes['db'],
                               login=attributes['username'], password=attributes['password'])
     else:
+        #TODO
         conn = get_connection(settings.ERP_HOST, port=settings.ERP_PORT, database=settings.ERP_DATABASE,
                               login=settings.ERP_LOGIN, password=settings.ERP_PASSWORD)
     session['usererpsession'] = conn
@@ -34,5 +35,5 @@ class ERPSessionMiddleware(object):
         assert hasattr(request,
                        'session'), "The Django authentication middleware requires session middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."
         # request.erpsession = SimpleLazyObject(lambda: get_erpsession(request))
-        request.erpsession = get_erpsession(request)
-        request.usererpsession = get_user_erpsession(request)
+        request.erpsession = SimpleLazyObject(lambda: get_erpsession(request))
+        request.usererpsession = SimpleLazyObject(lambda: get_user_erpsession(request))
