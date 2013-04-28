@@ -1,10 +1,10 @@
 __author__ = 'Zhou Guangwen'
 
-import settings
+from settings import *
 
-settings.ERP_HOST = "10.100.100.14"
-settings.DEBUG = TEMPLATE_DEBUG = False
-settings.CAS_SERVER_URL = "http://sso.updis.cn:81/cas/"
+ERP_HOST = "10.100.100.14"
+DEBUG = TEMPLATE_DEBUG = False
+CAS_SERVER_URL = "http://sso.updis.cn:81/cas/"
 
 CACHES = {
     'default': {
