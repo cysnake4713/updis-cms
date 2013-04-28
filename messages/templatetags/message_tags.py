@@ -51,7 +51,7 @@ def load_menu(context):
 def _get_message_publish_url(context):
     request = context['request']
 
-    ir_data_obj = request.session.get('erpsession').get_model("ir.model.data")
+    ir_data_obj = request.erpsession.get_model("ir.model.data")
     ids = {}
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_notice')],
                                      ['res_id'], limit=1)

@@ -20,9 +20,9 @@ def _get_last_image(messages):
 
 
 def get_messages_categories(position, request):
-    erpsession = request.session.get('erpsession')
+    erpsession = request.erpsession
     message_category_obj = erpsession.get_model("message.category")
-    message_obj = request.session.get('erpsession').get_model("message.message")
+    message_obj = erpsession.get_model("message.message")
     message_categories = message_category_obj.search_read([('display_position', '=', position)],
                                                           ['name', 'default_message_count', 'sequence'],
                                                           order='sequence')
@@ -36,7 +36,7 @@ def get_messages_categories(position, request):
 
 
 def get_messages_categories_with_image(position, request):
-    erpsession = request.session.get('erpsession')
+    erpsession = request.erpsession
     message_category_obj = erpsession.get_model("message.category")
     message_obj = request.session.get('erpsession').get_model("message.message")
     message_categories = message_category_obj.search_read([('display_position', '=', position)],
@@ -62,9 +62,9 @@ def get_messages_categories_with_image(position, request):
 
 
 def get_department_message_categories(request):
-    message_category_obj = request.session.get('erpsession').get_model("message.category")
-    hr_department_obj = request.session.get('erpsession').get_model("hr.department")
-    message_obj = request.session.get('erpsession').get_model("message.message")
+    message_category_obj = request.erpsession.get_model("message.category")
+    hr_department_obj = request.erpsession.get_model("hr.department")
+    message_obj = request.erpsession.get_model("message.message")
 
     departments = hr_department_obj.search_read(
         [('display_in_front', '=', True), ('deleted', '=', False), ('is_in_use', '=', True)],
