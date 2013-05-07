@@ -1,5 +1,6 @@
 {% load cms_tags sekizai_tags menu_tags placeholder_tags message_tags %}
 {% load_menu as menus %}
+{% get_erp_address as erp_address %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
                 <div class="oe_topbar sub-nav2" style="background-image:none;background-color:#000;width:auto;">
                     <ul>
-                        <li><a id="link_home" href="#">管理系统</a></li>
+                        <li><a id="link_home" href="{{ erp_address }}">管理系统</a></li>
                     </ul>
                     {% if request.user.is_authenticated %}
                         <strong>{{ request.user }}</strong>
@@ -59,7 +60,6 @@
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
                     <ul id="menu-main-nav">
-                        {#                        {{ menus.keys }}#}
                         {% for k, v in menus.items %}
                             {% if  v.parent_id.1 == 'Top menu' %}
                                 <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
@@ -123,7 +123,7 @@
                                             <li><a target="_blank"
                                                     {% if cv.action %}
                                                    href="{{ cv.action.url }}"
-                                                   {% else%}class="oe_menu_leaf"{% endif %}>{{ cv.name }}</a>
+                                                   {% else %}class="oe_menu_leaf"{% endif %}>{{ cv.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>

@@ -5,6 +5,7 @@ from openerplib import dates
 
 __author__ = 'Zhou Guangwen'
 from django import template
+from upcms import settings
 
 register = template.Library()
 
@@ -12,6 +13,12 @@ register = template.Library()
 @register.filter
 def to_date(value):
     return dates.str_to_datetime(value)
+
+
+@register.assignment_tag(takes_context=True)
+def get_erp_address(context):
+    path = "http://%s:%d" % (settings.ERP_HOST, settings.ERP_PORT)
+    return str(path)
 
 
 def _get_menu(context):
