@@ -12,3 +12,5 @@ CACHES = {
         'LOCATION': 'localhost:11211',
     }
 }
+
+from settings import *
