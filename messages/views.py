@@ -1,11 +1,13 @@
 # Create your views here.
 import base64
+import json
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from messages.forms import CommentForm, LoginForm
+import openerplib
 
 
 class MessageList(object):
@@ -74,7 +76,14 @@ def detail(req, message_id):
 
 # @cache_page(60 * 5)
 def index(req):
-    return render_to_response("messages/index.html", context_instance=RequestContext(req))
+    a = openerplib.login.test()
+    t = json.loads(a.read())
+    response = render_to_response("messages/index.html", context_instance=RequestContext(req))
+    response.set_cookie('instance0|session_id', '%%22%s%%22' % t['result']['session_id'])
+    p = a.info().getheader('Set-Cookie')
+    res = p.split(';')[0].split('=')
+    response.set_cookie(res[0], res[1])
+    return response
 
 
 def by_category(req, category_id):

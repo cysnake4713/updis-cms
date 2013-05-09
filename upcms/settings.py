@@ -101,7 +101,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'messages.middleware.ERPSessionMiddleware',
-    'django_cas.middleware.CASMiddleware',
+    # 'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -154,7 +154,7 @@ INSTALLED_APPS = (
     'cms.plugins.teaser',
     'cms.plugins.twitter',
     'tastypie',
-    'django_cas',
+    # 'django_cas',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -194,7 +194,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'cms.context_processors.media',
     'sekizai.context_processors.sekizai',
 )
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'django_cas.backends.CASBackend')
+# AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'django_cas.backends.CASBackend')
 
 LANGUAGES = [
     ('zh-CN', 'Chinese'),
@@ -205,4 +205,4 @@ ERP_PORT = 8069
 ERP_LOGIN = 'cmsreader'
 ERP_PASSWORD = 'cmsreader'
 ERP_DATABASE = 'develop'
-CAS_SERVER_URL="https://cysnake4713-lenovo:8443/cas/"
+# CAS_SERVER_URL="https://cysnake4713-lenovo:8443/cas/"
