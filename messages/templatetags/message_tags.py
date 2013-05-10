@@ -17,7 +17,7 @@ def to_date(value):
 
 @register.assignment_tag(takes_context=True)
 def get_erp_address(context):
-    path = "http://%s:%d" % (settings.ERP_HOST, settings.ERP_PORT)
+    path = settings.ERP_HOME
     return str(path)
 
 
