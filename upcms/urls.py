@@ -25,10 +25,9 @@ urlpatterns = patterns('',
 
                        # Uncomment the next line to enable the admin:
                        # url(r'^admin/', include(admin.site.urls)),
-                       url(r'accounts/login/$','django_cas.views.login',name="cas_login"),
-                       url(r'accounts/logout/$','django_cas.views.logout',name="cas_logout"),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^message/', include('messages.urls')),
+                       url(r'^account/', include('updisauth.urls')),
                        url(r'^api/', include(api_v1.urls)),
                        url(r'^', include('cms.urls')),
                        url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',

@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'updis_auth.middleware.ERPAuthMiddleWare',
+    'updisauth.middleware.ERPAuthMiddleWare',
     'messages.middleware.ERPSessionMiddleware',
     # 'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -137,7 +137,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'messages',
-
+    'updisauth',
     'cms',
     'mptt',
     'menus',
@@ -154,7 +154,7 @@ INSTALLED_APPS = (
     'cms.plugins.twitter',
     'tastypie',
     # 'django_cas',
-    'updis_auth',
+
 )
 
 # A sample logging configuration. The only tangible logging
@@ -206,3 +206,5 @@ ERP_LOGIN = 'cmsreader'
 ERP_PASSWORD = 'cmsreader'
 ERP_DATABASE = 'develop'
 # CAS_SERVER_URL="https://cysnake4713-lenovo:8443/cas/"
+
+ERP_DOMAIN = "localhost"

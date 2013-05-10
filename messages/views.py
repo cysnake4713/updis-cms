@@ -75,13 +75,7 @@ def detail(req, message_id):
 
 # @cache_page(60 * 5)
 def index(req):
-    a = updis_auth.authenticate.test()
-    t = json.loads(a.read())
     response = render_to_response("messages/index.html", context_instance=RequestContext(req))
-    response.set_cookie('instance0|session_id', '%%22%s%%22' % t['result']['session_id'],domain='.updis.cn')
-    p = a.info().getheader('Set-Cookie')
-    res = p.split(';')[0].split('=')
-    response.set_cookie(res[0], res[1],domain='.updis.cn')
     return response
 
 
@@ -130,18 +124,6 @@ def search(request, search_context):
         messages = paginator.page(paginator.num_pages)
     return render_to_response("messages/search_result.html", {'messages': messages, 'search_context': search_context},
                               context_instance=RequestContext(request))
-
-
-def login(request):
-    default_url = reverse('messages_index')
-    redirect_url = request.GET.get('redirect_url', default_url)
-    if request.method == 'POST':
-        form = LoginForm(request.POST, request=request)
-        if form.is_valid():
-            return HttpResponseRedirect(redirect_url)
-    else:
-        form = LoginForm(request=request)
-    return render_to_response("messages/login.html", {'form': form}, context_instance=RequestContext(request))
 
 
 def get_department_image(request, department_id):

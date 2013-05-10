@@ -5,6 +5,7 @@ import settings
 settings.ERP_HOST = "erp.updis.cn"
 settings.DEBUG = TEMPLATE_DEBUG = False
 settings.CAS_SERVER_URL = "http://sso.updis.cn/cas/"
+settings.ERP_DOMAIN = ".updis.cn"
 
 CACHES = {
     'default': {
