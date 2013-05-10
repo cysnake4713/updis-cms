@@ -8,7 +8,6 @@ import upcms.settings as settings
 HOST = 'http://%s:%d' % (settings.ERP_HOST, settings.ERP_PORT)
 
 
-
 def _send_json_info(url, data, request):
     json_request = urllib2.Request(url, json.dumps(data), {'Content-Type': 'application/json'})
     cookies = 'sid=%s; instance0|session_id=%s' % (
@@ -26,8 +25,8 @@ def _get_session_id(request):
     return session_id
 
 
-def _user_info(uid, username):
-    return {'uid': uid, 'username': username}
+def _user_info(uid, username, context):
+    return {'uid': uid, 'username': username, 'context': context}
 
 
 def login(request, username, password):
@@ -56,10 +55,21 @@ def get_session_info(request):
         json_response = json.loads(response.read())
         if json_response['result']:
             request.session['erp_user'] = _user_info(json_response['result']['uid'],
-                                                     json_response['result']['username'])
+                                                     json_response['result']['username'],
+                                                     json_response['result']['user_context'])
         else:
             request.session['erp_user'] = None
             # no session_id means not login.
     else:
         request.session['erp_user'] = None
 
+
+def logout(request):
+    session_id = _get_session_id(request)
+    if session_id:
+        logout_data = {'params': {'context': request.session['erp_user']['context'],
+                                  'session_id': session_id}, 'jsonrpc': '2.0', 'method': 'call',
+                       'id': 'r27'}
+        response = _send_json_info(HOST + '/web/session/destroy', logout_data, request)
+        json_response = json.loads(response.read())
+        print(json_response)

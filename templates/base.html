@@ -45,9 +45,9 @@
                     </ul>
                     {% if request.session.erp_user %}
                         <strong>{{ request.session.erp_user.username }}</strong>
-                        <a href="{% url login %}">登出</a>
+                        <a href="{% url erp_logout %}">登出</a>
                     {% else %}
-                        <strong><a href="{% url login %}">登录</a></strong>
+                        <strong><a href="{% url erp_login %}">登录</a></strong>
                     {% endif %}
                 </div>
                 <!-- end sub-nav2 -->
