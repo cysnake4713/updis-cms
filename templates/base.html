@@ -43,8 +43,8 @@
                     <ul>
                         <li><a id="link_home" href="{{ erp_address }}">管理系统</a></li>
                     </ul>
-                    {% if request.user.is_authenticated %}
-                        <strong>{{ request.user }}</strong>
+                    {% if request.session.erp_user %}
+                        <strong>{{ request.session.erp_user.username }}</strong>
                         <a href="{% url cas_logout %}">登出</a>
                     {% else %}
                         <strong><a href="{% url cas_login %}">登录</a></strong>

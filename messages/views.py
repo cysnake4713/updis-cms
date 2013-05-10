@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from messages.forms import CommentForm, LoginForm
-import openerplib
 
 
 class MessageList(object):
@@ -76,13 +75,13 @@ def detail(req, message_id):
 
 # @cache_page(60 * 5)
 def index(req):
-    a = openerplib.login.test()
+    a = updis_auth.authenticate.test()
     t = json.loads(a.read())
     response = render_to_response("messages/index.html", context_instance=RequestContext(req))
-    response.set_cookie('instance0|session_id', '%%22%s%%22' % t['result']['session_id'])
+    response.set_cookie('instance0|session_id', '%%22%s%%22' % t['result']['session_id'],domain='.updis.cn')
     p = a.info().getheader('Set-Cookie')
     res = p.split(';')[0].split('=')
-    response.set_cookie(res[0], res[1])
+    response.set_cookie(res[0], res[1],domain='.updis.cn')
     return response
 
 

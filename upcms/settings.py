@@ -93,13 +93,12 @@ TEMPLATE_LOADERS = (
     #     'django.template.loaders.eggs.Loader',
 )
 
-
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'updis_auth.middleware.ERPAuthMiddleWare',
     'messages.middleware.ERPSessionMiddleware',
     # 'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -155,6 +154,7 @@ INSTALLED_APPS = (
     'cms.plugins.twitter',
     'tastypie',
     # 'django_cas',
+    'updis_auth',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -200,7 +200,7 @@ LANGUAGES = [
     ('zh-CN', 'Chinese'),
 ]
 
-ERP_HOST = "127.0.0.1"
+ERP_HOST = "localhost"
 ERP_PORT = 8069
 ERP_LOGIN = 'cmsreader'
 ERP_PASSWORD = 'cmsreader'
