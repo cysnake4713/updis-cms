@@ -70,7 +70,7 @@
         <div class="comments-rss">
 
         </div>
-        {% if request.user.is_authenticated %}
+        {% if  request.session.erp_user %}
             <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
                 {% csrf_token %}
                 <p class="">
