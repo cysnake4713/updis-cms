@@ -25,6 +25,8 @@ def erp_logout(request):
 def erp_login(request):
     default_url = reverse('messages_index')
     redirect_url = request.GET.get('redirect_url', default_url)
+    #TODO: check session, if is login, redirect to redirect_url
+    #else do login
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
