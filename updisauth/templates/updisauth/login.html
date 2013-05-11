@@ -1,12 +1,63 @@
 <!DOCTYPE html>
-<html>
+{% load cms_tags sekizai_tags menu_tags placeholder_tags message_tags %}
+{% load_menu as menus %}
+{% get_erp_address as erp_address %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <title>UpdisERP</title>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% addtoblock "css" %}
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/login.css">
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+        <link rel="icon" type="image/gif" href="{{ STATIC_URL }}img/animated_favicon1.gif">
+    {% endaddtoblock %}
+    {% render_block "css" %}
 </head>
-<body>
-    <form action="" method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="登录"/>
-    </form>
+<body style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAKUlEQVQIHWO8e/fufwYsgAUkJigoiCIF5DMyoYggcUiXgNnBiGQKmAkARpcEQeriln4AAAAASUVORK5CYII=);">
+<div class="openerp openerp_webclient_container">
+    <table class="oe_webclient">
+        <tbody>
+        <tr>
+            <td class="oe_application">
+                <div>
+                    <div class="oe_login">
+                        <div class="oe_login_bottom"></div>
+                        <div class="oe_login_pane">
+                            <div class="oe_login_logo"><img src="/web/static/src/img/logo2.png"></div>
+                            <form action="" method="post">{% csrf_token %}
+                                <ul>
+                                    <li>
+                                        <div class="error_message"> {{ form.erperror}}</div>
+                                    </li>
+                                    <li>用户名&nbsp;&nbsp;&nbsp;
+                                        <div class="error_message">{{ form.login.errors }}</div>
+                                    </li>
+                                    <li>
+                                        {{ form.login }}
+                                    </li>
+
+                                    <li>密码&nbsp;&nbsp;&nbsp;
+                                        <div class="error_message"> {{ form.password.errors }}</div>
+                                    </li>
+                                    <li>
+                                        {{ form.password }}
+                                    </li>
+                                    <li>
+                                        <button name="submit" accesskey="l" tabindex="4" type="submit">登录</button>
+                                    </li>
+
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="oe_notification ui-notify" style=""></div>
+    <div class="oe_loading" style="display: none;">Loading</div>
+</div>
 </body>
 </html>

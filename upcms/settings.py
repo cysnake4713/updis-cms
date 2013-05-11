@@ -71,6 +71,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, '..', 'messages/static'),
+    os.path.join(PROJECT_PATH, '..', 'updisauth/static'),
 )
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'

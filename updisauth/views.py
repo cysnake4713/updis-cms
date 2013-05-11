@@ -44,6 +44,7 @@ def erp_login(request, redirect_url):
                     response.set_cookie('instance0|session_id', '%%22%s%%22' % result[1], domain=settings.ERP_DOMAIN)
                 return response
             else:
+                form.erperror = u'\u9519\u8bef\u7684\u7528\u6237\u540d\u6216\u5bc6\u7801'
                 return render_to_response("updisauth/login.html", {'form': form},
                                           context_instance=RequestContext(request))
     else:
