@@ -10,10 +10,8 @@ from messages.forms import LoginForm
 import authenticate as auth
 
 
-def erp_logout(request):
+def erp_logout(request, redirect_url):
     auth.logout(request)
-    default_url = reverse('messages_index')
-    redirect_url = request.GET.get('redirect_url', default_url)
     response = HttpResponseRedirect(redirect_url)
     if settings.ERP_DOMAIN == 'localhost':
         response.set_cookie('instance0|session_id', '%%22%s%%22' % "")
@@ -22,10 +20,12 @@ def erp_logout(request):
     return response
 
 
-def erp_login(request):
-    default_url = reverse('messages_index')
-    redirect_url = request.GET.get('redirect_url', default_url)
-    #TODO: check session, if is login, redirect to redirect_url
+def erp_login(request, redirect_url):
+
+    #check session, if is login, redirect to redirect_url
+    if request.session['erp_user'] is not None:
+        return HttpResponseRedirect(redirect_url)
+
     #else do login
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -36,8 +36,6 @@ def erp_login(request):
             result = auth.login(request, username, password)
             if result:
                 response = HttpResponseRedirect(redirect_url)
-                # response = render_to_response("updisauth/login.html", {'form': form},
-                #                               context_instance=RequestContext(request))
                 if settings.ERP_DOMAIN == 'localhost':
                     response.set_cookie('sid', result[0])
                     response.set_cookie('instance0|session_id', '%%22%s%%22' % result[1])

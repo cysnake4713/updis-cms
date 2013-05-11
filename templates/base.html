@@ -41,13 +41,14 @@
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
                 <div class="oe_topbar sub-nav2" style="background-image:none;background-color:#000;width:auto;">
                     <ul>
-                        <li><a id="link_home" href="{{ erp_address }}">管理系统</a></li>
+                        <li><a id="link_home" target="_blank " href="{{ erp_address }}">管理系统</a></li>
                     </ul>
                     {% if request.session.erp_user %}
                         <strong>{{ request.session.erp_user.username }}</strong>
-                        <a href="{% url erp_logout %}">登出</a>
+                        <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a>
                     {% else %}
-                        <strong><a target="_blank" href="{% url erp_login %}">登录</a></strong>
+                        <strong><a
+                                href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong>
                     {% endif %}
                 </div>
                 <!-- end sub-nav2 -->
