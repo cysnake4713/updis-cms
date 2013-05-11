@@ -56,6 +56,11 @@
                                 <span class="comment-date">{{ comment.date|to_date }}</span>
                                 <br>
                                 {{ comment.body|safe }}
+                                <div class='attachment'>
+                                    {% for attachment in comment.attachment_ids %}
+                                        附件:<a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,22 +79,26 @@
             <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
                 {% csrf_token %}
                 <p class="">
-                    <label for="id_body" class="comment-label">评论内容 &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" tabindex="2" id="id_is_anonymous"
-                                                                          name="is_anonymous"> <label for="id_is_anonymous">
-                        匿名评论
-                    </label> </label>
-                    <textarea style="border-style: solid; border-color: #d8d8d6; border-width: 1px" id="id_body" rows="5"
+                    <label for="id_body" class="comment-label">评论内容 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox"
+                               tabindex="2"
+                               id="id_is_anonymous"
+                               name="is_anonymous"/>
+                        <label for="id_is_anonymous">
+                            匿名评论
+                        </label> </label>
+                    <textarea style="border-style: solid; border-color: #d8d8d6; border-width: 1px" id="id_body"
+                              rows="5"
                               cols="70" name="body" class="comment-textarea"></textarea>
                 </p>
 
-
-
                 <p>
-                    <label for="id_attachment" class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>
+                    <label for="id_attachment"
+                           class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>
                 </p>
 
                 <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
             </form>
-    {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
