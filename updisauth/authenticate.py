@@ -5,7 +5,7 @@ __author__ = 'cysnake4713'
 import urllib2
 import upcms.settings as settings
 
-HOST = 'http://%s:%d' % (settings.ERP_HOST, settings.ERP_PORT)
+HOST = settings.ERP_HOME
 
 
 def _send_json_info(url, data, request):
