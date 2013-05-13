@@ -181,7 +181,7 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "
 
 
 /* 3 columns */
-.port_img_three {width: 275px;height: 145px;float: left;position: absolute;top:8px;left:9px;}
+.port_img_three {width: 275px;height: 145px;float: left;position: absolute;top:8px;left:9px;margin-left: 9px}
 .portfolio_content_top_three {float: left;height: 179px;width: 293px;background: url(../img/_global/image-frame-sprite.png) -1px -279px no-repeat;}
 
 
