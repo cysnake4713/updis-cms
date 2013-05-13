@@ -17,7 +17,7 @@ def to_date(value):
 
 @register.assignment_tag(takes_context=True)
 def get_erp_address(context):
-    path = "http://%s:%d" % (settings.ERP_HOST, settings.ERP_PORT)
+    path = settings.ERP_HOME
     return str(path)
 
 
@@ -92,14 +92,10 @@ def message_publish_url(context, name):
     else:
         url = _get_message_publish_url(context)
         cache.set('message_publish_url', url, 60 * 3600)
-    text = u'''<a class="publish-message" target="_blank" href="http://%s/#view_type=form&model=message.message&menu_id=277&action=%s">\u53d1\u5e03</a>'''
+    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">\u53d1\u5e03</a>'''
     from  upcms import settings
 
-    if settings.ERP_PORT == 80:
-        host = settings.ERP_HOST
-    else:
-        host = settings.ERP_HOST + ':' + str(settings.ERP_PORT)
-
+    host = settings.ERP_HOME
         # name = unicode(name, 'ascii')
 
     if name == u'\u7545\u6240\u6b32\u8a00':

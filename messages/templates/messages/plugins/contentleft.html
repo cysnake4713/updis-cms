@@ -16,7 +16,12 @@
                     {% if cat.top_message %}
                         <div class="home-message-top">
                             <div class="home-message-image">
-                                <img height="80" width="120" src="{{ cat.top_message.0|safe }}"/>
+                                <a href="{{ cat.top_message.0|safe }}" class="attachment-fadeIn" rel="prettyPhoto[g1]"
+                                   title="{{ cat.top_message.1.name|striptags|truncatehanzi:'16'|safe }}">
+                                    <img src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
+                                         style="position:absolute; display: none;" alt="CSS Template"/>
+                                    <img alt="CSS Template" width="275" height="145" class='img' src="{{ cat.top_message.0|safe }}"/>
+                                </a>
                             </div>
                             <div class="home-message-content">
                                 <h2 id="title">

@@ -566,9 +566,9 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "
 #menu-main-nav .drop .b {height:10px;overflow:hidden;}
 #menu-main-nav .drop .c {width:100%;}
 #menu-main-nav .drop ul {margin:0;padding:5px 0 8px;width:236px;list-style:none;}
-#menu-main-nav .drop ul li {float:none;padding:0;position:relative;height:1%;padding:0 8px;background:none;}
-#menu-main-nav .drop ul a {display:block;height:1%;width: 220px;}
-#menu-main-nav .drop ul a span {display:block;padding:7px 13px;height:1%;cursor:pointer;}
+#menu-main-nav .drop ul li {float:none;padding:0;position:relative;height:33px;padding:0 8px;background:none;}
+#menu-main-nav .drop ul a {display:block;height:33px;width: 220px;}
+#menu-main-nav .drop ul a span {display:block;padding:7px 13px;height:19px;cursor:pointer;}
 #menu-main-nav .drop ul .drop {top:0;left:236px;}
 #menu-main-nav .drop ul .drop ul a {background:none;}
 #menu-main-nav .drop ul .drop ul a span {background:none;}
@@ -678,7 +678,7 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "
 a {color:#666;outline: none;}
 #menu-main-nav a, #sub_nav a, #wrapper .tabset a {text-decoration: none;}
 a:hover { text-decoration:underline;}
-#header .logo {float:left;margin-left:22px;outline: none;}
+#header .logo {float:left;margin-left:0;outline: none;}
 #header .sub-nav a, #header .sub-nav2 a {color: #575C60;text-decoration: none;}
 #header .sub-nav a:hover, #header .sub-nav2 a:hover {color: #8B949A;}
 #header .sub-nav li, #header .sub-nav2 li {color: #575C60;}
@@ -1807,6 +1807,7 @@ border-radius: 5px;
     font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
 }
 
+
 div.oe_post_oe_post_title {
     display: block;
 }
@@ -1823,14 +1824,25 @@ div.home-message-top {
 
 div.home-message-image {
     width: 35%;
-    position:relative;
+    position: relative;
     display: block;
     float: left;
+    background-size: 130px 90px;
+    height: 100px;
+    background: url(../img/message-image-frame.png) no-repeat;
+    /*background-position: -10px center;*/
+}
+
+div.home-message-image img.img {
+    margin-left: 7px;
+    margin-top: 8px;
+    height: 75px;
+    width: 115px;
 }
 
 div.home-message-content {
     width: 65%;
-    position:relative;
+    position: relative;
     display: block;
     float: right;
 }
@@ -1854,57 +1866,78 @@ div.home-message-content #title {
     display: block;
 }
 
-#search-area .mc_input{
-    -webkit-appearance: textfield;
-    -webkit-border-image: none;
+/*#search-area span {*/
+/*float: right;*/
+/*}*/
+
+#search-area .mc_input {
+    -webkit-appearance: none;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px 0px inset;
     -webkit-rtl-ordering: logical;
     -webkit-user-select: text;
     -webkit-writing-mode: horizontal-tb;
-    background-color: #f4f4f2;
-    border-bottom-color: rgb(238, 238, 238);
-    border-bottom-style: inset;
-    border-bottom-width: 2px;
-    border-left-color: rgb(238, 238, 238);
-    border-left-style: inset;
-    border-left-width: 2px;
-    border-right-color: rgb(238, 238, 238);
-    border-right-style: inset;
-    border-right-width: 2px;
-    border-top-color: rgb(238, 238, 238);
-    border-top-style: inset;
-    border-top-width: 2px;
-    color: rgb(34, 34, 34);
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: rgb(245, 245, 245);
+    background-image: none;
+    background-origin: padding-box;
+    background-size: auto;
+    border-bottom-color: rgb(153, 153, 153);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: collapse;
+    border-left-color: rgb(153, 153, 153);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: rgb(153, 153, 153);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: rgb(153, 153, 153);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px 0px inset;
+    color: rgb(0, 0, 0);
     cursor: auto;
     display: inline-block;
-    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
-    height: 14px;
+    font-size: 13px;
+    height: 25px;
     letter-spacing: normal;
     line-height: normal;
-    margin: 2px 0 0 2px;
-    padding: 5px;
+    list-style-type: none;
+    margin-bottom: 9px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 8px;
+    padding-bottom: 5px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 5px;
     text-align: start;
     text-indent: 0px;
     text-shadow: none;
     text-transform: none;
-    vertical-align: middle;
-    width: 400px;
+    width: 252px;
     word-spacing: 0px;
     writing-mode: lr-tb;
 }
 
 .main-holder {
     width: 980px;
-    padding-top:20px !important;
+    padding-top: 20px !important;
 
 }
 
-#main .main-area {padding-top:60px !important;}
+#main .main-area {
+    padding-top: 60px !important;
+}
 
-.post_title {margin-top: 5px !important;}
+.post_title {
+    margin-top: 5px !important;
+}
 
 .blog_wrap {
     margin-bottom: 40px;
@@ -1932,7 +1965,6 @@ div.bizmail_SubmitArea input {
     background-color: #909090;
     border: 0px;
 
-
 }
 
 input.text {
@@ -1947,13 +1979,14 @@ input.text {
 
 div.bizmail_LoginBox form {
     display: inline-block;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 
 div.bizmail_LoginBox h3 {
     display: none;
 
 }
+
 .mail-login {
     display: inline-block;
     /*vertical-align: middle;*/
@@ -1961,7 +1994,7 @@ div.bizmail_LoginBox h3 {
 }
 
 #news {
-    overflow:hidden;
+    overflow: hidden;
 }
 
 #news li {
@@ -2001,7 +2034,7 @@ div.bizmail_LoginBox h3 {
 #phone2d {
     float: left;
     position: relative;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
     /*border-width: 1px;*/
     /*border-color: #40585f;*/
     /*border-style: solid;*/
@@ -2014,14 +2047,17 @@ div.bizmail_LoginBox h3 {
     width: 240px;
     position: relative;
 }
+
 #phone2d h4 {
     margin-left: 30px;
 }
+
 #phone2d span {
     float: left;
     position: relative;
     display: inline-block;
 }
+
 #phone2d img {
     position: relative;
     display: inline-block;
@@ -2036,9 +2072,11 @@ div.bizmail_LoginBox h3 {
     padding: 0px !important;
     margin: 0px !important;
 }
+
 .karma-pages input {
     width: 29px;
 }
+
 .karma-pages-top input {
     width: 29px;
 }
@@ -2052,5 +2090,5 @@ div.bizmail_LoginBox h3 {
     margin: 0px !important;
     color: #666 !important;
     outline-style: none !important;
-    text-decoration: none!important;
+    text-decoration: none !important;
 }

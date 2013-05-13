@@ -1,11 +1,10 @@
 # Create your views here.
 import base64
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from messages.forms import CommentForm, LoginForm
+from messages.forms import CommentForm
 
 
 class MessageList(object):
@@ -33,18 +32,23 @@ def detail(req, message_id):
                                         'category_id', 'message_summary', 'read_times'])
     message = messages[0]
     message_obj.write([message_id], {'read_times': message['read_times'] + 1})
-    comments = comment_obj.read(message['message_ids'], ['body', 'date', 'subject', 'author_id', 'is_anonymous'])
-    # for comment in comments:
-    #     comment.update(partner_obj.read(comment.get('author_id')[0], ["image_small"]))
+    comments = comment_obj.read(message['message_ids'],
+                                ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
+    for comment in comments:
+        comment['attachment_ids'] = attachment_obj.read(comment.get('attachment_ids'), ["id", 'datas_fname'])
     if req.method == 'POST':
         form = CommentForm(req.POST, req.FILES)
         if form.is_valid():
+            erp_user = req.session['erp_user']
+            res_users_obj = req.erpsession.get_model('res.users')
+            partner_id = res_users_obj.search_read([('id', '=', erp_user['uid'])], ['partner_id'])[0]['partner_id'][0]
             params = {
                 'body': form.cleaned_data['body'],
                 'type': 'comment',
                 'model': 'message.message',
                 'res_id': message.get('id'),
                 'is_anonymous': form.cleaned_data['is_anonymous'],
+                'author_id': partner_id,
             }
             if form.cleaned_data['attachment']:
                 attachment_id = attachment_obj.create({
@@ -57,10 +61,10 @@ def detail(req, message_id):
                 params.update({
                     'attachment_ids': [(4, attachment_id)],
                 })
-            comment_obj = req.usererpsession.get_model('mail.message')
+            comment_obj = req.erpsession.get_model('mail.message')
             comment_id = comment_obj.create(params)
             if form.cleaned_data['attachment']:
-                attachment_obj = req.usererpsession.get_model('ir.attachment')
+                attachment_obj = req.erpsession.get_model('ir.attachment')
                 attachment_obj.write([attachment_id], {'res_model': 'mail.message', 'res_id': comment_id})
             return HttpResponseRedirect(req.path)
     else:
@@ -74,7 +78,8 @@ def detail(req, message_id):
 
 # @cache_page(60 * 5)
 def index(req):
-    return render_to_response("messages/index.html", context_instance=RequestContext(req))
+    response = render_to_response("messages/index.html", context_instance=RequestContext(req))
+    return response
 
 
 def by_category(req, category_id):
@@ -124,18 +129,6 @@ def search(request, search_context):
                               context_instance=RequestContext(request))
 
 
-def login(request):
-    default_url = reverse('messages_index')
-    redirect_url = request.GET.get('redirect_url', default_url)
-    if request.method == 'POST':
-        form = LoginForm(request.POST, request=request)
-        if form.is_valid():
-            return HttpResponseRedirect(redirect_url)
-    else:
-        form = LoginForm(request=request)
-    return render_to_response("messages/login.html", {'form': form}, context_instance=RequestContext(request))
-
-
 def get_department_image(request, department_id):
     erp_session = request.erpsession
 
@@ -169,4 +162,13 @@ def get_department_image_big(request, department_id):
     hr_department = message_category_obj.search_read([('id', '=', department_id)], ['image'])[0]
     response = HttpResponse(hr_department['image'].decode('base64'))
     response['Content-Type'] = 'image/png'
+    return response
+
+
+def get_attachment(request, attachment_id):
+    attachment_id = int(attachment_id)
+    attachment_obj = request.erpsession.get_model('ir.attachment')
+    datas = attachment_obj.search_read([('id', '=', attachment_id)], ['datas', 'datas_fname'])[0]
+    response = HttpResponse(datas['datas'].decode('base64'), mimetype='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename=%s' % datas['datas_fname']
     return response
