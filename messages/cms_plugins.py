@@ -96,7 +96,7 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('shortcut_category_cache')
         else:
             message_categories = get_messages_categories('shortcut', context.get('request'))
-            cache.set('shortcut_category_cache', message_categories, 60 * 60)
+            cache.set('shortcut_category_cache', message_categories, 60 * 100)
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -116,7 +116,7 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('left_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_left', context.get('request'))
-            cache.set('left_category_cache', message_categories, 60 * 60)
+            cache.set('left_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
         context.update({
             'object': instance,
@@ -138,7 +138,7 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('right_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_right', context.get('request'))
-            cache.set('right_category_cache', message_categories, 60 * 60)
+            cache.set('right_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
 
         context.update({
@@ -160,7 +160,7 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
             department_message_categories = cache.get('department_message_category_cache')
         else:
             department_message_categories = get_department_message_categories(context.get('request'))
-            cache.set('department_message_category_cache', department_message_categories, 60 * 60)
+            cache.set('department_message_category_cache', department_message_categories, 60 * 100)
         context.update({
             'object': instance,
             'placeholder': placeholder,

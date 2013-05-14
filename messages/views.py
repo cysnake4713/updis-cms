@@ -178,13 +178,13 @@ def get_attachment(request, attachment_id):
 
 def reload_cache(request, TYPE):
     if TYPE == '0':
-        cache.set('shortcut_category_cache', cms_plugins.get_messages_categories('shortcut', request), 60 * 5)
+        cache.set('shortcut_category_cache', cms_plugins.get_messages_categories('shortcut', request), 60 * 100)
     if TYPE == '1':
         cache.set('left_category_cache', cms_plugins.get_messages_categories_with_image('content_left', request),
-                  60 * 60)
+                  60 * 100)
     if TYPE == '2':
         cache.set('right_category_cache', cms_plugins.get_messages_categories_with_image('content_right', request),
-                  60 * 60)
+                  60 * 100)
     if TYPE == '3':
-        cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 60)
+        cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
