@@ -7,7 +7,6 @@ settings.DEBUG = TEMPLATE_DEBUG = False
 settings.CAS_SERVER_URL = "http://sso.updis.cn/cas/"
 settings.ERP_DOMAIN = ".updis.cn"
 settings.ERP_HOME = 'http://erp.updis.cn'
-settings.CMS_HOME = 'http://127.0.0.1:8001'
 
 CACHES = {
     'default': {
