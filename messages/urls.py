@@ -1,5 +1,5 @@
 from django.views.decorators.cache import cache_page
-from messages.views import get_department_image, get_employee_image, get_department_image_big, get_attachment
+from messages.views import get_department_image, get_employee_image, get_department_image_big, get_attachment, reload_cache
 
 __author__ = 'Zhou Guangwen'
 from django.conf.urls import patterns, url
@@ -18,5 +18,5 @@ urlpatterns = patterns('messages.views',
                            name="get_employee_image"),
                        url(r'^attachment/(?P<attachment_id>\d+)/$', cache_page(60 * 600)(get_attachment),
                            name="get_attachment"),
-
+                       url(r'reload/(?P<TYPE>\d+)/$', reload_cache, name="reload_cache"),
 )

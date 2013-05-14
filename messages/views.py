@@ -5,6 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from messages.forms import CommentForm
+from django.core.cache import cache
+import cms_plugins
 
 
 class MessageList(object):
@@ -172,3 +174,17 @@ def get_attachment(request, attachment_id):
     response = HttpResponse(datas['datas'].decode('base64'), mimetype='application/octet-stream')
     response['Content-Disposition'] = 'attachment; filename=%s' % datas['datas_fname']
     return response
+
+
+def reload_cache(request, TYPE):
+    if TYPE == '0':
+        cache.set('shortcut_category_cache', cms_plugins.get_messages_categories('shortcut', request), 60 * 5)
+    if TYPE == '1':
+        cache.set('left_category_cache', cms_plugins.get_messages_categories_with_image('content_left', request),
+                  60 * 60)
+    if TYPE == '2':
+        cache.set('right_category_cache', cms_plugins.get_messages_categories_with_image('content_right', request),
+                  60 * 60)
+    if TYPE == '3':
+        cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 60)
+    return HttpResponse("")
