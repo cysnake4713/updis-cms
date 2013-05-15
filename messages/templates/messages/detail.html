@@ -58,7 +58,8 @@
                                 {{ comment.body|safe }}
                                 <div class='attachment'>
                                     {% for attachment in comment.attachment_ids %}
-                                        附件:<a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
+                                        附件:
+                                        <a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
                                     {% endfor %}
                                 </div>
                             </div>

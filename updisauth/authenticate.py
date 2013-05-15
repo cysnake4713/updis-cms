@@ -53,7 +53,7 @@ def get_session_info(request):
                             "id": "r0"}
         response = _send_json_info(HOST + '/web/session/get_session_info', get_session_data, request)
         json_response = json.loads(response.read())
-        if json_response['result']:
+        if json_response['result'] and json_response['result']['username']:
             request.session['erp_user'] = _user_info(json_response['result']['uid'],
                                                      json_response['result']['username'],
                                                      json_response['result']['user_context'])
