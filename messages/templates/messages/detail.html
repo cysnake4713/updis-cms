@@ -23,8 +23,13 @@
     <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
     <br/>
     <br/>
-    <p>{{ message.content|safe }}</p>
-
+    <p>
+        {% if message.content %}
+            {{ message.content|safe }}
+        {% else %}
+            消息无内容
+        {% endif %}
+    </p>
     <div class="post_footer">
         <div class="post-cats">
             <p>

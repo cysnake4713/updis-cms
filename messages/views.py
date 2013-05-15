@@ -1,5 +1,7 @@
 # Create your views here.
 import base64
+import urllib
+import urllib2
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
@@ -195,7 +197,7 @@ def get_attachment(request, attachment_id):
     else:
         raise Http404
     response = HttpResponse(data['datas'].decode('base64'), mimetype='application/octet-stream')
-    response['Content-Disposition'] = 'attachment; filename=%s' % data['datas_fname']
+    response['Content-Disposition'] = 'attachment; filename=' + data['datas_fname'].encode('utf-8')
     return response
 
 
