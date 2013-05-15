@@ -2,14 +2,16 @@
 {% load message_tags %}
 <div id="news" style="margin-top:-15px;padding-top: 15px">
     {% for cat in message_categories %}
-        <div class="{% cycle 'one_third' 'one_third' 'one_third_last'%}">
+        <div class="{% cycle 'one_third' 'one_third' 'one_third_last' %}">
             <h2 style="display: inline-block">{{ cat.name }}</h2>
-            <a class="message_more" target="_blank" href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
+            <a class="message_more" target="_blank"
+               href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
             {% message_publish_url name=cat.name %}
             <ul style="list-style:none;padding-left:0px;">
                 {% for msg in cat.messages %}
                     <li>
-                        <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                        <a target="_blank" class="page-item" title="{{ msg.name|safe }}"
+                           href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
                     </li>
                 {% endfor %}
             </ul>

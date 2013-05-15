@@ -28,7 +28,7 @@ def get_messages_categories(position, request):
                                                           order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids'], limit=6)
+                                           ['category_message_title_meta_display', 'message_ids', 'name'], limit=6)
         cat.update({
             'messages': messages
         })
