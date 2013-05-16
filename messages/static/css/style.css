@@ -1904,7 +1904,7 @@ div.home-message-content #title {
     cursor: auto;
     display: inline-block;
     font-size: 13px;
-    height: 25px;
+    /*height: 25px;*/
     letter-spacing: normal;
     line-height: normal;
     list-style-type: none;
@@ -1979,6 +1979,7 @@ input.text {
 
 div.bizmail_LoginBox form {
     display: inline-block;
+    font-size: 12px;
     /*margin-left: 20px;*/
 }
 
@@ -2091,4 +2092,8 @@ div.bizmail_LoginBox h3 {
     color: #666 !important;
     outline-style: none !important;
     text-decoration: none !important;
+}
+
+.sub-nav2 {
+    font-size: 12px;
 }
