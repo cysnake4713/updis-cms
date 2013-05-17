@@ -7,12 +7,12 @@ Version: 2.1
 
 
 
-/* ---------------------- 
+/* ----------------------
 Stylesheet Guide
 -------------------------
 
  01. GLOBAL STYLES
- 
+
  02. LAYOUT
  	1. GENERAL STRUCTURE
  	2. CONTENT AREA
@@ -23,33 +23,33 @@ Stylesheet Guide
 	7. HOMEPAGE
 	8. SITEMAP
 	9. VIDEO + 3D THUMBS
-	
+
  03. NAVIGATION
  	1. MAIN NAVIGATION
  	2. VERTICAL SUB NAVIGATION
 	3. HORIZONTAL SUB NAVIGATION
 	4. BREADCRUMBS
-	
+
 04. LINKS
 	1. GENERAL LINKS
 	2. TOP LINK
 	3. CUSTOM BUTTONS
-	
+
 05. LISTS
 	1. GENERAL LISTS
 	2. CUSTOM LIST BULLETS
 	3. ACCORDION
 	4. TABS
-	
+
 06. TYPOGRAPHY
 	1. GENERAL TYPOGRAPHY
 	2. @FONT-FACE
 	3. MESSAGE BOXES
 	4. FOOTER
 	5. CALLOUTS
-	
+
 07. BLOG
-	
+
 08. FORMS
 
 09. IMAGES
@@ -65,7 +65,7 @@ Stylesheet Guide
 	3. DEFAULTS
 	4. 404 ERROR PAGE
 	5. CONSTANT CONTACT
-	
+
 12. WIDGETS + SHORTCODES
 	1. DEFAULT STYLES
 	2. BLOGROLL - FOOTER
@@ -76,7 +76,7 @@ Stylesheet Guide
 	7. SOCIAL MEDIA
 	8. LATEST TWEETS
 	9. TESTIMONIALS SLIDER
-	
+
 13. PROGRESSIVE CSS ENHANCEMENTS
 
 14. PRETTY PHOTO
@@ -1420,7 +1420,7 @@ blockquote.right {margin-left: 20px;text-align: left;margin-right: 0;width: 33%;
 
 
 /*---------------------------------------------------------------*/
-/* 3. CALENDAR 
+/* 3. CALENDAR
 /*---------------------------------------------------------------*/
 table#wp-calendar {width: 100%;}
 table#wp-calendar td {width: 14%;text-align: center;}
@@ -1572,7 +1572,7 @@ box-shadow: 1px 1px 3px #222;
 #menu-main-nav li.parent:hover{
 border-top-left-radius: 5px;
 -moz-border-radius-topleft: 5px;
-border-top-right-radius: 5px;	
+border-top-right-radius: 5px;
 -moz-border-radius-topright: 5px;
 -webkit-border-top-left-radius: 5px;
 -webkit-border-top-right-radius: 5px;
@@ -2097,3 +2097,6 @@ div.bizmail_LoginBox h3 {
 .sub-nav2 {
     font-size: 12px;
 }
+
+.content_full_width .short_one_third {float:left;width:303px !important;margin-right:15px !important;}
+.content_full_width .short_one_third_last {float:right;width:303px !important;margin:0 !important;}
