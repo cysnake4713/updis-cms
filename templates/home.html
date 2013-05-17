@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% load cms_tags sekizai_tags menu_tags %}
 {% block search %}
-    {% placeholder "infomation" %}
-    {% placeholder "hot news" %}
+    <div class="top_left_position">
+        {% placeholder "infomation" %}
+    </div>
+    <div class="top_middle_hot_news">
+        {% placeholder "hot news" %}
+
+    </div>
 {% endblock %}
 {% block searchother %}
-    {% placeholder "behind search" %}
+    <div class="top_right_under_search">
+        {% placeholder "under search" %}
+    </div>
 {% endblock %}
 {% block content %}
     {% placeholder "shortcuts" %}

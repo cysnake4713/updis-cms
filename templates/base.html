@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% addtoblock "css" %}
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/internal-home.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-teal-grey.css">
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
@@ -87,16 +88,19 @@
             {% block search %}
             {% endblock %}
             <div id="search-area">
-                <span style="float: right" class="text">
-                 <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context" value="搜索主题"
-                        onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
-                        onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
-                    <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
-                       style="opacity: 1;"><span>搜索</span></a>
-                </span>
+                <div>
+                    <span style="float: right" class="text">
+                     <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context" value="搜索主题"
+                            onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
+                            onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
+                        <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
+                           style="opacity: 1;"><span>搜索</span></a>
+                    </span>
+                </div>
+                {% block searchother %}
+                {% endblock %}
             </div>
-            {% block searchother %}
-            {% endblock %}
+
         </div>
         <div class="main-area">
             {% block tools %}
