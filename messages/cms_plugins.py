@@ -28,7 +28,8 @@ def get_messages_categories(position, request):
                                                           order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids', 'name'], limit=6)
+                                           ['category_message_title_meta_display', 'message_ids', 'name',
+                                            "create_date"], limit=6)
         cat.update({
             'messages': messages
         })
@@ -44,7 +45,8 @@ def get_messages_categories_with_image(position, request):
                                                           order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids', 'content', 'name'],
+                                           ['category_message_title_meta_display', 'message_ids', 'content', 'name',
+                                            'create_date'],
                                            limit=10)
         top_message = _get_last_image(messages)
         if top_message:
@@ -76,7 +78,7 @@ def get_department_message_categories(request):
         for cat in message_categories:
             messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
                                                ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
-                                                'category_message_title_meta_display'], limit=6)
+                                                'category_message_title_meta_display', 'create_date'], limit=6)
             cat.update({
                 'messages': messages
             })

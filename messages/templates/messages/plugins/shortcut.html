@@ -11,7 +11,10 @@
                 {% for msg in cat.messages %}
                     <li>
                         <a target="_blank" class="page-item" title="{{ msg.name|safe }}"
-                           href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                           href="{% url messages_detail message_id=msg.id %}">
+                            <div {% is_today date=msg.create_date %}>
+                                {{ msg.category_message_title_meta_display|safe }}</div>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>

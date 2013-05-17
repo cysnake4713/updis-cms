@@ -1,4 +1,5 @@
 import operator
+import datetime
 from django.core.cache import cache
 from django.template.defaultfilters import stringfilter
 from openerplib import dates
@@ -96,7 +97,7 @@ def message_publish_url(context, name):
     from  upcms import settings
 
     host = settings.ERP_HOME
-        # name = unicode(name, 'ascii')
+    # name = unicode(name, 'ascii')
 
     if name == u'\u7545\u6240\u6b32\u8a00':
         return text % (host, url['chat'])
@@ -136,5 +137,18 @@ def truncatehanzi(value, arg):
     except (ValueError, TypeError):
         return value # Fail silently.
 
+
+@register.simple_tag(name='is_today', takes_context=True)
+def is_today(context, date):
+    create_date = datetime.datetime.strptime(date,
+                                             '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
+    create_date = create_date.strftime('%Y-%m-%d')
+
+    now = datetime.datetime.now()
+    now = now.strftime('%Y-%m-%d')
+    if create_date == now:
+        return 'style="font-weight: bold"'
+    else:
+        return ''
 
 register.filter('truncatehanzi', truncatehanzi)

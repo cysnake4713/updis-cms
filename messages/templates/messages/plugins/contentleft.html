@@ -20,7 +20,8 @@
                                    title="{{ cat.top_message.1.name|striptags|truncatehanzi:'16'|safe }}">
                                     <img src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
                                          style="position:absolute; display: none;" alt="CSS Template"/>
-                                    <img alt="CSS Template" width="275" height="145" class='img' src="{{ cat.top_message.0|safe }}"/>
+                                    <img alt="CSS Template" width="275" height="145" class='img'
+                                         src="{{ cat.top_message.0|safe }}"/>
                                 </a>
                             </div>
                             <div class="home-message-content">
@@ -40,8 +41,10 @@
 
                     {% for msg in cat.messages %}
                         <p style="padding: 0">
-                            <a target="_blank" class="page-item" href="{% url messages_detail message_id=msg.id %}">
-                                {{ msg.category_message_title_meta_display|safe }}</a>
+                            <a target="_blank" class="page-item"
+                               href="{% url messages_detail message_id=msg.id %}"  {% is_today date=msg.create_date %}>
+                                {{ msg.category_message_title_meta_display|safe }}
+                            </a>
                         </p>
                     {% endfor %}
 
