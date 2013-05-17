@@ -108,3 +108,18 @@
         {% endif %}
     </div>
 {% endblock %}
+
+{% block custom_js %}
+    <script>
+            $("#ka-submit").bind("click", function (event) {
+                id_body = $("#id_body")[0].value;
+                id_body = $.trim(id_body);
+                if (id_body != '' && id_body != null) {
+
+                }else {
+                    event.preventDefault();
+                    alert("请输入评论内容！");
+                }
+            })
+    </script>
+{% endblock %}
