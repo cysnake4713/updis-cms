@@ -110,16 +110,34 @@
 {% endblock %}
 
 {% block custom_js %}
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.icon.min.js"></script>
+    <script src="{{ STATIC_URL }}js/clupload.js"></script>
+    <script src="{{ STATIC_URL }}js/fileuploader.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
     <script>
-            $("#ka-submit").bind("click", function (event) {
-                id_body = $("#id_body")[0].value;
-                id_body = $.trim(id_body);
-                if (id_body != '' && id_body != null) {
+        $(document).ready(function () {
 
-                }else {
-                    event.preventDefault();
-                    alert("请输入评论内容！");
-                }
-            })
+            $("#id_body").cleditor({
+                controls:   // controls to add to the toolbar
+                        "bold italic underline strikethrough " +
+                                "| removeformat | bullets numbering | outdent " +
+                                "indent | link unlink | source" +
+                                " icon "
+            });
+        });
+
+    </script>
+    <script>
+        $("#ka-submit").bind("click", function (event) {
+            id_body = $("#id_body")[0].value;
+            id_body = $.trim(id_body);
+            if (id_body != '' && id_body != null) {
+
+            } else {
+                event.preventDefault();
+                alert("请输入评论内容！");
+            }
+        });
     </script>
 {% endblock %}
