@@ -105,6 +105,8 @@
 
                 <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
             </form>
+        {% else %}
+            请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后发表评论
         {% endif %}
     </div>
 {% endblock %}
@@ -123,7 +125,9 @@
                         "bold italic underline strikethrough " +
                                 "| removeformat | bullets numbering | outdent " +
                                 "indent | link unlink | source" +
-                                " icon "
+                                " icon ",
+                width: 940,
+                height: 150
             });
         });
 
