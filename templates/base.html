@@ -15,6 +15,8 @@
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-teal-grey.css">
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
         <link rel="icon" type="image/gif" href="{{ STATIC_URL }}img/animated_favicon1.gif">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
     {% endaddtoblock %}
     {% render_block "css" %}
 </head>
@@ -90,7 +92,8 @@
             <div id="search-area">
                 <div>
                     <span style="float: right" class="text">
-                     <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context" value="搜索主题"
+                     <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context"
+                            value="搜索主题"
                             onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
                             onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
                         <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
