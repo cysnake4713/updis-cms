@@ -29,7 +29,9 @@ def get_messages_categories(position, request):
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
                                            ['category_message_title_meta_display', 'message_ids', 'name',
-                                            "create_date"], limit=cat['default_message_count'])
+                                            "create_date"],
+                                           limit=cat['default_message_count'] is not 0 and cat[
+                                               'default_message_count'] or 8)
         cat.update({
             'messages': messages
         })
@@ -79,7 +81,8 @@ def get_department_message_categories(request):
             messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
                                                ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
                                                 'category_message_title_meta_display', 'create_date'],
-                                               limit=cat['default_message_count'])
+                                               limit=cat['default_message_count'] is not 0 and cat[
+                                                   'default_message_count'] or 8)
             cat.update({
                 'messages': messages
             })
