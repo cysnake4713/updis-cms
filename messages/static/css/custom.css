@@ -43,6 +43,7 @@ div.home-message-content #title {
 
 .search-holder {
     width: 980px;
+    height: auto;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -56,9 +57,9 @@ div.home-message-content #title {
     display: block;
 }
 
-/*#search-area span {*/
-/*float: right;*/
-/*}*/
+#search-area .text {
+    margin-right: 30px;
+}
 
 #search-area .mc_input {
     -webkit-appearance: none;
@@ -110,7 +111,7 @@ div.home-message-content #title {
     text-indent: 0px;
     text-shadow: none;
     text-transform: none;
-    width: 202px;
+    width: 180px;
     word-spacing: 0px;
     writing-mode: lr-tb;
 }
@@ -122,7 +123,7 @@ div.home-message-content #title {
 }
 
 #main .main-area {
-    padding-top: 60px !important;
+    padding-top: 0px !important;
 }
 
 .post_title {
@@ -279,6 +280,12 @@ div.bizmail_LoginBox h3 {
 .top_right_under_search {
     display: inline-block;
     width: 300px;
+    height: auto;
     word-wrap: break-word;
     word-break: normal;
+}
+
+#main .tools {
+    margin-top: 70px;
+    width: 940px;
 }

@@ -42,7 +42,7 @@
 
                 <!-- ***************** - END Top Toolbar Left Side - ***************** -->
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
-                <div class="sub-nav2">
+                <div class="sub-nav2" style="margin-right: 30px">
                     <ul>
                         {% if request.session.erp_user %}
                             <li><strong>{{ request.session.erp_user.username }}</strong>
@@ -63,7 +63,7 @@
                     <a class="logo" href="{% page_url 'cms_home' %}">
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
-                    <ul id="menu-main-nav">
+                    <ul id="menu-main-nav" style="margin-right: 10px">
                         {% for k, v in menus.items %}
                             {% if  v.parent_id.1 == 'Top menu' %}
                                 <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
@@ -89,8 +89,8 @@
             {% block search %}
             {% endblock %}
             <div id="search-area">
-                <div>
-                    <span style="float: right" class="text">
+                <div class="text">
+                    <span style="float: right">
                      <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context"
                             value="搜索主题"
                             onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
@@ -126,7 +126,7 @@
                     <div class="footer-holder">
                         {% for k, v in menus.items %}
                             {% if  v.parent_id.1 == 'Footer Menu' %}
-                                <div class="one_fifth">
+                                <div class="one_fifth" style="width: 167px !important;">
                                     <h3>{{ v.name }}</h3>
                                     <ul>
                                         {% for cv in v.children %}
