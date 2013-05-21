@@ -289,3 +289,6 @@ div.bizmail_LoginBox h3 {
     margin-top: 70px;
     width: 940px;
 }
+#news {
+    min-height: 242px !important;
+}
