@@ -292,3 +292,7 @@ div.bizmail_LoginBox h3 {
 #news {
     min-height: 242px !important;
 }
+
+#content .tabs li a {
+    padding: 0 8px !important;
+}
