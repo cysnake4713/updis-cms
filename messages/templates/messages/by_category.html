@@ -21,7 +21,7 @@
 {% block content %}
     <div class="karma-pages-top">
         <span class="pages"> 第<strong> {{ messages.number }} </strong>页/ 共{{ messages.paginator.num_pages }}页</span>
-        每页20条&nbsp;&nbsp;&nbsp;&nbsp;
+        每页20条&nbsp;&nbsp;&nbsp;&nbsp;共{{ messages.paginator.count }}条&nbsp;&nbsp;&nbsp;&nbsp;
         <a style="background: none;" href="?page=1">首页</a>
         {% if messages.has_previous %}
             <a style="background: none;" href="?page={{ messages.previous_page_number }}">上一页</a>
@@ -92,7 +92,7 @@
     {% endfor %}
     <div class="karma-pages">
         <span class="pages"> 第<strong> {{ messages.number }} </strong>页/ 共{{ messages.paginator.num_pages }}页</span>
-        每页20条&nbsp;&nbsp;&nbsp;&nbsp;
+        每页20条&nbsp;&nbsp;&nbsp;&nbsp;共{{ messages.paginator.count }}条&nbsp;&nbsp;&nbsp;&nbsp;
         <a style="background: none;" href="?page=1">首页</a>
         {% if messages.has_previous %}
             <a style="background: none;" href="?page={{ messages.previous_page_number }}">上一页</a>

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import operator
 import datetime
 from django.core.cache import cache
@@ -5,6 +6,7 @@ from django.template.defaultfilters import stringfilter
 from openerplib import dates
 
 __author__ = 'Zhou Guangwen'
+
 from django import template
 from upcms import settings
 
@@ -93,25 +95,25 @@ def message_publish_url(context, name):
     else:
         url = _get_message_publish_url(context)
         cache.set('message_publish_url', url, 60 * 3600)
-    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">\u53d1\u5e03</a>'''
+    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">发布</a>'''
     from  upcms import settings
 
     host = settings.ERP_HOME
     # name = unicode(name, 'ascii')
 
-    if name == u'\u7545\u6240\u6b32\u8a00':
+    if name == u'畅所欲言':
         return text % (host, url['chat'])
-    if name == u'\u901a\u77e5':
+    if name == u'通知':
         return text % (host, url['notice'])
-    if name == u'\u4e1a\u4f59\u751f\u6d3b':
+    if name == u'业余生活':
         return text % (host, url['life'])
-    if name == u'\u670d\u52a1\u7533\u62a5':
+    if name == u'服务申报':
         return text % (host, url['service'])
-    if name == u'\u9910\u8bba':
+    if name == u'餐论':
         return text % (host, url['food'])
-    if name == u'\u5171\u4eab\u8d44\u6e90':
+    if name == u'共享资源':
         return text % (host, url['share'])
-    if name == u'\u5404\u6240\u5feb\u8baf':
+    if name == u'各所快讯':
         return text % (host, url['news'])
     return ''
 
