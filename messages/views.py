@@ -224,3 +224,19 @@ def get_votes(request):
         raise Http404
     return render_to_response("messages/vote.html", {'votes': votes},
                               context_instance=RequestContext(request))
+
+
+def get_image(request, id, model, field):
+    erp_session = request.erpsession
+
+    id = int(id)
+    image_obj = erp_session.get_model(model)
+
+    images = image_obj.search_read([('id', '=', id)], [field])
+    if images:
+        image = images[0]
+    else:
+        raise Http404
+    response = HttpResponse(image[field].decode('base64'))
+    response['Content-Type'] = 'image/png'
+    return response
