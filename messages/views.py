@@ -1,13 +1,13 @@
 # Create your views here.
 import base64
-import urllib
-import urllib2
+
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from messages.forms import CommentForm
 from django.core.cache import cache
+
+from messages.forms import CommentForm
 import cms_plugins
 
 
@@ -213,3 +213,14 @@ def reload_cache(request, TYPE):
     if TYPE == '3':
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
+
+
+def get_votes(request):
+    erpsession = request.erpsession
+    vote_obj = erpsession.get_model("updis.vote")
+
+    votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description'])
+    if not votes:
+        raise Http404
+    return render_to_response("messages/vote.html", {'votes': votes},
+                              context_instance=RequestContext(request))
