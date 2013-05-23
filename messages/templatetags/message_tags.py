@@ -84,6 +84,17 @@ def _get_message_publish_url(context):
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_news')],
                                      ['res_id'], limit=1)
     ids['news'] = notice[0]['res_id']
+
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_sell')],
+                                     ['res_id'], limit=1)
+    ids['sell'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_recommend')],
+                                     ['res_id'], limit=1)
+    ids['recommend'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_inner_connection')],
+                                     ['res_id'], limit=1)
+    ids['inner_connection'] = notice[0]['res_id']
+
     cache.set('message_publish_url', ids, 60 * 3600)
     return ids
 
@@ -115,6 +126,13 @@ def message_publish_url(context, name):
         return text % (host, url['share'])
     if name == u'各所快讯':
         return text % (host, url['news'])
+    if name == u'跳蚤市场':
+        return text % (host, url['sell'])
+    if name == u'大家推荐':
+        return text % (host, url['recommend'])
+    if name == u'内部交流':
+        return text % (host, url['inner_connection'])
+
     return ''
 
 
