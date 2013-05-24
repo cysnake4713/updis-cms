@@ -1,50 +1,23 @@
 {% load cms_tags sekizai_tags menu_tags placeholder_tags message_tags %}
 {% load_menu as menus %}
-<!DOCTYPE html>
+{% get_erp_address as erp_address %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"　"http://w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <!--[if lte IE 8]><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><![endif]-->
     <meta charset="utf-8">
     <meta http-equiv="pragma" content="no-cache"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% addtoblock "css" %}
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/internal-home.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-teal-grey.css">
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
     {% endaddtoblock %}
     {% render_block "css" %}
-    <style>
-        div.bizmail_column {
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        div.bizmail_SubmitArea {
-            display: inline-block;
-        }
-
-        a, input {
-            margin-left: 10px;
-        }
-
-        div.bizmail_inputArea {
-            display: inline-block;
-        }
-
-        input.text {
-            width: 80px;
-            background-color: lightgrey;
-        }
-
-        div.bizmail_LoginBox form {
-            display: inline-block;
-            margin-left: 20px;
-        }
-
-        div.bizmail_LoginBox h3 {
-            display: none;
-
-        }
-    </style>
 </head>
 <body>
 <div id="wrapper">
@@ -53,11 +26,9 @@
             <div class="top-holder">
                 <!-- ***************** - Top Toolbar Left Side - ***************** -->
                 <div class="sub-nav">
+
                     <ul>
-                        <li><a id="link_home" href="#">管理系统</a></li>
-                    </ul>
-                    <ul>
-                        <div class="login">
+                        <div class="mail-login">
                             <script type="text/javascript"
                                     src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js"
                                     charset="gb18030"></script>
@@ -71,12 +42,17 @@
 
                 <!-- ***************** - END Top Toolbar Left Side - ***************** -->
                 <!-- ***************** - Top Toolbar Right Side - ***************** -->
-                <div class="oe_topbar sub-nav2" style="background-image:none;background-color:#000;width:auto;">
-                    {#                    {% if request.erpsession.login == 'upcms' %}#}
-                    <a href="{% url login %}">登录</a>
-                    {#                    {% else %}#}
-                    {#                        <strong>{{ request.erpsession.login }}</strong>#}
-                    {#                    {% endif %}#}
+                <div class="sub-nav2" style="margin-right: 30px">
+                    <ul>
+                        {% if request.session.erp_user %}
+                            <li><strong>{{ request.session.erp_user.username }}</strong>
+                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a></li>
+                        {% else %}
+                            <li><strong><a
+                                    href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong></li>
+                        {% endif %}
+                        <li><a id="link_home" target="_blank " href="{{ erp_address }}">办公管理系统</a></li>
+                    </ul>
                 </div>
                 <!-- end sub-nav2 -->
             </div>
@@ -87,8 +63,7 @@
                     <a class="logo" href="{% page_url 'cms_home' %}">
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
-                    <ul id="menu-main-nav">
-                        {#                        {{ menus.keys }}#}
+                    <ul id="menu-main-nav" style="margin-right: 10px">
                         {% for k, v in menus.items %}
                             {% if  v.parent_id.1 == 'Top menu' %}
                                 <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
@@ -110,9 +85,30 @@
         </div>
     </div>
     <div id="main">
+        <div class="search-holder">
+            {% block search %}
+            {% endblock %}
+            <div id="search-area">
+                <div class="text">
+                    <span style="float: right">
+                     <input type="text" size="18" class="mc_input" name="search_context" id="id_search_context"
+                            value="搜索主题"
+                            onfocus="this.value=(this.value=='搜索主题') ? '' : this.value;"
+                            onblur="this.value=(this.value=='') ? '搜索主题' : this.value;">
+                        <a href="#" id="searchsubmit" class="ka_button small_button small_tealgrey"
+                           style="opacity: 1;"><span>搜索</span></a>
+                    </span>
+                </div>
+                {% block searchother %}
+                {% endblock %}
+            </div>
+
+        </div>
         <div class="main-area">
             {% block tools %}
             {% endblock %}
+
+
             <div class="main-holder">
                 <div id="content" class="{% block content_class %} content_full_width {% endblock %}">
 
@@ -130,13 +126,14 @@
                     <div class="footer-holder">
                         {% for k, v in menus.items %}
                             {% if  v.parent_id.1 == 'Footer Menu' %}
-                                <div class="one_fifth">
+                                <div class="one_fifth" style="width: 167px !important;">
                                     <h3>{{ v.name }}</h3>
                                     <ul>
                                         {% for cv in v.children %}
                                             <li><a target="_blank"
-                                                    {% if cv.action %} class="oe_menu_leaf"
-                                                   href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
+                                                    {% if cv.action %}
+                                                   href="{{ cv.action.url }}"
+                                                   {% else %}class="oe_menu_leaf"{% endif %}>{{ cv.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -148,6 +145,20 @@
                 </div>
             </div>
         </div>
+
+        <div id="footer_bottom">
+            <div class="info">
+                <div id="foot_left" style="margin-left: 230px"><p>Copyright &copy; 2013 <a target="_blank"
+                                                                                           href="http://upr.cn">深圳市城市规划设计研究院</a>.保留所有权利
+                    v1.0</p>
+                </div>
+                <!-- end foot_left -->
+
+                <!-- end foot_right -->
+            </div>
+            <!-- end info -->
+        </div>
+        <!-- end footer_bottom -->
     </div>
 </div>
 
@@ -156,8 +167,34 @@
     <script src="{{ STATIC_URL }}js/updis.js"></script>
     <script src="{{ STATIC_URL }}js/karma.js"></script>
     <script src="{{ STATIC_URL }}js/tab.js"></script>
+    <script>
+        $(function () {
+            $("#searchsubmit").bind("click", function (event) {
+                searchtext = $("#id_search_context")[0].value;
+                searchtext = $.trim(searchtext)
+                if (searchtext != '' && searchtext != "搜索主题") {
+                    event.preventDefault();
+                    window.location.href = '/message/search/' + encodeURIComponent(searchtext)
+                }
+            })
+            $("#id_search_context").bind("keydown", function (event) {
+                if (event.keyCode == 13) {
+                    searchtext = $("#id_search_context")[0].value;
+                    searchtext = $.trim(searchtext)
+                    if (searchtext != '' && searchtext != "搜索主题") {
+                        event.preventDefault();
+                        window.location.href = '/message/search/' + encodeURIComponent(searchtext)
+                    }
+                }
+            })
+
+        })
+
+    </script>
 {% endaddtoblock %}
 {% render_block "js" %}
+{% block custom_js %}
+{% endblock %}
 </body>
 </html>
 

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags message_tags %}
+{% block content %}
+    <div class="four_error">
+        <div class="four_message">
+            <h1 class="four_o_four">未找到该页！</h1>
+            很遗憾，该网页已经被移除或者不存在
+            <ul>
+                <li><a href="{% page_url 'cms_home' %}">Home</a></li>
+            </ul>
+        </div><!-- end four_message -->
+    </div><!-- end four_error -->
+{% endblock %}

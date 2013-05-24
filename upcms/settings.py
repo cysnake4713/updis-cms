@@ -71,6 +71,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, '..', 'messages/static'),
+    os.path.join(PROJECT_PATH, '..', 'updisauth/static'),
 )
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
@@ -93,13 +94,14 @@ TEMPLATE_LOADERS = (
     #     'django.template.loaders.eggs.Loader',
 )
 
-
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'updisauth.middleware.ERPAuthMiddleWare',
+    'messages.middleware.ERPSessionMiddleware',
+    # 'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -107,8 +109,6 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-
-    'messages.middleware.ERPSessionMiddleware',
 )
 
 ROOT_URLCONF = 'upcms.urls'
@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'messages',
-
+    'updisauth',
     'cms',
     'mptt',
     'menus',
@@ -154,6 +154,8 @@ INSTALLED_APPS = (
     'cms.plugins.teaser',
     'cms.plugins.twitter',
     'tastypie',
+    # 'django_cas',
+
 )
 
 # A sample logging configuration. The only tangible logging
@@ -193,13 +195,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'cms.context_processors.media',
     'sekizai.context_processors.sekizai',
 )
+# AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend', 'django_cas.backends.CASBackend')
 
 LANGUAGES = [
     ('zh-CN', 'Chinese'),
 ]
 
-ERP_HOST = "127.0.0.1"
+ERP_HOST = "localhost"
 ERP_PORT = 8069
 ERP_LOGIN = 'cmsreader'
 ERP_PASSWORD = 'cmsreader'
 ERP_DATABASE = 'develop'
+# CAS_SERVER_URL="https://cysnake4713-lenovo:8443/cas/"
+ERP_DOMAIN = "localhost"
+
+ERP_HOME = 'http://localhost:8069'

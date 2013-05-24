@@ -27,8 +27,15 @@ urlpatterns = patterns('',
                        # url(r'^admin/', include(admin.site.urls)),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^message/', include('messages.urls')),
+                       url(r'^account/', include('updisauth.urls')),
                        url(r'^api/', include(api_v1.urls)),
                        url(r'^', include('cms.urls')),
                        url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
                            {'sitemaps': {'cmspages': CMSSitemap}}),
 ) + staticfiles_urlpatterns()
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+                            (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                             {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    )

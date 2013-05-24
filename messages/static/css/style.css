@@ -7,12 +7,12 @@ Version: 2.1
 
 
 
-/* ---------------------- 
+/* ----------------------
 Stylesheet Guide
 -------------------------
 
  01. GLOBAL STYLES
- 
+
  02. LAYOUT
  	1. GENERAL STRUCTURE
  	2. CONTENT AREA
@@ -23,33 +23,33 @@ Stylesheet Guide
 	7. HOMEPAGE
 	8. SITEMAP
 	9. VIDEO + 3D THUMBS
-	
+
  03. NAVIGATION
  	1. MAIN NAVIGATION
  	2. VERTICAL SUB NAVIGATION
 	3. HORIZONTAL SUB NAVIGATION
 	4. BREADCRUMBS
-	
+
 04. LINKS
 	1. GENERAL LINKS
 	2. TOP LINK
 	3. CUSTOM BUTTONS
-	
+
 05. LISTS
 	1. GENERAL LISTS
 	2. CUSTOM LIST BULLETS
 	3. ACCORDION
 	4. TABS
-	
+
 06. TYPOGRAPHY
 	1. GENERAL TYPOGRAPHY
 	2. @FONT-FACE
 	3. MESSAGE BOXES
 	4. FOOTER
 	5. CALLOUTS
-	
+
 07. BLOG
-	
+
 08. FORMS
 
 09. IMAGES
@@ -65,7 +65,7 @@ Stylesheet Guide
 	3. DEFAULTS
 	4. 404 ERROR PAGE
 	5. CONSTANT CONTACT
-	
+
 12. WIDGETS + SHORTCODES
 	1. DEFAULT STYLES
 	2. BLOGROLL - FOOTER
@@ -76,7 +76,7 @@ Stylesheet Guide
 	7. SOCIAL MEDIA
 	8. LATEST TWEETS
 	9. TESTIMONIALS SLIDER
-	
+
 13. PROGRESSIVE CSS ENHANCEMENTS
 
 14. PRETTY PHOTO
@@ -96,7 +96,7 @@ Stylesheet Guide
 
 * {font-size: 100%;}
 html {font-size: 62.5%;margin:0;padding:0;}
-body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
+body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
 
 
 
@@ -181,7 +181,7 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Gra
 
 
 /* 3 columns */
-.port_img_three {width: 275px;height: 145px;float: left;position: absolute;top:8px;left:9px;}
+.port_img_three {width: 275px;height: 145px;float: left;position: absolute;top:8px;left:9px;margin-left: 9px}
 .portfolio_content_top_three {float: left;height: 179px;width: 293px;background: url(../img/_global/image-frame-sprite.png) -1px -279px no-repeat;}
 
 
@@ -566,9 +566,9 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Gra
 #menu-main-nav .drop .b {height:10px;overflow:hidden;}
 #menu-main-nav .drop .c {width:100%;}
 #menu-main-nav .drop ul {margin:0;padding:5px 0 8px;width:236px;list-style:none;}
-#menu-main-nav .drop ul li {float:none;padding:0;position:relative;height:1%;padding:0 8px;background:none;}
-#menu-main-nav .drop ul a {display:block;height:1%;width: 220px;}
-#menu-main-nav .drop ul a span {display:block;padding:7px 13px;height:1%;cursor:pointer;}
+#menu-main-nav .drop ul li {float:none;padding:0;position:relative;height:33px;padding:0 8px;background:none;}
+#menu-main-nav .drop ul a {display:block;height:33px;width: 220px;}
+#menu-main-nav .drop ul a span {display:block;padding:7px 13px;height:19px;cursor:pointer;}
 #menu-main-nav .drop ul .drop {top:0;left:236px;}
 #menu-main-nav .drop ul .drop ul a {background:none;}
 #menu-main-nav .drop ul .drop ul a span {background:none;}
@@ -678,7 +678,7 @@ body {margin:0;background:#f4f4f2;font:1.2em/19px "Microsoft YaHei", "Lucida Gra
 a {color:#666;outline: none;}
 #menu-main-nav a, #sub_nav a, #wrapper .tabset a {text-decoration: none;}
 a:hover { text-decoration:underline;}
-#header .logo {float:left;margin-left:22px;outline: none;}
+#header .logo {float:left;margin-left:0;outline: none;}
 #header .sub-nav a, #header .sub-nav2 a {color: #575C60;text-decoration: none;}
 #header .sub-nav a:hover, #header .sub-nav2 a:hover {color: #8B949A;}
 #header .sub-nav li, #header .sub-nav2 li {color: #575C60;}
@@ -1049,7 +1049,7 @@ p strong {color: #555;}
 .post_date .day {font-weight: bold;color:#FFF;font-size:30px;margin:12px 0 0 0;display: block;text-align: center;}
 .post_date .month {color:#A2A3A4;font-size:16px;text-transform:uppercase;display: block;margin:-14px 0 0 0;text-align: center;}
 .post_comments {width:36px;height:32px;position:absolute;top: 71px;right: 48px;}
-.post_comments span {display: block;color:#FFF;font-size:13px;font-weight: bold;margin: 5px 1px 0 0;text-align:right;}
+.post_comments span {display: block;color:#FFF;font-size:13px;font-weight: bold;margin: 5px 5px 0 0;text-align:right;}
 .sharelink_small {width:65px;height:30px;position:absolute;top: 115px;right: 18px;text-indent:-9999em;outline:none;display:block;background: url(../img/_global/global-sprite.png) 0 0 no-repeat;}
 .sharelink_big {width:92px;height:30px;text-indent:-9999em;outline:none;display:block;background: url(../img/_global/global-sprite.png) -66px 0 no-repeat;}
 .shareme {float: left;padding:0 0 30px 0;}
@@ -1420,7 +1420,7 @@ blockquote.right {margin-left: 20px;text-align: left;margin-right: 0;width: 33%;
 
 
 /*---------------------------------------------------------------*/
-/* 3. CALENDAR 
+/* 3. CALENDAR
 /*---------------------------------------------------------------*/
 table#wp-calendar {width: 100%;}
 table#wp-calendar td {width: 14%;text-align: center;}
@@ -1572,7 +1572,7 @@ box-shadow: 1px 1px 3px #222;
 #menu-main-nav li.parent:hover{
 border-top-left-radius: 5px;
 -moz-border-radius-topleft: 5px;
-border-top-right-radius: 5px;	
+border-top-right-radius: 5px;
 -moz-border-radius-topright: 5px;
 -webkit-border-top-left-radius: 5px;
 -webkit-border-top-right-radius: 5px;
@@ -1799,38 +1799,10 @@ border-radius: 5px;
 
 
 
-a.oe_menu_leaf {
-    margin: 0;
+#menu-main-nav {
+    font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
 }
 
-div.oe_post_oe_post_title {
-    display: block;
-}
-
-div.home-message-top {
-    margin-top: -20px;
-    border-color: #e0e0e0;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    height: 110px;
-    /*width: 400px;*/
-    margin-bottom: 30px;
-}
-
-div.home-message-image {
-    width: 35%;
-    position:relative;
-    display: block;
-    float: left;
-}
-
-div.home-message-content {
-    width: 65%;
-    position:relative;
-    display: block;
-    float: right;
-}
-
-div.home-message-content #title {
-    margin-top: 5px;
+.footer-holder {
+    font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
 }
