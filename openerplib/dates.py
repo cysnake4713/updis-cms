@@ -29,6 +29,7 @@
 ##############################################################################
 
 import datetime
+import pytz
 
 DEFAULT_SERVER_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_SERVER_TIME_FORMAT = "%H:%M:%S"
@@ -46,7 +47,9 @@ def str_to_datetime(str):
     """
     if not str:
         return str
-    return datetime.datetime.strptime(str, DEFAULT_SERVER_DATETIME_FORMAT)
+    time = datetime.datetime.strptime(str, DEFAULT_SERVER_DATETIME_FORMAT)
+    time = pytz.utc.localize(time)
+    return time
 
 def str_to_date(str):
     """
@@ -55,7 +58,9 @@ def str_to_date(str):
     """
     if not str:
         return str
-    return datetime.datetime.strptime(str, DEFAULT_SERVER_DATE_FORMAT).date()
+    time = datetime.datetime.strptime(str, DEFAULT_SERVER_DATE_FORMAT)
+    time = pytz.utc.localize(time)
+    return time
 
 def str_to_time(str):
     """
@@ -64,7 +69,9 @@ def str_to_time(str):
     """
     if not str:
         return str
-    return datetime.datetime.strptime(str, DEFAULT_SERVER_TIME_FORMAT).time()
+    time = datetime.datetime.strptime(str, DEFAULT_SERVER_TIME_FORMAT)
+    time = pytz.utc.localize(time)
+    return time
 
 def datetime_to_str(obj):
     """

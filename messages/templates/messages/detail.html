@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-{% load cms_tags message_tags humanize sekizai_tags%}
+{% load cms_tags message_tags humanize sekizai_tags %}
+{% load tz %}
 {% block tools %}
     <div class="tools">
         <div class="holder">
             <div class="frame">
                 <h1>{{ message.name }}</h1>
+
                 <p class="breadcrumb">
                     <a href="{% page_url 'cms_home' %}">首页</a>
-                    <a href="{%  url category_messages category_id=message.category_id|first %}">{{ message.category_id|last}}</a>
+                    <a href="{% url category_messages category_id=message.category_id|first %}">{{ message.category_id|last }}</a>
                     <span class="current_crumb">{{ message.name|truncatehanzi:'4'|safe }}</span>
                 </p>
             </div>
@@ -16,19 +18,26 @@
 {% endblock %}
 {% block content %}
     <div class="oe_post_title">
-{#        <h1 style="text-align: center">{{ message.name }}</h1>#}
+        {#        <h1 style="text-align: center">{{ message.name }}</h1>#}
     </div>
-    <div><span>{{ message.message_meta_display|safe }}</span></div>
-    <p>{{ message.content|safe }}</p>
-
-        <div class="post_footer">
-            <div class="post-cats">
-                <p>
-                    <span>分类:</span>
-                    <a href="{%  url category_messages category_id=message.category_id|first %}">{{ message.category_id|last}}</a>
-                </p>
-            </div>
+    <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
+    <br/>
+    <br/>
+    <p>
+        {% if message.content %}
+            {{ message.content|safe }}
+        {% else %}
+            消息无内容
+        {% endif %}
+    </p>
+    <div class="post_footer">
+        <div class="post-cats">
+            <p>
+                <span>分类:</span>
+                <a href="{% url category_messages category_id=message.category_id|first %}">{{ message.category_id|last }}</a>
+            </p>
         </div>
+    </div>
 
     <div class="blog-tab-box">
         <ol id="post-comments" class="comment-ol">
@@ -52,6 +61,12 @@
                                 <span class="comment-date">{{ comment.date|to_date }}</span>
                                 <br>
                                 {{ comment.body|safe }}
+                                <div class='attachment'>
+                                    {% for attachment in comment.attachment_ids %}
+                                        附件:
+                                        <a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,26 +81,67 @@
         <div class="comments-rss">
 
         </div>
-        <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
-            {% csrf_token %}
-            <p class="">
-                <label for="id_body" class="comment-label">评论内容</label>
-                <textarea id="id_body" rows="5" cols="70" name="body" class="comment-textarea"></textarea>
-            </p>
+        {% if  request.session.erp_user %}
+            <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
+                {% csrf_token %}
+                <p class="">
+                    <label for="id_body" class="comment-label">评论内容 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox"
+                               tabindex="2"
+                               id="id_is_anonymous"
+                               name="is_anonymous"/>
+                        <label for="id_is_anonymous">
+                            匿名评论
+                        </label> </label>
+                    <textarea style="border-style: solid; border-color: #d8d8d6; border-width: 1px" id="id_body"
+                              rows="5"
+                              cols="70" name="body" class="comment-textarea"></textarea>
+                </p>
 
-            <p style="float: right">
-                <input type="checkbox" tabindex="2" id="id_is_anonymous"
-                       name="is_anonymous">
-                <label for="id_is_anonymous">
-                    匿名评论
-                </label>
-            </p>
+                <p>
+                    <label for="id_attachment"
+                           class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>
+                </p>
 
-            <p>
-                <label for="id_attachment" class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>
-            </p>
-
-            <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
-        </form>
+                <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
+            </form>
+        {% else %}
+            请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后发表评论
+        {% endif %}
     </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.icon.min.js"></script>
+    <script src="{{ STATIC_URL }}js/clupload.js"></script>
+    <script src="{{ STATIC_URL }}js/fileuploader.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#id_body").cleditor({
+                controls:   // controls to add to the toolbar
+                        "bold italic underline strikethrough " +
+                                "| removeformat | bullets numbering | outdent " +
+                                "indent | link unlink | source" +
+                                " icon ",
+                width: 940,
+                height: 150
+            });
+        });
+
+    </script>
+    <script>
+        $("#ka-submit").bind("click", function (event) {
+            id_body = $("#id_body")[0].value;
+            id_body = $.trim(id_body);
+            if (id_body != '' && id_body != null) {
+
+            } else {
+                event.preventDefault();
+                alert("请输入评论内容！");
+            }
+        });
+    </script>
 {% endblock %}

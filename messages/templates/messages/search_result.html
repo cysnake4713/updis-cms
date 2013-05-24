@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags message_tags %}
+{% block content_class %}
+    content_blog
+{% endblock %}
+{% block tools %}
+    <div class="tools">
+        <div class="holder">
+            <div class="frame">
+                <h1>搜索结果:{{ search_context }}</h1>
+
+                <p class="breadcrumb">
+                    <a href="{% page_url 'cms_home' %}">首页</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endblock %}
+{% block content %}
+    {% if messages %}
+        <div class="karma-pages-top">
+            <span class="pages"> 第<strong> {{ messages.number }} </strong>页/ 共{{ messages.paginator.num_pages }}页</span>
+            每页20条&nbsp;&nbsp;&nbsp;&nbsp;共{{ messages.paginator.count }}条&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="background: none;" href="?page=1">首页</a>
+            {% if messages.has_previous %}
+                <a style="background: none;" href="?page={{ messages.previous_page_number }}">上一页</a>
+            {% endif %}
+            {% if messages.has_next %}
+                <a style="background: none;" href="?page={{ messages.next_page_number }}">下一页</a>
+            {% endif %}
+            <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
+            跳转到<input id="jump_to_page_top">页
+            <button id="jump_to_top">go</button>
+        </div>
+        {% for msg in messages %}
+            <div class="blog_wrap">
+                <div class="post_title">
+                    <h1>
+                        <a style="line-height: 110%;" target="_blank" href="{% url messages_detail message_id=msg.id %}"
+                           title="{{ msg.name }}"> {{ msg.name }}</a>
+                    </h1>
+
+                    <p class="posted-by-text">
+                        <span>发布者</span>
+                        {#                        {% if msg.is_display_name %}#}
+                        &nbsp;&nbsp;{{ msg.name_for_display|safe }}
+                        {#                        {% else %}#}
+                        {#                            &nbsp;&nbsp;匿名用户#}
+                        {#                        {% endif %}#}
+                    </p>
+                </div>
+                <div class="post_content">
+                    {% if msg.image_medium %}
+                        <div class="post_thumb">
+                            <div class="post_thumb_load">
+                                <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
+                                   class="attachment-fadeIn" style="display: inline">
+                                    <img src="data:image/png;base64,{{ msg.image_medium }}" height="218" width="700"/>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="" style="min-height: 50px">
+                        <p>{{ msg.content|striptags|truncatehanzi:'100'|safe }}</p>
+                    </div>
+                    <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}"
+                       href="{% url messages_detail message_id=msg.id %}">
+                        <span>阅读</span>
+                    </a>
+
+                    <div class="post_date">
+                        <span class="day">{{ msg.create_date|to_date|date:'d' }}</span>
+                        <br>
+                        <span class="month">{{ msg.create_date|to_date|date:'M' }}</span>
+                    </div>
+                    <div class="post_comments">
+                        <a href="{% url messages_detail message_id=msg.id %}#post-comments">
+                            <span>{{ msg.message_ids|length }}</span>
+                        </a>
+                    </div>
+                    <div class="post_footer">
+                        <div class="post_cats">
+                            <p>
+                                <span>分类：</span>
+                                <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        无相关搜索结果
+    {% endif %}
+
+    <div class="karma-pages">
+        <span class="pages"> 第<strong> {{ messages.number }} </strong>页/ 共{{ messages.paginator.num_pages }}页</span>
+        每页20条&nbsp;&nbsp;&nbsp;&nbsp;共{{ messages.paginator.count }}条&nbsp;&nbsp;&nbsp;&nbsp;
+        <a style="background: none;" href="?page=1">首页</a>
+        {% if messages.has_previous %}
+            <a style="background: none;" href="?page={{ messages.previous_page_number }}">上一页</a>
+        {% endif %}
+        {% if messages.has_next %}
+            <a style="background: none;" href="?page={{ messages.next_page_number }}">下一页</a>
+        {% endif %}
+        <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
+        跳转到<input id="jump_to_page_bottom">页
+        <button id="jump_to_bottom">go</button>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $(function () {
+            $('#jump_to_bottom').bind("click", function (event) {
+                var reg = new RegExp("^[0-9]+$");
+                event.preventDefault();
+                var pageNum = $("#jump_to_page_bottom")[0].value;
+                if (reg.test(pageNum)) {
+                    window.location.href = '?page=' + encodeURIComponent(pageNum)
+                } else {
+                    alert("请输入数字！")
+                }
+            })
+            $('#jump_to_top').bind("click", function (event) {
+                var reg = new RegExp("^[0-9]+$");
+                event.preventDefault();
+                var pageNum = $("#jump_to_page_top")[0].value;
+                if (reg.test(pageNum)) {
+                    window.location.href = '?page=' + encodeURIComponent(pageNum)
+                } else {
+                    alert("请输入数字！")
+                }
+            })
+        })
+    </script>
+{% endblock %}

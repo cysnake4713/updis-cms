@@ -1,3 +1,4 @@
+{% load message_tags %}
 <div class="clear department-container tabs-container" id="tabbox_c">
     <a class="arrow" href="#">
         <img src="{{ STATIC_URL }}img/left.gif">
@@ -12,12 +13,12 @@
             </li>
         {% endfor %}
     </ul>
-    <ul class="tab_conbox" id="tab_conbox3">
+    <ul class="tab_conbox" id="tab_conbox3" style="background-color:#f5f5f5;">
         {% for dep in department_message_categories %}
             <li class="tab_con" style="display: list-item">
                 <div class="term">
                     {% if dep.have_image %}
-                        <dl class="one_third"  style="margin-right: 9px !important; padding-left: 9px !important;">
+                        <dl class="one_third" style="margin-right: 9px !important; padding-left: 9px !important;">
                             <div class="portfolio_content_top_three">
                                 <div class="port_img_three">
                                     <div class="preload preload_three">
@@ -36,12 +37,15 @@
                     {% endif %}
                     {% for cat in dep.message_categories %}
                         <dl style="margin-right: 9px !important; padding-left: 9px !important;"
-                                class="{% if  dep.have_image %}{% cycle 'one_third' 'one_third' 'one_third' %}{% else %}{% cycle 'one_third' 'one_third' 'one_third' %}{% endif %}">
-                            <dt>{{ cat.name }}</dt>
+                            class="
+                                    {% if  dep.have_image %}{% cycle 'one_third' 'one_third' 'one_third' %}{% else %}{% cycle 'one_third' 'one_third' 'one_third' %}{% endif %}">
+                            <dt>{{ cat.name }}{% message_publish_url name=cat.name %}</dt>
                             {% for msg in cat.messages %}
                                 <dd>
                                     <a target="_blank" class="page-item"
-                                       href="{% url messages_detail message_id=msg.id %}">{{ msg.category_message_title_meta_display|safe }}</a>
+                                       href="{% url messages_detail message_id=msg.id %}">
+                                        <div {% is_today date=msg.create_date %}>{{ msg.category_message_title_meta_display|safe }}</div>
+                                    </a>
                                 </dd>
                             {% endfor %}
                         </dl>

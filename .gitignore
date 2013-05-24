@@ -3,3 +3,4 @@
 *.sqlite
 upcms/static/*
 upcms/media/*
+atlassian-ide-plugin.xml
