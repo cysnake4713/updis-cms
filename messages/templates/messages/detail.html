@@ -23,8 +23,13 @@
     <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
     <br/>
     <br/>
-    <p>{{ message.content|safe }}</p>
-
+    <p>
+        {% if message.content %}
+            {{ message.content|safe }}
+        {% else %}
+            消息无内容
+        {% endif %}
+    </p>
     <div class="post_footer">
         <div class="post-cats">
             <p>
@@ -58,7 +63,8 @@
                                 {{ comment.body|safe }}
                                 <div class='attachment'>
                                     {% for attachment in comment.attachment_ids %}
-                                        附件:<a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
+                                        附件:
+                                        <a href="{% url get_attachment attachment_id=attachment.id %}">{{ attachment.datas_fname }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -99,6 +105,43 @@
 
                 <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
             </form>
+        {% else %}
+            请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后发表评论
         {% endif %}
     </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cleditor.icon.min.js"></script>
+    <script src="{{ STATIC_URL }}js/clupload.js"></script>
+    <script src="{{ STATIC_URL }}js/fileuploader.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#id_body").cleditor({
+                controls:   // controls to add to the toolbar
+                        "bold italic underline strikethrough " +
+                                "| removeformat | bullets numbering | outdent " +
+                                "indent | link unlink | source" +
+                                " icon ",
+                width: 940,
+                height: 150
+            });
+        });
+
+    </script>
+    <script>
+        $("#ka-submit").bind("click", function (event) {
+            id_body = $("#id_body")[0].value;
+            id_body = $.trim(id_body);
+            if (id_body != '' && id_body != null) {
+
+            } else {
+                event.preventDefault();
+                alert("请输入评论内容！");
+            }
+        });
+    </script>
 {% endblock %}

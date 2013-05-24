@@ -28,7 +28,10 @@ def get_messages_categories(position, request):
                                                           order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids'], limit=6)
+                                           ['category_message_title_meta_display', 'message_ids', 'name',
+                                            "create_date"],
+                                           limit=cat['default_message_count'] is not 0 and cat[
+                                               'default_message_count'] or 8)
         cat.update({
             'messages': messages
         })
@@ -44,7 +47,8 @@ def get_messages_categories_with_image(position, request):
                                                           order='sequence')
     for cat in message_categories:
         messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids', 'content', 'name'],
+                                           ['category_message_title_meta_display', 'message_ids', 'content', 'name',
+                                            'create_date'],
                                            limit=10)
         top_message = _get_last_image(messages)
         if top_message:
@@ -76,7 +80,9 @@ def get_department_message_categories(request):
         for cat in message_categories:
             messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
                                                ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
-                                                'category_message_title_meta_display'], limit=6)
+                                                'category_message_title_meta_display', 'create_date'],
+                                               limit=cat['default_message_count'] is not 0 and cat[
+                                                   'default_message_count'] or 8)
             cat.update({
                 'messages': messages
             })
@@ -91,7 +97,12 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
     admin_preview = False
 
     def render(self, context, instance, placeholder):
-        message_categories = get_messages_categories('shortcut', context.get('request'))
+
+        if cache.get('shortcut_category_cache'):
+            message_categories = cache.get('shortcut_category_cache')
+        else:
+            message_categories = get_messages_categories('shortcut', context.get('request'))
+            cache.set('shortcut_category_cache', message_categories, 60 * 100)
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -111,7 +122,7 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('left_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_left', context.get('request'))
-            cache.set('left_category_cache', message_categories, 60 * 10)
+            cache.set('left_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
         context.update({
             'object': instance,
@@ -133,7 +144,7 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
             message_categories = cache.get('right_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_right', context.get('request'))
-            cache.set('right_category_cache', message_categories, 60 * 10)
+            cache.set('right_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
 
         context.update({
@@ -155,13 +166,14 @@ class DepartmentMessageCategoriesPlugin(CMSPluginBase):
             department_message_categories = cache.get('department_message_category_cache')
         else:
             department_message_categories = get_department_message_categories(context.get('request'))
-            cache.set('department_message_category_cache', department_message_categories, 60 * 60)
+            cache.set('department_message_category_cache', department_message_categories, 60 * 100)
         context.update({
             'object': instance,
             'placeholder': placeholder,
             'department_message_categories': department_message_categories
         })
         return context
+
 
 class Android2DImagePlugin(CMSPluginBase):
     name = _("Android 2D Image plugin")

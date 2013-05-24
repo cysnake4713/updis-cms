@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 import operator
+import datetime
 from django.core.cache import cache
 from django.template.defaultfilters import stringfilter
 from openerplib import dates
 
 __author__ = 'Zhou Guangwen'
+
 from django import template
 from upcms import settings
 
@@ -81,6 +84,17 @@ def _get_message_publish_url(context):
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_news')],
                                      ['res_id'], limit=1)
     ids['news'] = notice[0]['res_id']
+
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_sell')],
+                                     ['res_id'], limit=1)
+    ids['sell'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_recommend')],
+                                     ['res_id'], limit=1)
+    ids['recommend'] = notice[0]['res_id']
+    notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_inner_connection')],
+                                     ['res_id'], limit=1)
+    ids['inner_connection'] = notice[0]['res_id']
+
     cache.set('message_publish_url', ids, 60 * 3600)
     return ids
 
@@ -92,26 +106,33 @@ def message_publish_url(context, name):
     else:
         url = _get_message_publish_url(context)
         cache.set('message_publish_url', url, 60 * 3600)
-    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">\u53d1\u5e03</a>'''
+    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">发布</a>'''
     from  upcms import settings
 
     host = settings.ERP_HOME
-        # name = unicode(name, 'ascii')
+    # name = unicode(name, 'ascii')
 
-    if name == u'\u7545\u6240\u6b32\u8a00':
+    if name == u'畅所欲言':
         return text % (host, url['chat'])
-    if name == u'\u901a\u77e5':
+    if name == u'通知':
         return text % (host, url['notice'])
-    if name == u'\u4e1a\u4f59\u751f\u6d3b':
+    if name == u'业余生活':
         return text % (host, url['life'])
-    if name == u'\u670d\u52a1\u7533\u62a5':
+    if name == u'服务申报':
         return text % (host, url['service'])
-    if name == u'\u9910\u8bba':
+    if name == u'餐论':
         return text % (host, url['food'])
-    if name == u'\u5171\u4eab\u8d44\u6e90':
+    if name == u'共享资源':
         return text % (host, url['share'])
-    if name == u'\u5404\u6240\u5feb\u8baf':
+    if name == u'各所快讯':
         return text % (host, url['news'])
+    if name == u'跳蚤市场':
+        return text % (host, url['sell'])
+    if name == u'大家推荐':
+        return text % (host, url['recommend'])
+    if name == u'内部交流':
+        return text % (host, url['inner_connection'])
+
     return ''
 
 
@@ -136,5 +157,18 @@ def truncatehanzi(value, arg):
     except (ValueError, TypeError):
         return value # Fail silently.
 
+
+@register.simple_tag(name='is_today', takes_context=True)
+def is_today(context, date):
+    create_date = datetime.datetime.strptime(date,
+                                             '%Y-%m-%d %H:%M:%S') + datetime.timedelta(hours=8)
+    create_date = create_date.strftime('%Y-%m-%d')
+
+    now = datetime.datetime.now()
+    now = now.strftime('%Y-%m-%d')
+    if create_date == now:
+        return 'style="font-weight: bold"'
+    else:
+        return ''
 
 register.filter('truncatehanzi', truncatehanzi)

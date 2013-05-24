@@ -1,10 +1,14 @@
 # Create your views here.
 import base64
+import urllib
+import urllib2
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from messages.forms import CommentForm
+from django.core.cache import cache
+import cms_plugins
 
 
 class MessageList(object):
@@ -30,12 +34,15 @@ def detail(req, message_id):
     messages = message_obj.search_read([('id', '=', message_id)],
                                        ['name', 'message_meta_display', 'content', 'message_ids',
                                         'category_id', 'message_summary', 'read_times'])
-    message = messages[0]
-    message_obj.write([message_id], {'read_times': message['read_times'] + 1})
-    comments = comment_obj.read(message['message_ids'],
-                                ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
-    for comment in comments:
-        comment['attachment_ids'] = attachment_obj.read(comment.get('attachment_ids'), ["id", 'datas_fname'])
+    if messages:
+        message = messages[0]
+        message_obj.write([message_id], {'read_times': message['read_times'] + 1})
+        comments = comment_obj.read(message['message_ids'],
+                                    ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
+        for comment in comments:
+            comment['attachment_ids'] = attachment_obj.read(comment.get('attachment_ids'), ["id", 'datas_fname'])
+    else:
+        raise Http404
     if req.method == 'POST':
         form = CommentForm(req.POST, req.FILES)
         if form.is_valid():
@@ -87,7 +94,11 @@ def by_category(req, category_id):
     category_id = int(category_id)
     message_category_obj = erpsession.get_model("message.category")
 
-    message_category = message_category_obj.search_read([('id', '=', category_id)])[0]
+    message_categorys = message_category_obj.search_read([('id', '=', category_id)])
+    if message_categorys:
+        message_category = message_categorys[0]
+    else:
+        raise Http404
     per_page = int(req.GET.get('per_page', 20))
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
                                       ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
@@ -135,7 +146,11 @@ def get_department_image(request, department_id):
     department_id = int(department_id)
     message_category_obj = erp_session.get_model("hr.department")
 
-    hr_department = message_category_obj.search_read([('id', '=', department_id)], ['image_medium'])[0]
+    hr_departments = message_category_obj.search_read([('id', '=', department_id)], ['image_medium'])
+    if hr_departments:
+        hr_department = hr_departments[0]
+    else:
+        raise Http404
     response = HttpResponse(hr_department['image_medium'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
@@ -147,7 +162,11 @@ def get_employee_image(request, employee_id):
     employee_id = int(employee_id)
     employee_obj = erp_session.get_model("res.partner")
 
-    hr_employee = employee_obj.search_read([('id', '=', employee_id)], ['image_small'])[0]
+    hr_employees = employee_obj.search_read([('id', '=', employee_id)], ['image_small'])
+    if hr_employees:
+        hr_employee = hr_employees[0]
+    else:
+        raise Http404
     response = HttpResponse(hr_employee['image_small'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
@@ -159,7 +178,11 @@ def get_department_image_big(request, department_id):
     department_id = int(department_id)
     message_category_obj = erp_session.get_model("hr.department")
 
-    hr_department = message_category_obj.search_read([('id', '=', department_id)], ['image'])[0]
+    hr_departments = message_category_obj.search_read([('id', '=', department_id)], ['image'])
+    if hr_departments:
+        hr_department = hr_departments[0]
+    else:
+        raise Http404
     response = HttpResponse(hr_department['image'].decode('base64'))
     response['Content-Type'] = 'image/png'
     return response
@@ -168,7 +191,25 @@ def get_department_image_big(request, department_id):
 def get_attachment(request, attachment_id):
     attachment_id = int(attachment_id)
     attachment_obj = request.erpsession.get_model('ir.attachment')
-    datas = attachment_obj.search_read([('id', '=', attachment_id)], ['datas', 'datas_fname'])[0]
-    response = HttpResponse(datas['datas'].decode('base64'), mimetype='application/octet-stream')
-    response['Content-Disposition'] = 'attachment; filename=%s' % datas['datas_fname']
+    datas = attachment_obj.search_read([('id', '=', attachment_id)], ['datas', 'datas_fname'])
+    if datas:
+        data = datas[0]
+    else:
+        raise Http404
+    response = HttpResponse(data['datas'].decode('base64'), mimetype='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename=' + data['datas_fname'].encode('utf-8')
     return response
+
+
+def reload_cache(request, TYPE):
+    if TYPE == '0':
+        cache.set('shortcut_category_cache', cms_plugins.get_messages_categories('shortcut', request), 60 * 100)
+    if TYPE == '1':
+        cache.set('left_category_cache', cms_plugins.get_messages_categories_with_image('content_left', request),
+                  60 * 100)
+    if TYPE == '2':
+        cache.set('right_category_cache', cms_plugins.get_messages_categories_with_image('content_right', request),
+                  60 * 100)
+    if TYPE == '3':
+        cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
+    return HttpResponse("")

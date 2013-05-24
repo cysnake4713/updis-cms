@@ -7,12 +7,12 @@ Version: 2.1
 
 
 
-/* ---------------------- 
+/* ----------------------
 Stylesheet Guide
 -------------------------
 
  01. GLOBAL STYLES
- 
+
  02. LAYOUT
  	1. GENERAL STRUCTURE
  	2. CONTENT AREA
@@ -23,33 +23,33 @@ Stylesheet Guide
 	7. HOMEPAGE
 	8. SITEMAP
 	9. VIDEO + 3D THUMBS
-	
+
  03. NAVIGATION
  	1. MAIN NAVIGATION
  	2. VERTICAL SUB NAVIGATION
 	3. HORIZONTAL SUB NAVIGATION
 	4. BREADCRUMBS
-	
+
 04. LINKS
 	1. GENERAL LINKS
 	2. TOP LINK
 	3. CUSTOM BUTTONS
-	
+
 05. LISTS
 	1. GENERAL LISTS
 	2. CUSTOM LIST BULLETS
 	3. ACCORDION
 	4. TABS
-	
+
 06. TYPOGRAPHY
 	1. GENERAL TYPOGRAPHY
 	2. @FONT-FACE
 	3. MESSAGE BOXES
 	4. FOOTER
 	5. CALLOUTS
-	
+
 07. BLOG
-	
+
 08. FORMS
 
 09. IMAGES
@@ -65,7 +65,7 @@ Stylesheet Guide
 	3. DEFAULTS
 	4. 404 ERROR PAGE
 	5. CONSTANT CONTACT
-	
+
 12. WIDGETS + SHORTCODES
 	1. DEFAULT STYLES
 	2. BLOGROLL - FOOTER
@@ -76,7 +76,7 @@ Stylesheet Guide
 	7. SOCIAL MEDIA
 	8. LATEST TWEETS
 	9. TESTIMONIALS SLIDER
-	
+
 13. PROGRESSIVE CSS ENHANCEMENTS
 
 14. PRETTY PHOTO
@@ -1420,7 +1420,7 @@ blockquote.right {margin-left: 20px;text-align: left;margin-right: 0;width: 33%;
 
 
 /*---------------------------------------------------------------*/
-/* 3. CALENDAR 
+/* 3. CALENDAR
 /*---------------------------------------------------------------*/
 table#wp-calendar {width: 100%;}
 table#wp-calendar td {width: 14%;text-align: center;}
@@ -1572,7 +1572,7 @@ box-shadow: 1px 1px 3px #222;
 #menu-main-nav li.parent:hover{
 border-top-left-radius: 5px;
 -moz-border-radius-topleft: 5px;
-border-top-right-radius: 5px;	
+border-top-right-radius: 5px;
 -moz-border-radius-topright: 5px;
 -webkit-border-top-left-radius: 5px;
 -webkit-border-top-right-radius: 5px;
@@ -1805,290 +1805,4 @@ border-radius: 5px;
 
 .footer-holder {
     font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
-}
-
-
-div.oe_post_oe_post_title {
-    display: block;
-}
-
-div.home-message-top {
-    margin-top: -20px;
-    border-color: #e0e0e0;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    height: 110px;
-    /*width: 400px;*/
-    margin-bottom: 30px;
-}
-
-div.home-message-image {
-    width: 35%;
-    position: relative;
-    display: block;
-    float: left;
-    background-size: 130px 90px;
-    height: 100px;
-    background: url(../img/message-image-frame.png) no-repeat;
-    /*background-position: -10px center;*/
-}
-
-div.home-message-image img.img {
-    margin-left: 7px;
-    margin-top: 8px;
-    height: 75px;
-    width: 115px;
-}
-
-div.home-message-content {
-    width: 65%;
-    position: relative;
-    display: block;
-    float: right;
-}
-
-div.home-message-content #title {
-    margin-top: 5px;
-}
-
-.search-holder {
-    width: 980px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#search-area {
-    position: relative;
-    width: 550px;
-    height: 40px;
-    float: right;
-    display: block;
-}
-
-/*#search-area span {*/
-/*float: right;*/
-/*}*/
-
-#search-area .mc_input {
-    -webkit-appearance: none;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px 0px inset;
-    -webkit-rtl-ordering: logical;
-    -webkit-user-select: text;
-    -webkit-writing-mode: horizontal-tb;
-    background-attachment: scroll;
-    background-clip: border-box;
-    background-color: rgb(245, 245, 245);
-    background-image: none;
-    background-origin: padding-box;
-    background-size: auto;
-    border-bottom-color: rgb(153, 153, 153);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-collapse: collapse;
-    border-left-color: rgb(153, 153, 153);
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-right-color: rgb(153, 153, 153);
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-top-color: rgb(153, 153, 153);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-top-style: solid;
-    border-top-width: 1px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px 0px inset;
-    color: rgb(0, 0, 0);
-    cursor: auto;
-    display: inline-block;
-    font-size: 13px;
-    height: 25px;
-    letter-spacing: normal;
-    line-height: normal;
-    list-style-type: none;
-    margin-bottom: 9px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 8px;
-    padding-bottom: 5px;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 5px;
-    text-align: start;
-    text-indent: 0px;
-    text-shadow: none;
-    text-transform: none;
-    width: 252px;
-    word-spacing: 0px;
-    writing-mode: lr-tb;
-}
-
-.main-holder {
-    width: 980px;
-    padding-top: 20px !important;
-
-}
-
-#main .main-area {
-    padding-top: 60px !important;
-}
-
-.post_title {
-    margin-top: 5px !important;
-}
-
-.blog_wrap {
-    margin-bottom: 40px;
-}
-
-div.bizmail_column {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-div.bizmail_SubmitArea {
-    display: inline-block;
-}
-
-a.oe_menu_leaf, input {
-    margin-left: 10px;
-}
-
-div.bizmail_inputArea {
-    display: inline-block;
-}
-
-div.bizmail_SubmitArea input {
-    width: 40px !important;
-    background-color: #909090;
-    border: 0px;
-
-}
-
-input.text {
-    width: 80px;
-    background-color: #19292e;
-    color: #ffffff;
-    border-style: dotted;
-    border-width: 1px;
-    border-color: dimgrey;
-
-}
-
-div.bizmail_LoginBox form {
-    display: inline-block;
-    /*margin-left: 20px;*/
-}
-
-div.bizmail_LoginBox h3 {
-    display: none;
-
-}
-
-.mail-login {
-    display: inline-block;
-    /*vertical-align: middle;*/
-    /*margin-left: 120px;*/
-}
-
-#news {
-    overflow: hidden;
-}
-
-#news li {
-    margin-top: 5px;
-}
-
-.post-cats {
-    margin-top: 16px;
-}
-
-#news a {
-    margin-left: 0px !important;
-}
-
-.publish-message {
-    float: right;
-    margin-right: 5px;
-    font-size: 12px;
-    font-weight: normal;
-}
-
-.message_more {
-    float: right;
-    /*margin-right: 30px;*/
-}
-
-#news a.publish-message {
-    display: inline-block;
-    /*font-size: 12px;*/
-}
-
-.tab_con {
-    background-color: #f7f7f7 !important;
-    min-height: 250px !important;
-}
-
-#phone2d {
-    float: left;
-    position: relative;
-    padding: 20px 20px 20px 0;
-    /*border-width: 1px;*/
-    /*border-color: #40585f;*/
-    /*border-style: solid;*/
-}
-
-#phone2d .phone_text {
-    float: right;
-    display: block;
-    margin-left: 5px;
-    width: 240px;
-    position: relative;
-}
-
-#phone2d h4 {
-    margin-left: 30px;
-}
-
-#phone2d span {
-    float: left;
-    position: relative;
-    display: inline-block;
-}
-
-#phone2d img {
-    position: relative;
-    display: inline-block;
-    float: left;
-}
-
-#phone2d a {
-    color: #FF6600;
-}
-
-.karma-pages a {
-    padding: 0px !important;
-    margin: 0px !important;
-}
-
-.karma-pages input {
-    width: 29px;
-}
-
-.karma-pages-top input {
-    width: 29px;
-}
-
-.karma-pages-top {
-    margin-bottom: 40px;
-}
-
-.karma-pages-top a {
-    padding: 0px !important;
-    margin: 0px !important;
-    color: #666 !important;
-    outline-style: none !important;
-    text-decoration: none !important;
 }

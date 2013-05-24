@@ -207,7 +207,6 @@ ERP_LOGIN = 'cmsreader'
 ERP_PASSWORD = 'cmsreader'
 ERP_DATABASE = 'develop'
 # CAS_SERVER_URL="https://cysnake4713-lenovo:8443/cas/"
-
 ERP_DOMAIN = "localhost"
 
 ERP_HOME = 'http://localhost:8069'
