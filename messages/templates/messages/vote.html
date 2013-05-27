@@ -26,18 +26,19 @@
                     <div class="portfolio_content_top">
                         <div class="port_img_two">
                             <div class="preload preload_two">
-                                <a><img src="{{ STATIC_URL }}img/_global/img-zoom-2.png"
+                                <a href="{% url get_votes_record vote__category_id=vote.id %}"><img
+                                        src="{{ STATIC_URL }}img/_global/img-zoom-2.png"
                                         style="position:absolute; display: none;"
-                                        alt="CSS Template"/><img
+                                        alt="无法获得图像"/><img
                                         src="{% url get_image id=vote.id model='updis.vote' field='image' %}"
-                                        alt="CSS Template" width="437" height="234"/></a>
+                                        alt="无法获得图像" width="437" height="234"/></a>
                             </div>
                         </div>
 
                     </div>
 
                     <div class="portfolio_content">
-                        <h3>{{ vote.name }}</h3>
+                        <h3><a href="{% url get_votes_record vote__category_id=vote.id %}">{{ vote.name }}</a></h3>
 
                         <p>{{ vote.description }}</p>
                     </div>

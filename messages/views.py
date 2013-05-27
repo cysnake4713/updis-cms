@@ -220,9 +220,36 @@ def get_votes(request):
     vote_obj = erpsession.get_model("updis.vote")
 
     votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description'])
-    if not votes:
-        raise Http404
     return render_to_response("messages/vote.html", {'votes': votes},
+                              context_instance=RequestContext(request))
+
+
+def get_votes_record(request, vote__category_id):
+    erpsession = request.erpsession
+    vote_record_obj = erpsession.get_model("updis.vote.record")
+    vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
+                                               fields=['author', 'name', 'description'])
+    vote_obj = erpsession.get_model("updis.vote")
+    votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)], fields=['name'])
+    if votes:
+        votes = votes[0]
+    else:
+        raise Http404
+    return render_to_response("messages/vote_record.html", {'vote_records': vote_records, 'vote_category': votes},
+                              context_instance=RequestContext(request))
+
+
+def get_votes_detail(request, vote_record_id):
+    erpsession = request.erpsession
+    vote_record_obj = erpsession.get_model("updis.vote.record")
+    vote_records = vote_record_obj.search_read(
+        domain=[('id', '=', vote_record_id)], fields=['name', 'vote_category', 'author', 'content', 'description'])
+    if vote_records:
+        vote_record = vote_records[0]
+    else:
+        raise Http404
+
+    return render_to_response("messages/vote_detail.html", {'vote_record': vote_record},
                               context_instance=RequestContext(request))
 
 
