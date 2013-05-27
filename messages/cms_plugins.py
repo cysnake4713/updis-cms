@@ -12,8 +12,8 @@ def _get_last_image(messages):
     for message in messages:
         content = message['content']
         if content:
-            #TODO:regx still got problem
-            match = re.compile(r'.*?<[img|IMG].*?[src|SRC]="(.*?)".*?').match(content.replace('\n', ' '))
+            match = re.compile(r'''.*?<img[^>]+\s+src\s*=\s*['"]([^'"]+)['"][^>]*>.*?''', re.IGNORECASE).match(
+                content.replace('\n', ' '))
             if match:
                 return match.group(1), message
     return None
