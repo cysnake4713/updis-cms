@@ -56,10 +56,15 @@
             </div>
             <br class="clear">
             <div class="hr"></div>
-            <div style="position: relative">
-                <a href="#" class="ka_button medium_button medium_tealgrey"
-                   style="opacity: 1;"><span>我要投票</span></a>
-            </div>
+
+            {% if  request.session.erp_user %}
+                <div style="position: relative">
+                    <a href="#" class="ka_button medium_button medium_tealgrey"
+                       style="opacity: 1;"><span>我要投票</span></a>
+                </div>
+            {% else %}
+                <h2>请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后投票</h2>
+            {% endif %}
 
         {% else %}
             无相关搜索结果
