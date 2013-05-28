@@ -1,13 +1,16 @@
 # Create your views here.
 import base64
-import urllib
-import urllib2
+import psycopg2
+import timeit
+
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from messages.forms import CommentForm
 from django.core.cache import cache
+
+from upcms import settings
+from messages.forms import CommentForm
 import cms_plugins
 
 
@@ -36,7 +39,8 @@ def detail(req, message_id):
                                         'category_id', 'message_summary', 'read_times'])
     if messages:
         message = messages[0]
-        message_obj.write([message_id], {'read_times': message['read_times'] + 1})
+        update_read_time(message['id'])
+
         comments = comment_obj.read(message['message_ids'],
                                     ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
         for comment in comments:
@@ -70,6 +74,7 @@ def detail(req, message_id):
                 })
             comment_obj = req.erpsession.get_model('mail.message')
             comment_id = comment_obj.create(params)
+            message_obj.write([message_id], {'read_times': message['read_times']})
             if form.cleaned_data['attachment']:
                 attachment_obj = req.erpsession.get_model('ir.attachment')
                 attachment_obj.write([attachment_id], {'res_model': 'mail.message', 'res_id': comment_id})
@@ -213,3 +218,20 @@ def reload_cache(request, TYPE):
     if TYPE == '3':
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
+
+
+def update_read_time(id):
+    conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
+                            password=settings.DB_PASSWORD)
+
+    cursor = conn.cursor()
+    cursor.execute("""update message_message set read_times = read_times + 1 where id = %d""" % (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+if __name__ == '__main__':
+    t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")
+    v = t.timeit(1000)
+    print v

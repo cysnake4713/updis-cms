@@ -1,6 +1,5 @@
 # Django settings for upcms project.
 import os
-from django.conf.global_settings import CACHES
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
@@ -210,3 +209,9 @@ ERP_DATABASE = 'develop'
 ERP_DOMAIN = "localhost"
 
 ERP_HOME = 'http://localhost:8069'
+
+
+DB_HOST = "localhost"
+DB_NAME = "develop"
+DB_USER = "openerp_updis"
+DB_PASSWORD = "openerpupdis2013"

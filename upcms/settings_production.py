@@ -8,6 +8,11 @@ settings.CAS_SERVER_URL = "http://sso.updis.cn/cas/"
 settings.ERP_DOMAIN = ".updis.cn"
 settings.ERP_HOME = 'http://erp.updis.cn'
 
+settings.DB_HOST = "10.100.100.16"
+settings.DB_NAME = "develop"
+settings.DB_USER = "openerp_updis"
+settings.DB_PASSWORD = "openerpupdis2013"
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -15,4 +20,3 @@ CACHES = {
     }
 }
 
-from settings import *
