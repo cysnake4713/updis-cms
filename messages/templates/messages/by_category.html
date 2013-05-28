@@ -43,11 +43,11 @@
 
                 <p class="posted-by-text">
                     <span>发布者</span>
-{#                    {% if msg.is_display_name %}#}
-                        &nbsp;&nbsp;{{ msg.name_for_display|safe }}
-{#                    {% else %}#}
-{#                        &nbsp;&nbsp;匿名用户#}
-{#                    {% endif %}#}
+                    {#                    {% if msg.is_display_name %}#}
+                    &nbsp;&nbsp;{{ msg.name_for_display|safe }}
+                    {#                    {% else %}#}
+                    {#                        &nbsp;&nbsp;匿名用户#}
+                    {#                    {% endif %}#}
                 </p>
             </div>
             <div class="post_content">
@@ -62,7 +62,9 @@
                     </div>
                 {% endif %}
                 <div class="" style="min-height: 50px">
-                    <p>{{ msg.content|striptags|truncatehanzi:'100'|safe }}</p>
+                    {% if msg.content %}
+                        <p>{{ msg.content|striptags|truncatehanzi:'100'|safe }}</p>
+                    {% endif %}
                 </div>
                 <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}"
                    href="{% url messages_detail message_id=msg.id %}">
