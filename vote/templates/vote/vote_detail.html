@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_vote.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
 {#{% block content_class %}#}
 {#    co#}
@@ -23,7 +23,7 @@
 {% endblock %}
 {% block content %}
     <div id="content" class="content_full_width portfolio_layout">
-        <h1>作者: {% if vote_record %}{{ vote_record.author|last }}{% endif %}</h1>
+        <h1>作者: {% if vote_record.author %}{{ vote_record.author|last }}{% endif %}</h1>
         {% if vote_record.content %}
             {{ vote_record.content|safe }}
         {% else %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_vote.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
 {#{% block content_class %}#}
 {#    co#}
@@ -50,10 +50,13 @@
         {% else %}
             无相关搜索结果
         {% endif %}
+
+
+
+
     </div>
 {% endblock %}
 
 {% block custom_js %}
-    <script>
-    </script>
+
 {% endblock %}

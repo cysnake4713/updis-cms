@@ -1,7 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_vote.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
 {#{% block content_class %}#}
-{#    co#}
 {#{% endblock %}#}
 {% block tools %}
     <div class="tools">
@@ -59,7 +58,7 @@
 
             {% if  request.session.erp_user %}
                 <div style="position: relative">
-                    <a href="#" class="ka_button medium_button medium_tealgrey"
+                    <a id="vote" href="" class="ka_button medium_button medium_tealgrey"
                        style="opacity: 1;"><span>我要投票</span></a>
                 </div>
             {% else %}
@@ -69,10 +68,55 @@
         {% else %}
             无相关搜索结果
         {% endif %}
+
+        <div id="dialog" title="投票">
+            <form>
+
+                {% for vote_record in vote_records %}
+
+                    <ul style="list-style-type: none">
+                        <li><input type="checkbox">{{ vote_record.name }}<span style="font-size: 12px"> {% if vote_record.author %}
+                           &nbsp;&nbsp;({{ vote_record.author|last }}){% endif %}</span></li>
+                    </ul>
+                {% endfor %}
+            </form>
+        </div>
     </div>
 {% endblock %}
 
 {% block custom_js %}
+    <script src="{{ STATIC_URL }}js/jquery-ui-1.10.3.custom.min.js"></script>
     <script>
+
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                width: 400,
+                modal: true,
+                draggable: false,
+                position: "top",
+                buttons: [
+                    {
+                        text: "确定",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    {
+                        text: "取消",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                ]
+
+            });
+
+            $("#vote").click(function (e) {
+                $("#dialog").dialog("open");
+                e.preventDefault();
+            });
+        });
     </script>
+
 {% endblock %}
