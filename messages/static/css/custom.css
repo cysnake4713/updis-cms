@@ -175,7 +175,10 @@ div.bizmail_LoginBox form {
 }
 
 div.bizmail_LoginBox h3 {
-    display: none;
+    display: inline-block;
+    margin: 0;
+    font-weight: normal;
+    text-shadow:none;
 
 }
 
