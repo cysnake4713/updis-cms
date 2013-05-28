@@ -7,7 +7,7 @@
     <div class="tools">
         <div class="holder">
             <div class="frame">
-                <h1>投票系统</h1>
+                <h1>投票</h1>
 
                 <p class="breadcrumb">
                     <a href="{% page_url 'cms_home' %}">首页</a>
@@ -29,9 +29,9 @@
                                 <a href="{% url get_votes_record vote__category_id=vote.id %}"><img
                                         src="{{ STATIC_URL }}img/_global/img-zoom-2.png"
                                         style="position:absolute; display: none;"
-                                        alt="没有图像"/><img
+                                        alt="载入图像..."/><img
                                         src="{% url get_image id=vote.id model='updis.vote' field='image' %}"
-                                        alt="没有图像" width="437" height="234"/></a>
+                                        alt="载入图像.." width="437" height="234"/></a>
                             </div>
                         </div>
 

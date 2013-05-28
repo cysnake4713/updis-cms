@@ -23,6 +23,7 @@
 {% endblock %}
 {% block content %}
     <div id="content" class="content_full_width portfolio_layout">
+        <h1>作者: {% if vote_record %}{{ vote_record.author|last }}{% endif %}</h1>
         {% if vote_record.content %}
             {{ vote_record.content|safe }}
         {% else %}
