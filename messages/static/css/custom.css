@@ -299,3 +299,7 @@ div.bizmail_LoginBox h3 {
 #content .tabs li a {
     padding: 0 8px !important;
 }
+
+body {
+    zoom: 110%;
+}
