@@ -72,6 +72,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_PATH, '..', 'messages/static'),
     os.path.join(PROJECT_PATH, '..', 'updisauth/static'),
+    os.path.join(PROJECT_PATH, '..', 'vote/static'),
 )
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
@@ -139,6 +140,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'messages',
     'updisauth',
+    'vote',
     'cms',
     'mptt',
     'menus',
