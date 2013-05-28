@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
-{% block content_class %}
-    content_blog
-{% endblock %}
 {% block tools %}
     <div class="tools">
         <div class="holder">
@@ -30,66 +27,51 @@
                 <a style="background: none;" href="?page={{ messages.next_page_number }}">下一页</a>
             {% endif %}
             <a style="background: none;" href="?page={{ messages.paginator.num_pages }}">尾页</a>
-            跳转到<input id="jump_to_page_top">页
+            跳转到<input id="jump_to_page_top"/>页
             <button id="jump_to_top">go</button>
         </div>
-        {% for msg in messages %}
-            <div class="blog_wrap">
-                <div class="post_title">
-                    <h1>
-                        <a style="line-height: 110%;" target="_blank" href="{% url messages_detail message_id=msg.id %}"
-                           title="{{ msg.name }}"> {{ msg.name }}</a>
-                    </h1>
+        <table class="category_table">
+            <thead>
+            <tr>
+                <th>主题</th>
+                <th>发布人</th>
+                <th>回复/查看</th>
+                <th>分类</th>
+            </tr>
+            </thead>
+            <tbody>
 
-                    <p class="posted-by-text">
-                        <span>发布者</span>
-                        {#                        {% if msg.is_display_name %}#}
-                        &nbsp;&nbsp;{{ msg.name_for_display|safe }}
-                        {#                        {% else %}#}
-                        {#                            &nbsp;&nbsp;匿名用户#}
-                        {#                        {% endif %}#}
-                    </p>
-                </div>
-                <div class="post_content">
-                    {% if msg.image_medium %}
-                        <div class="post_thumb">
-                            <div class="post_thumb_load">
-                                <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
-                                   class="attachment-fadeIn" style="display: inline">
-                                    <img src="data:image/png;base64,{{ msg.image_medium }}" height="218" width="700"/>
-                                </a>
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="" style="min-height: 50px">
-                        <p>{{ msg.content|striptags|truncatehanzi:'100'|safe }}</p>
-                    </div>
-                    <a class="ka_button small_button" style="opacity:1;" title="{{ msg.name }}"
-                       href="{% url messages_detail message_id=msg.id %}">
-                        <span>阅读</span>
-                    </a>
 
-                    <div class="post_date">
-                        <span class="day">{{ msg.create_date|to_date|date:'d' }}</span>
-                        <br>
-                        <span class="month">{{ msg.create_date|to_date|date:'M' }}</span>
-                    </div>
-                    <div class="post_comments">
-                        <a href="{% url messages_detail message_id=msg.id %}#post-comments">
-                            <span>{{ msg.message_ids|length }}</span>
-                        </a>
-                    </div>
-                    <div class="post_footer">
-                        <div class="post_cats">
-                            <p>
-                                <span>分类：</span>
-                                <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+            {% for msg in messages %}
+
+                <tr>
+                    <td>
+                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
+                           title="{{ msg.name }}"> {{ msg.name }} </a>
+                    </td>
+                    <td>
+                        {% if msg.name_for_display %}
+                            {{ msg.name_for_display|safe }}
+                        {% endif %}<br/>
+                        {{ msg.create_date_display }}
+                    </td>
+                    <td>
+                        {% if  msg.message_ids %}
+                            <a href="{% url messages_detail message_id=msg.id %}#post-comments">
+                                <span>{{ msg.message_ids|length }}</span></a>
+                        {% else %}
+                            0
+                        {% endif %}/
+                        {{ msg.read_times }}
+                    </td>
+                    <td>
+                        <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
     {% else %}
         无相关搜索结果
     {% endif %}

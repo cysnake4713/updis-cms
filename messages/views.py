@@ -30,6 +30,7 @@ class MessageList(object):
 
 
 def detail(req, message_id):
+    update_read_time(message_id)
     message_obj = req.erpsession.get_model('message.message')
     comment_obj = req.erpsession.get_model('mail.message')
     attachment_obj = req.erpsession.get_model('ir.attachment')
@@ -39,7 +40,6 @@ def detail(req, message_id):
                                         'category_id', 'message_summary', 'read_times'])
     if messages:
         message = messages[0]
-        update_read_time(message['id'])
 
         comments = comment_obj.read(message['message_ids'],
                                     ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
@@ -106,8 +106,9 @@ def by_category(req, category_id):
         raise Http404
     per_page = int(req.GET.get('per_page', 20))
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
-                                      ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
-                                       'write_date', 'create_date', 'category_id', 'is_display_name',
+                                      ['name', 'message_ids', 'write_uid', 'fbbm',
+                                       'write_date_display', 'read_times', 'create_date_display', 'category_id',
+                                       'is_display_name',
                                        'name_for_display']), per_page)
     page = req.GET.get('page')
     try:
@@ -128,8 +129,8 @@ def search(request, search_context):
     # message_message_obj = erpsession.get_model("message.message")
     per_page = int(request.GET.get('per_page', 20))
     paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context.replace(' ', '%'))],
-                                      ['name', 'content', 'message_ids', 'write_uid', 'fbbm', 'image_medium',
-                                       'write_date', 'create_date', 'name_for_display', 'category_id',
+                                      ['name', 'message_ids', 'write_uid', 'fbbm', 'read_times',
+                                       'write_date_display', 'create_date_display', 'name_for_display', 'category_id',
                                        'is_display_name']), per_page)
     page = request.GET.get('page')
 
@@ -225,7 +226,9 @@ def update_read_time(id):
                             password=settings.DB_PASSWORD)
 
     cursor = conn.cursor()
-    cursor.execute("""update message_message set read_times = read_times + 1 where id = %d""" % (id))
+    cursor.execute(
+        """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
+        id))
     conn.commit()
     cursor.close()
     conn.close()
