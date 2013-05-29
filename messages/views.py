@@ -107,7 +107,8 @@ def by_category(req, category_id):
     per_page = int(req.GET.get('per_page', 20))
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
                                       ['name', 'message_ids', 'write_uid', 'fbbm',
-                                       'write_date_display', 'read_times', 'create_date_display', 'category_id',
+                                       'write_date_display', 'create_date', 'read_times', 'create_date_display',
+                                       'category_id',
                                        'is_display_name',
                                        'name_for_display']), per_page)
     page = req.GET.get('page')
@@ -130,7 +131,8 @@ def search(request, search_context):
     per_page = int(request.GET.get('per_page', 20))
     paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context.replace(' ', '%'))],
                                       ['name', 'message_ids', 'write_uid', 'fbbm', 'read_times',
-                                       'write_date_display', 'create_date_display', 'name_for_display', 'category_id',
+                                       'write_date_display', 'create_date_display', 'create_date', 'name_for_display',
+                                       'category_id',
                                        'is_display_name']), per_page)
     page = request.GET.get('page')
 
@@ -228,7 +230,7 @@ def update_read_time(id):
     cursor = conn.cursor()
     cursor.execute(
         """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
-        id))
+            id))
     conn.commit()
     cursor.close()
     conn.close()

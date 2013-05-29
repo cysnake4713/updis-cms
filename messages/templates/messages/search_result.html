@@ -33,10 +33,11 @@
         <table class="category_table">
             <thead>
             <tr>
-                <th>主题</th>
+                <th>标题</th>
+                <th>栏目</th>
                 <th>发布人</th>
+                <th>发布时间</th>
                 <th>回复/查看</th>
-                <th>分类</th>
             </tr>
             </thead>
             <tbody>
@@ -46,13 +47,19 @@
 
                 <tr>
                     <td>
-                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
-                           title="{{ msg.name }}"> {{ msg.name }} </a>
+                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}" {% is_today date=msg.create_date_display %}
+                           title="{{ msg.name }}"><span style='color: #ba2636'>·&nbsp;</span> {{ msg.name }} </a>
+                    </td>
+                    <td>
+                        <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
                     </td>
                     <td>
                         {% if msg.name_for_display %}
                             {{ msg.name_for_display|safe }}
-                        {% endif %}<br/>
+                        {% endif %}
+
+                    </td>
+                    <td>
                         {{ msg.create_date_display }}
                     </td>
                     <td>
@@ -64,9 +71,7 @@
                         {% endif %}/
                         {{ msg.read_times }}
                     </td>
-                    <td>
-                        <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
-                    </td>
+
                 </tr>
             {% endfor %}
             </tbody>
