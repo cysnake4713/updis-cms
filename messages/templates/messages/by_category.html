@@ -50,13 +50,13 @@
                     <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
                        title="{{ msg.name }}" {% is_today date=msg.create_date_display %}> <span style='color: #ba2636'>·&nbsp;</span>{{ msg.name }} </a>
                 </td>
-                <td>
+                <td style="text-align: center">
                     {% if msg.name_for_display %}
                         {{ msg.name_for_display|safe }}
                     {% endif %}
 
                 </td>
-                <td>
+                <td style="text-align: center">
                     {{ msg.create_date_display }}
                 </td>
                 <td style="text-align: center">
