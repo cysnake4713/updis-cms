@@ -50,19 +50,19 @@
                         <a target="_blank" href="{% url messages_detail message_id=msg.id %}" {% is_today date=msg.create_date_display %}
                            title="{{ msg.name }}"><span style='color: #ba2636'>·&nbsp;</span> {{ msg.name }} </a>
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         {% if msg.name_for_display %}
                             {{ msg.name_for_display|safe }}
                         {% endif %}
 
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         {{ msg.create_date_display }}
                     </td>
-                    <td>
+                    <td style="text-align: center">
                         {% if  msg.message_ids %}
                             <a href="{% url messages_detail message_id=msg.id %}#post-comments">
                                 <span>{{ msg.message_ids|length }}</span></a>
