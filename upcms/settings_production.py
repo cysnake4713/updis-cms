@@ -20,3 +20,5 @@ CACHES = {
     }
 }
 
+from settings import *
+
