@@ -193,7 +193,7 @@ div.bizmail_LoginBox h3 {
 }
 
 #news li {
-    margin-top: 0;
+    margin-top: 5px;
 }
 
 .post-cats {
@@ -223,12 +223,7 @@ div.bizmail_LoginBox h3 {
 
 .tab_con {
     background-color: #f7f7f7 !important;
-    min-height: 210px !important;
-}
-
-.tab_con .term dl dd {
-    height: 18px !important;
-    line-height: 18px !important;
+    min-height: 250px !important;
 }
 
 .karma-pages a {
@@ -299,20 +294,16 @@ div.bizmail_LoginBox h3 {
 }
 
 #news {
-    min-height: 200px !important;
+    min-height: 242px !important;
 }
 
 #content .tabs li a {
     padding: 0 8px !important;
 }
 
-body {
-    zoom: 110%;
-}
-
-.tab_con .nr p {
-    height: 18px !important;
-}
+/*body {*/
+    /*zoom: 110%;*/
+/*}*/
 
 /*.category_table {*/
 /*border: 1px solid #666666;*/
@@ -326,14 +317,14 @@ body {
 
 table.category_table {
     font-size: 95%;
-    /*font-family: 'Lucida Grande', Helvetica, verdana, sans-serif;*/
+    font-family: 'Lucida Grande', Helvetica, verdana, sans-serif;
     /*background-color: #fff;*/
     border-collapse: collapse;
     width: 100%;
     line-height: 1.2em;
 }
 
-table.category_table caption {
+caption {
     font-size: 30px;
     font-weight: bold;
     color: #002084;
@@ -343,7 +334,7 @@ table.category_table caption {
     text-transform: capitalize;
 }
 
-table.category_table thead th {
+thead th {
     border: 1px solid #e2e2e2;
     color: #000000;
     text-align: center;
@@ -353,7 +344,7 @@ table.category_table thead th {
     font-weight: normal;
 }
 
-table.category_table tfoot {
+tfoot {
     color: #002084;
     padding: 2px;
     text-transform: uppercase;
@@ -364,29 +355,29 @@ table.category_table tfoot {
     border-bottom: 6px solid #004080;
 }
 
-table.category_table tbody tr {
+tbody tr {
     /*background-color: ;*/
     border-bottom: 1px solid #e2e2e2;
 }
 
-table.category_table tbody td {
+tbody td {
     color: #5A7C87;
     padding: 5px;
     text-align: left;
 }
 
-table.category_table tbody th {
+tbody th {
     text-align: left;
     padding: 2px;
 }
 
-table.category_table tbody td a, tbody th a {
+tbody td a, tbody th a {
     color: #002084;
-    /*text-decoration: underline;*/
+    text-decoration: underline;
     font-weight: normal;
 }
 
-table.category_table tbody td a:hover, tbody th a:hover {
-    text-decoration: none;
+tbody td a:hover, tbody th a:hover {
+    /*text-decoration: none;*/
     color: #ba2636 !important;
 }

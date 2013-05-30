@@ -1,4 +1,5 @@
 # Create your views here.
+# -*- coding: utf-8 -*-
 import base64
 import psycopg2
 import timeit
@@ -125,15 +126,41 @@ def by_category(req, category_id):
                               context_instance=RequestContext(req))
 
 
+def _get_special_group(request):
+    if cache.get('special_group'):
+        return cache.get('special_group')
+    else:
+        groups_obj = request.erpsession.get_model("res.groups")
+        groups = groups_obj.search_read([('name', '=', 'Special')])
+        if groups:
+            return groups[0]['users']
+        else:
+            return None
+
+
 def search(request, search_context):
     erpsession = request.erpsession
     # message_message_obj = erpsession.get_model("message.message")
     per_page = int(request.GET.get('per_page', 20))
-    paginator = Paginator(MessageList(erpsession, [('name', 'like', search_context.replace(' ', '%'))],
+
+    users = _get_special_group(request)
+    if request.session['erp_user']:
+        if users is not None and request.session['erp_user']['uid'] not in users:
+            fields = [('name', 'like', search_context.replace(' ', '%')),
+                      ('category_id.name', '!=', u'在谈项目')]
+        else:
+            fields = [('name', 'like', search_context.replace(' ', '%'))]
+    else:
+        fields = [('name', 'like', search_context.replace(' ', '%')),
+                  ('category_id.name', '!=', u'在谈项目')]
+
+    paginator = Paginator(MessageList(erpsession, fields,
                                       ['name', 'message_ids', 'write_uid', 'fbbm', 'read_times',
-                                       'write_date_display', 'create_date_display', 'create_date', 'name_for_display',
+                                       'write_date_display', 'create_date_display', 'create_date',
+                                       'name_for_display',
                                        'category_id',
                                        'is_display_name']), per_page)
+
     page = request.GET.get('page')
 
     try:
