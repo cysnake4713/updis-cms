@@ -1,8 +1,8 @@
 {% extends "base_vote.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
-{#{% block content_class %}#}
-{#    co#}
-{#{% endblock %}#}
+{% block head_js %}
+    <script src="http://jwpsrv.com/library/vJME8sm1EeKzYhIxOQulpA.js"></script>
+{% endblock %}
 {% block tools %}
     <div class="tools">
         <div class="holder">
@@ -34,5 +34,20 @@
 
 {% block custom_js %}
     <script>
+
+        $(function () {
+            $("div.video_block").each(function (index) {
+                var id = $(this).attr("id");
+                var file = $(this).attr("src");
+                jwplayer(id).setup({
+                    file: file,
+                    {#                    image: 'http://www.longtailvideo.com/content/images/jw-player/lWMJeVvV-876.jpg',#}
+                    width: '640',
+                    height: '360'
+                });
+            })
+
+        })
+
     </script>
 {% endblock %}

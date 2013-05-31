@@ -19,6 +19,8 @@
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom-theme/jquery-ui-1.10.3.custom.css">
     {% endaddtoblock %}
     {% render_block "css" %}
+    {% block head_js %}
+    {% endblock %}
 </head>
 <body>
 <div id="wrapper">
