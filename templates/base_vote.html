@@ -12,7 +12,7 @@
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/internal-home.css">
-        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-teal-grey.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-purple.css">
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
@@ -28,6 +28,35 @@
         <div class="top-block">
             <div class="top-holder">
                 <!-- ***************** - Top Toolbar Left Side - ***************** -->
+                <div class="sub-nav">
+
+                    <ul>
+                        <div class="mail-login">
+                            <script type="text/javascript"
+                                    src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js"
+                                    charset="gb18030"></script>
+                            <script type="text/javascript">
+                                writeLoginPanel({domainlist: "upr.cn", mode: "vertical"});
+                            </script>
+                        </div>
+                    </ul>
+                </div>
+
+
+                <!-- ***************** - END Top Toolbar Left Side - ***************** -->
+                <!-- ***************** - Top Toolbar Right Side - ***************** -->
+                <div class="sub-nav2" style="margin-right: 30px">
+                    <ul>
+                        {% if request.session.erp_user %}
+                            <li><strong>{{ request.session.erp_user.username }}</strong>
+                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a></li>
+                        {% else %}
+                            <li><strong><a
+                                    href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong></li>
+                        {% endif %}
+                        <li><a id="link_home" target="_blank " href="{{ erp_address }}">办公管理系统</a></li>
+                    </ul>
+                </div>
                 <!-- end sub-nav2 -->
             </div>
         </div>
@@ -37,7 +66,23 @@
                     <a class="logo" href="{% page_url 'cms_home' %}">
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
-
+                    <ul id="menu-main-nav" style="margin-right: 10px">
+                        {% for k, v in menus.items %}
+                            {% if  v.parent_id.1 == 'Top menu' %}
+                                <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
+                                    <ul class="sub-menu">
+                                        {% for cv in v.children %}
+                                            <li><a target="_blank" {% if cv.action %}
+                                                   href="{{ cv.action.url }}"{% endif %}>
+                                                <span {% if not cv.action %}
+                                                    style="text-align: right;" {% endif %}>{{ cv.name }}</span></a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
