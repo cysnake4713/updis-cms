@@ -1,4 +1,5 @@
 # Create your views here.
+import datetime
 
 import django.http
 from django.shortcuts import render_to_response
@@ -18,11 +19,15 @@ def get_votes_record(request, vote__category_id):
     erpsession = request.erpsession
     vote_record_obj = erpsession.get_model("updis.vote.record")
     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                               fields=['author', 'name', 'description'])
+                                               fields=['author', 'name', 'description', ])
     vote_obj = erpsession.get_model("updis.vote")
-    votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)], fields=['name'])
+    votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)], fields=['name', 'start_time', 'end_time'])
     if votes:
         votes = votes[0]
+        start_time = datetime.datetime.strptime(votes['start_time'], "%Y-%m-%d")
+        votes['start_time_small_than'] = (start_time.date() <= datetime.datetime.now().date())
+        end_time = datetime.datetime.strptime(votes['end_time'], "%Y-%m-%d")
+        votes['end_time_big_than'] = (end_time.date() >= datetime.datetime.now().date() )
     else:
         raise django.http.Http404
     return render_to_response("vote/vote_record.html", {'vote_records': vote_records, 'vote_category': votes},

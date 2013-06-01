@@ -54,13 +54,28 @@
                 {% endfor %}
             </div>
             <br class="clear">
+
             <div class="hr"></div>
 
             {% if  request.session.erp_user %}
-                <div style="position: relative">
-                    <a id="vote" href="" class="ka_button medium_button medium_tealgrey"
-                       style="opacity: 1;"><span>我要投票</span></a>
-                </div>
+                {% if vote_category.start_time_small_than %}
+                    {% if vote_category.end_time_big_than %}
+                        <div style="position: relative">
+                            <a id="vote" href="" class="ka_button medium_button medium_tealgrey"
+                               style="opacity: 1;"><span>我要投票</span></a>
+                        </div>
+                    {% else %}
+                        <div style="position: relative">
+                            <a disabled='1' class="ka_button medium_button medium_tealgrey"
+                               style="opacity: 1;"><span>已过投票时间</span></a>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div style="position: relative">
+                        <a disabled='1' class="ka_button medium_button medium_tealgrey"
+                           style="opacity: 1;"><span>未到投票时间</span></a>
+                    </div>
+                {% endif %}
             {% else %}
                 <h2>请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后投票</h2>
             {% endif %}
@@ -75,8 +90,9 @@
                 {% for vote_record in vote_records %}
 
                     <ul style="list-style-type: none">
-                        <li><input type="checkbox">{{ vote_record.name }}<span style="font-size: 12px"> {% if vote_record.author %}
-                           &nbsp;&nbsp;({{ vote_record.author|last }}){% endif %}</span></li>
+                        <li><input type="checkbox">{{ vote_record.name }}<span
+                                style="font-size: 12px"> {% if vote_record.author %}
+                            &nbsp;&nbsp;({{ vote_record.author|last }}){% endif %}</span></li>
                     </ul>
                 {% endfor %}
             </form>
