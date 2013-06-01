@@ -1,4 +1,4 @@
-# Create your views here.
+# -*- coding: utf-8 -*-
 import datetime
 
 import django.http
@@ -16,21 +16,57 @@ def get_votes(request):
 
 
 def get_votes_record(request, vote__category_id):
+    error = ""
     erpsession = request.erpsession
     vote_record_obj = erpsession.get_model("updis.vote.record")
     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                               fields=['author', 'name', 'description', ])
+                                               fields=['author', 'name', 'description', 'vote_logs'])
     vote_obj = erpsession.get_model("updis.vote")
-    votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)], fields=['name', 'start_time', 'end_time'])
+    votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)],
+                                 fields=['name', 'start_time', 'end_time', 'allow_vote_time'])
     if votes:
         votes = votes[0]
         start_time = datetime.datetime.strptime(votes['start_time'], "%Y-%m-%d")
         votes['start_time_small_than'] = (start_time.date() <= datetime.datetime.now().date())
         end_time = datetime.datetime.strptime(votes['end_time'], "%Y-%m-%d")
-        votes['end_time_big_than'] = (end_time.date() >= datetime.datetime.now().date() )
+        votes['end_time_big_than'] = (end_time.date() >= datetime.datetime.now().date())
+
+        #if its form post, log
+        vote_logs_obj = erpsession.get_model("updis.vote.log")
+        erp_user = request.session['erp_user']
+        if erp_user:
+            vote_logs = vote_logs_obj.search_read(
+                domain=[('vote_category.id', '=', vote__category_id), ('voter.id', '=', erp_user['uid'])])
+            if vote_logs:
+                votes['is_voted'] = True
+            else:
+                votes['is_voted'] = False
+        else:
+            votes['is_voted'] = False
+
+        if request.method == 'POST':
+            if votes['is_voted'] is True:
+                error = u"已经投过票了!"
+            else:
+                vote_record_list = request.REQUEST.getlist('vote_record')
+                if len(vote_record_list) > votes['allow_vote_time']:
+                    error = u"票数不可超过%s票" % votes['allow_vote_time']
+                else:
+                    vote_record_list = [int(v) for v in vote_record_list]
+                    params = {
+                        'voter': erp_user['uid'],
+                        'vote_category': int(vote__category_id),
+                        # 'vote_time': datetime.datetime.utcnow(),
+                        'vote_for': [(6, 0, vote_record_list)],
+                    }
+                    vote_logs_obj.create(params)
+                    votes['is_voted'] = True
+
     else:
         raise django.http.Http404
-    return render_to_response("vote/vote_record.html", {'vote_records': vote_records, 'vote_category': votes},
+
+    return render_to_response("vote/vote_record.html",
+                              {'vote_records': vote_records, 'vote_category': votes, 'error': error},
                               context_instance=RequestContext(request))
 
 
