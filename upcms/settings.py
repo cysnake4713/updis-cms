@@ -217,3 +217,5 @@ DB_HOST = "localhost"
 DB_NAME = "develop"
 DB_USER = "openerp_updis"
 DB_PASSWORD = "openerpupdis2013"
+
+
