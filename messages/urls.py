@@ -1,5 +1,5 @@
 from django.views.decorators.cache import cache_page
-from messages.views import get_department_image, get_employee_image, get_department_image_big, get_attachment, reload_cache
+from messages.views import *
 
 __author__ = 'Zhou Guangwen'
 from django.conf.urls import patterns, url

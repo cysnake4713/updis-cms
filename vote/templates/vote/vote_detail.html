@@ -1,0 +1,53 @@
+{% extends "base_vote.html" %}
+{% load cms_tags sekizai_tags menu_tags message_tags %}
+{% block head_js %}
+    <script src="http://jwpsrv.com/library/vJME8sm1EeKzYhIxOQulpA.js"></script>
+{% endblock %}
+{% block tools %}
+    <div class="tools">
+        <div class="holder">
+            <div class="frame">
+                <h1>{{ vote_record.name|safe }}</h1>
+
+                <p class="breadcrumb">
+                    <a href="{% page_url 'cms_home' %}">首页</a>
+                    <a href="{% url get_votes %}">投票</a>
+                    <a href="{% url get_votes_record vote__category_id=vote_record.vote_category|first %}">
+                        {{ vote_record.vote_category|last }}</a>
+                    <span class="current_crumb">{{ vote_record.name|safe }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endblock %}
+{% block content %}
+    <div id="content" class="content_full_width portfolio_layout">
+        <h1>作者: {% if vote_record.author %}{{ vote_record.author|last }}{% endif %}</h1>
+        {% if vote_record.content %}
+            {{ vote_record.content|safe }}
+        {% else %}
+            无相关搜索结果
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+
+        $(function () {
+            $("div.video_block").each(function (index) {
+                var id = $(this).attr("id");
+                var file = $(this).attr("src");
+                jwplayer(id).setup({
+                    file: file,
+                    {#                    image: 'http://www.longtailvideo.com/content/images/jw-player/lWMJeVvV-876.jpg',#}
+                    width: '640',
+                    height: '360'
+                });
+            })
+
+        })
+
+    </script>
+{% endblock %}
