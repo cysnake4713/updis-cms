@@ -73,7 +73,7 @@ def get_department_message_categories(request):
 
     departments = hr_department_obj.search_read(
         [('display_in_front', '=', True), ('deleted', '=', False), ('is_in_use', '=', True)],
-        ['name', 'sequence', 'have_image'], order="sequence")
+        ['name', 'short_name', 'sequence', 'have_image'], order="sequence")
     for dep in departments:
         message_categories = message_category_obj.search_read([('display_in_departments', '=', dep['id'])],
                                                               ['name', 'default_message_count', 'sequence',
