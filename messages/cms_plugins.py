@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from cms.plugin_base import CMSPluginBase
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
@@ -12,8 +13,8 @@ def _get_last_image(messages):
     for message in messages:
         content = message['content']
         if content:
-            #TODO:regx still got problem
-            match = re.compile(r'.*?<[img|IMG].*?[src|SRC]="(.*?)".*?').match(content.replace('\n', ' '))
+            match = re.compile(r'''.*?<img[^>]+\s+src\s*=\s*['"]([^'"]+)['"][^>]*>.*?''', re.IGNORECASE).match(
+                content.replace('\n', ' '))
             if match:
                 return match.group(1), message
     return None
@@ -117,13 +118,35 @@ class ContentLeftMessageCategoriesPlugin(CMSPluginBase):
     render_template = "messages/plugins/contentleft.html"
     admin_preview = False
 
+    def _get_special_group(self, request):
+        if cache.get('special_group'):
+            return cache.get('special_group')
+        else:
+            groups_obj = request.erpsession.get_model("res.groups")
+            groups = groups_obj.search_read([('name', '=', 'Special')])
+            if groups:
+                return groups[0]['users']
+            else:
+                return None
+
     def render(self, context, instance, placeholder):
+        request = context['request']
         if cache.get('left_category_cache'):
             message_categories = cache.get('left_category_cache')
         else:
             message_categories = get_messages_categories_with_image('content_left', context.get('request'))
             cache.set('left_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_left', context.get('request'))
+
+        for cate in message_categories:
+            if cate['name'] == u'在谈项目':
+                users = self._get_special_group(request)
+                if request.session['erp_user']:
+                    if users is not None and request.session['erp_user']['uid'] not in users:
+                        message_categories.remove(cate)
+                else:
+                    message_categories.remove(cate)
+
         context.update({
             'object': instance,
             'placeholder': placeholder,
@@ -138,7 +161,20 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
     render_template = "messages/plugins/contentright.html"
     admin_preview = False
 
+
+    def _get_special_group(self, request):
+        if cache.get('special_group'):
+            return cache.get('special_group')
+        else:
+            groups_obj = request.erpsession.get_model("res.groups")
+            groups = groups_obj.search_read([('name', '=', 'Special')])
+            if groups:
+                return groups[0]['users']
+            else:
+                return None
+
     def render(self, context, instance, placeholder):
+        request = context['request']
         #cache top message
         if cache.get('right_category_cache'):
             message_categories = cache.get('right_category_cache')
@@ -146,6 +182,15 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
             message_categories = get_messages_categories_with_image('content_right', context.get('request'))
             cache.set('right_category_cache', message_categories, 60 * 100)
             # message_categories = get_messages_categories_with_image('content_right', context.get('request'))
+
+        for cate in message_categories:
+            if cate['name'] == u'在谈项目':
+                users = self._get_special_group(request)
+                if request.session['erp_user']:
+                    if users is not None and request.session['erp_user']['uid'] not in users:
+                        message_categories.remove(cate)
+                else:
+                    message_categories.remove(cate)
 
         context.update({
             'object': instance,

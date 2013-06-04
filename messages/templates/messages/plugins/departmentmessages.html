@@ -39,7 +39,12 @@
                         <dl style="margin-right: 9px !important; padding-left: 9px !important;"
                             class="
                                     {% if  dep.have_image %}{% cycle 'one_third' 'one_third' 'one_third' %}{% else %}{% cycle 'one_third' 'one_third' 'one_third' %}{% endif %}">
-                            <dt>{{ cat.name }}{% message_publish_url name=cat.name %}</dt>
+                            <dt>{{ cat.name }}
+                                <a style="font-size: 12px;font-weight: normal;" class="message_more" target="_blank"
+                                   href="{% url category_messages category_id=cat.id %}">
+                                    更多</a>{% message_publish_url name=cat.name %}
+                            </dt>
+
                             {% for msg in cat.messages %}
                                 <dd>
                                     <a target="_blank" class="page-item"

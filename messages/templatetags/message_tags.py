@@ -63,37 +63,50 @@ def _get_message_publish_url(context):
 
     ir_data_obj = request.erpsession.get_model("ir.model.data")
     ids = {}
+
+    my_menu = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'menu_message_message_my_act')],
+                                      ['res_id'], limit=1)
+    my_menu_id = my_menu[0]['res_id']
+
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_notice')],
                                      ['res_id'], limit=1)
-    ids['notice'] = notice[0]['res_id']
+    ids['notice'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_food')],
                                      ['res_id'], limit=1)
-    ids['food'] = notice[0]['res_id']
+    ids['food'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_service')],
                                      ['res_id'], limit=1)
-    ids['service'] = notice[0]['res_id']
+    ids['service'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_chat')],
                                      ['res_id'], limit=1)
-    ids['chat'] = notice[0]['res_id']
+    ids['chat'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_life')],
                                      ['res_id'], limit=1)
-    ids['life'] = notice[0]['res_id']
+    ids['life'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_share')],
                                      ['res_id'], limit=1)
-    ids['share'] = notice[0]['res_id']
+    ids['share'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_news')],
                                      ['res_id'], limit=1)
-    ids['news'] = notice[0]['res_id']
-
+    ids['news'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_sell')],
                                      ['res_id'], limit=1)
-    ids['sell'] = notice[0]['res_id']
+    ids['sell'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_recommend')],
                                      ['res_id'], limit=1)
-    ids['recommend'] = notice[0]['res_id']
+    ids['recommend'] = [my_menu_id, notice[0]['res_id']]
     notice = ir_data_obj.search_read([('module', '=', 'message'), ('name', '=', 'action_my_messages_inner_connection')],
                                      ['res_id'], limit=1)
-    ids['inner_connection'] = notice[0]['res_id']
+    ids['inner_connection'] = [my_menu_id, notice[0]['res_id']]
+
+    internal_menu = ir_data_obj.search_read(
+        [('module', '=', 'message'), ('name', '=', 'menu_message_message_internal_act')],
+        ['res_id'], limit=1)
+    internal_menu_id = internal_menu[0]['res_id']
+    notice = ir_data_obj.search_read(
+        [('module', '=', 'message'), ('name', '=', 'action_internal_messages_incoming_project')],
+        ['res_id'], limit=1)
+    ids['incoming_project'] = [internal_menu_id, notice[0]['res_id']]
 
     cache.set('message_publish_url', ids, 60 * 3600)
     return ids
@@ -106,32 +119,35 @@ def message_publish_url(context, name):
     else:
         url = _get_message_publish_url(context)
         cache.set('message_publish_url', url, 60 * 3600)
-    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=277&action=%s">发布</a>'''
+    text = u'''<a class="publish-message" target="_blank" href="%s/#view_type=form&model=message.message&menu_id=%d&action=%s">发布</a>'''
     from  upcms import settings
 
     host = settings.ERP_HOME
     # name = unicode(name, 'ascii')
 
     if name == u'畅所欲言':
-        return text % (host, url['chat'])
+        return text % (host, url['chat'][0], url['chat'][1])
     if name == u'通知':
-        return text % (host, url['notice'])
+        return text % (host, url['notice'][0], url['notice'][1])
     if name == u'业余生活':
-        return text % (host, url['life'])
+        return text % (host, url['life'][0], url['life'][1])
     if name == u'服务申报':
-        return text % (host, url['service'])
+        return text % (host, url['service'][0], url['service'][1])
     if name == u'餐论':
-        return text % (host, url['food'])
+        return text % (host, url['food'][0], url['food'][1])
     if name == u'共享资源':
-        return text % (host, url['share'])
+        return text % (host, url['share'][0], url['share'][1])
     if name == u'各所快讯':
-        return text % (host, url['news'])
+        return text % (host, url['news'][0], url['news'][1])
     if name == u'跳蚤市场':
-        return text % (host, url['sell'])
+        return text % (host, url['sell'][0], url['sell'][1])
     if name == u'大家推荐':
-        return text % (host, url['recommend'])
+        return text % (host, url['recommend'][0], url['recommend'][1])
     if name == u'内部交流':
-        return text % (host, url['inner_connection'])
+        return text % (host, url['inner_connection'][0], url['inner_connection'][1])
+
+    if name == u'在谈项目':
+        return text % (host, url['incoming_project'][0], url['incoming_project'][1])
 
     return ''
 
@@ -170,5 +186,6 @@ def is_today(context, date):
         return 'style="font-weight: bold"'
     else:
         return ''
+
 
 register.filter('truncatehanzi', truncatehanzi)
