@@ -23,20 +23,20 @@
         {% if votes %}
             {% for vote in votes %}
                 <div class="{% cycle 'one_half' 'one_half_last' %}">
-                    <div class="portfolio_content_top">
-                        <div class="port_img_two">
-                            <div class="preload preload_two">
-                                <a href="{% url get_votes_record vote__category_id=vote.id %}"><img
-                                        src="{{ STATIC_URL }}img/_global/img-zoom-2.png"
-                                        style="position:absolute; display: none;"
-                                        alt="载入图像..."/><img
-                                        src="{% url get_image id=vote.id model='updis.vote' field='image' %}"
-                                        alt="载入图像.." width="437" height="234"/></a>
+                    {% if vote.have_image %}
+                        <div class="portfolio_content_top">
+                            <div class="port_img_two">
+                                <div class="preload preload_two">
+                                    <a href="{% url get_votes_record vote__category_id=vote.id %}"><img
+                                            src="{{ STATIC_URL }}img/_global/img-zoom-2.png"
+                                            style="position:absolute; display: none;"
+                                            alt="载入图像..."/><img
+                                            src="{% url get_image id=vote.id model='updis.vote' field='image' %}"
+                                            alt="载入图像.." width="437" height="234"/></a>
+                                </div>
                             </div>
                         </div>
-
-                    </div>
-
+                    {% endif %}
                     <div class="portfolio_content">
                         <h3><a href="{% url get_votes_record vote__category_id=vote.id %}">{{ vote.name }}</a></h3>
 
@@ -50,8 +50,6 @@
         {% else %}
             无相关搜索结果
         {% endif %}
-
-
 
 
     </div>

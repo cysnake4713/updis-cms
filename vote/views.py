@@ -10,7 +10,7 @@ def get_votes(request):
     erpsession = request.erpsession
     vote_obj = erpsession.get_model("updis.vote")
 
-    votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description'])
+    votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description', 'have_image'])
     return render_to_response("vote/vote.html", {'votes': votes},
                               context_instance=RequestContext(request))
 
@@ -20,7 +20,7 @@ def get_votes_record(request, vote__category_id):
     erpsession = request.erpsession
     vote_record_obj = erpsession.get_model("updis.vote.record")
     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                               fields=['author', 'name', 'description', 'vote_logs'])
+                                               fields=['author', 'name', 'description', 'vote_logs', 'have_image'])
     vote_obj = erpsession.get_model("updis.vote")
     votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)],
                                  fields=['name', 'start_time', 'end_time', 'allow_vote_time'])

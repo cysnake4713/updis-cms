@@ -25,20 +25,21 @@
             <div style="display: block;position: relative">
                 {% for vote_record in vote_records %}
                     <div class="{% cycle 'one_third' 'one_third' 'one_third_last' %}">
-                        <div class="portfolio_content_top_three">
-                            <div class="port_img_three" style="margin-left: 0">
-                                <div class="preload preload_three">
-                                    <a target="_blank"
-                                       href="{% url get_votes_detail vote_record_id=vote_record.id %}"><img
-                                            src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
-                                            style="position:absolute; display: none;"
-                                            alt="载入图像.."/><img
-                                            src="{% url get_image id=vote_record.id model='updis.vote.record' field='record_image' %}"
-                                            alt="载入图像.." width="275" height="145"/></a>
+                        {% if vote_record.have_image %}
+                            <div class="portfolio_content_top_three">
+                                <div class="port_img_three" style="margin-left: 0">
+                                    <div class="preload preload_three">
+                                        <a target="_blank"
+                                           href="{% url get_votes_detail vote_record_id=vote_record.id %}"><img
+                                                src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
+                                                style="position:absolute; display: none;"
+                                                alt="载入图像.."/><img
+                                                src="{% url get_image id=vote_record.id model='updis.vote.record' field='record_image' %}"
+                                                alt="载入图像.." width="275" height="145"/></a>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        {% endif %}
 
                         <div class="portfolio_content">
                             <a target="_blank" href="{% url get_votes_detail vote_record_id=vote_record.id %}">
@@ -183,9 +184,9 @@
                             text: "投票",
                             click: function () {
                                 var length = $(".vote-checkbox:checked").length;
-                                if (length>0){
+                                if (length > 0) {
                                     $("#vote_form").submit();
-                                }else {
+                                } else {
                                     alert("投票条目不可为空!");
                                 }
                             }
