@@ -62,7 +62,8 @@ def get_votes_record(request, vote__category_id):
                     vote_logs_obj.create(params)
                     votes['is_voted'] = True
                     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                                               fields=['author', 'name', 'description', 'vote_logs'])
+                                                               fields=['author', 'name', 'description', 'vote_logs',
+                                                                       'have_image'])
 
     else:
         raise django.http.Http404

@@ -66,23 +66,6 @@
                     <a class="logo" href="{% page_url 'cms_home' %}">
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
-                    <ul id="menu-main-nav" style="margin-right: 10px">
-                        {% for k, v in menus.items %}
-                            {% if  v.parent_id.1 == 'Top menu' %}
-                                <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
-                                    <ul class="sub-menu">
-                                        {% for cv in v.children %}
-                                            <li><a target="_blank" {% if cv.action %}
-                                                   href="{{ cv.action.url }}"{% endif %}>
-                                                <span {% if not cv.action %}
-                                                    style="text-align: right;" {% endif %}>{{ cv.name }}</span></a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
                 </div>
             </div>
         </div>
