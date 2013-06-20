@@ -22,7 +22,7 @@
 
     <div id="content" class="content_full_width portfolio_layout">
         <div class="vote-record-head">
-            {{ vote_category.comment|default:"" }}
+            {{ vote_category.comment|default:""|safe }}
         </div>
         {% if vote_records %}
             <div style="display: block;position: relative">
