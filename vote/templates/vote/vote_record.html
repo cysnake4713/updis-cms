@@ -22,7 +22,7 @@
 
     <div id="content" class="content_full_width portfolio_layout">
         <div class="vote-record-head">
-            {{ vote_category.comment|safe }}
+            {{ vote_category.comment|default:"" }}
         </div>
         {% if vote_records %}
             <div style="display: block;position: relative">
@@ -53,7 +53,7 @@
                                 </h3>
                             </a>
 
-                            <p>{{ vote_record.description }}</p>
+                            <p>{{ vote_record.description|default:"" }}</p>
                         </div>
                         <!-- end portfolio_content -->
                     </div>
@@ -105,9 +105,7 @@
 
 
         <div style="color: red;">
-            {% if error %}
-                {{ error }}
-            {% endif %}
+                {{ error|default:"" }}
         </div>
 
         <div id="dialog" title="投票">
