@@ -98,14 +98,14 @@
             {% endif %}
         </div>
 
-{#        <div style="position: relative;display: inline-block">#}
-{#            <a id="vote_result" href="" class="ka_button medium_button medium_purple"#}
-{#               style="opacity: 1;"><span>查看投票結果</span></a>#}
-{#        </div>#}
+        {#        <div style="position: relative;display: inline-block">#}
+        {#            <a id="vote_result" href="" class="ka_button medium_button medium_purple"#}
+        {#               style="opacity: 1;"><span>查看投票結果</span></a>#}
+        {#        </div>#}
 
 
         <div style="color: red;">
-                {{ error|default:"" }}
+            {{ error|default:"" }}
         </div>
 
         <div id="dialog" title="投票">
@@ -113,9 +113,9 @@
                 {% csrf_token %}
                 <fieldset>
 
-                    <h1 style="margin-left: 20px;">每人可投<a style="color: red;">{{ vote_category.allow_vote_time }}</a>票
-                    </h1>
-                    <h3>注意:每人只能投票一次</h3>
+                    <h2 style="margin-left: 20px;">注意:每人只能投票一次,一次投<a
+                            style="color: red;">{{ vote_category.allow_vote_time }}</a>票
+                    </h2>
                     <br/>
                     <table>
                         <tbody>
@@ -175,7 +175,7 @@
                 var length = $(".vote-checkbox:checked").length;
                 if (length >{{ vote_category.allow_vote_time }}) {
                     e.preventDefault();
-                    alert("每人最多只能投{{ vote_category.allow_vote_time }}票!");
+                    alert("每人只能投{{ vote_category.allow_vote_time }}票!");
                 }
             });
 
@@ -191,10 +191,10 @@
                             text: "投票",
                             click: function () {
                                 var length = $(".vote-checkbox:checked").length;
-                                if (length > 0) {
+                                if (length == {{ vote_category.allow_vote_time }} && length > 0) {
                                     $("#vote_form").submit();
                                 } else {
-                                    alert("投票条目不可为空!");
+                                    alert("投票条目必须为{{ vote_category.allow_vote_time }}条");
                                 }
                             }
                         },

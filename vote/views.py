@@ -49,8 +49,8 @@ def get_votes_record(request, vote__category_id):
                 error = u"已经投过票了!"
             else:
                 vote_record_list = request.REQUEST.getlist('vote_record')
-                if len(vote_record_list) > votes['allow_vote_time']:
-                    error = u"票数不可超过%s票" % votes['allow_vote_time']
+                if len(vote_record_list) != votes['allow_vote_time']:
+                    error = u"票数必须为%s票" % votes['allow_vote_time']
                 else:
                     vote_record_list = [int(v) for v in vote_record_list]
                     params = {
