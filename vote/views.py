@@ -23,7 +23,7 @@ def get_votes_record(request, vote__category_id):
                                                fields=['author', 'name', 'description', 'vote_logs', 'have_image'])
     vote_obj = erpsession.get_model("updis.vote")
     votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)],
-                                 fields=['name', 'start_time', 'end_time', 'allow_vote_time', 'comment'])
+                                 fields=['name', 'start_time', 'end_time', 'allow_vote_time', 'comment', 'show_result'])
     if votes:
         votes = votes[0]
         start_time = datetime.datetime.strptime(votes['start_time'], "%Y-%m-%d")

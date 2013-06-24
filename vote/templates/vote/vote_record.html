@@ -97,11 +97,13 @@
                 <h2>请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后投票</h2>
             {% endif %}
         </div>
+        {% if vote_category.show_result %}
+            <div style="position: relative;display: inline-block">
+                <a id="vote_result" href="" class="ka_button medium_button medium_purple"
+                   style="opacity: 1;"><span>查看投票結果</span></a>
+            </div>
+        {% endif %}
 
-        {#        <div style="position: relative;display: inline-block">#}
-        {#            <a id="vote_result" href="" class="ka_button medium_button medium_purple"#}
-        {#               style="opacity: 1;"><span>查看投票結果</span></a>#}
-        {#        </div>#}
 
 
         <div style="color: red;">
@@ -142,27 +144,27 @@
             </form>
         </div>
 
+        {% if vote_category.show_result %}
+            <div id="dialog_result" title="投票結果">
+                <table>
+                    <tbody>
 
-        <div id="dialog_result" title="投票結果">
-            <table>
-                <tbody>
+                    {% for vote_record in vote_records %}
+                        <tr>
+                            <td>{{ vote_record.name }}
+                                {#                            <span#}
+                                {#                                style="font-size: 12px"> {% if vote_record.author %}#}
+                                {#                            &nbsp;&nbsp;({{ vote_record.author|last }}#}
+                                {#                            ){% endif %}</span>#}
+                            </td>
+                            <td>{{ vote_record.vote_logs|length }}票</td>
+                        </tr>
+                    {% endfor %}
 
-                {% for vote_record in vote_records %}
-                    <tr>
-                        <td>{{ vote_record.name }}
-                            {#                            <span#}
-                            {#                                style="font-size: 12px"> {% if vote_record.author %}#}
-                            {#                            &nbsp;&nbsp;({{ vote_record.author|last }}#}
-                            {#                            ){% endif %}</span>#}
-                        </td>
-                        <td>{{ vote_record.vote_logs|length }}票</td>
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
