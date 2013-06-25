@@ -29,7 +29,7 @@ urlpatterns = patterns('',
                        # Uncomment the next line to enable the admin:
                        # url(r'^admin/', include(admin.site.urls)),
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^image/(?P<model>.+)/(?P<field>.+)/(?P<id>\d+)/$', get_image,
+                       url(r'^image/(?P<model>.+)/(?P<field>.+)/(?P<id>\d+)/$', cache_page(60 * 60)(get_image),
                            name="get_image"),
                        url(r'^message/', include('messages.urls')),
                        url(r'^account/', include('updisauth.urls')),
