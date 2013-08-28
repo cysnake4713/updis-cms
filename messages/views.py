@@ -262,6 +262,9 @@ def update_read_time(id):
     cursor.close()
     conn.close()
 
+def lazy_load(request, attachment_id):
+    pass
+
 
 # if __name__ == '__main__':
 #     t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")

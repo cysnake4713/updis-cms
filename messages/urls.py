@@ -19,4 +19,5 @@ urlpatterns = patterns('messages.views',
                        url(r'^attachment/(?P<attachment_id>\d+)/$', cache_page(60 * 600)(get_attachment),
                            name="get_attachment"),
                        url(r'reload/(?P<TYPE>\d+)/$', reload_cache, name="reload_cache"),
+                       url(r'category/lazy_load/$', lazy_load, name="lazy_load"),
 )

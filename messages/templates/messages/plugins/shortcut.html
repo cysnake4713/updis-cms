@@ -8,16 +8,31 @@
                href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
             {% message_publish_url name=cat.name %}
             <ul style="list-style:none;padding-left:0px;">
-                {% for msg in cat.messages %}
-                    <li>
-                        <a target="_blank" class="page-item" title="{{ msg.name|safe }}"
-                           href="{% url messages_detail message_id=msg.id %}">
-                            <div {% is_today date=msg.create_date %}>
-                                {{ msg.category_message_title_meta_display|safe }}</div>
-                        </a>
-                    </li>
-                {% endfor %}
+                <div name="shortcut_placeholder" id="{{ cat.id }}"></div>
+                {#                {% for msg in cat.messages %}#}
+                {#                    <li>#}
+                {#                        <a target="_blank" class="page-item" title="{{ msg.name|safe }}"#}
+                {#                           href="{% url messages_detail message_id=msg.id %}">#}
+                {#                            <div {% is_today date=msg.create_date %}>#}
+                {#                                {{ msg.category_message_title_meta_display|safe }}</div>#}
+                {#                        </a>#}
+                {#                    </li>#}
+                {#                {% endfor %}#}
             </ul>
         </div>
     {% endfor %}
 </div>
+
+<script>
+
+    $(function () {
+        $("div[name='shortcut_placeholder']").each(function () {
+            $.ajax({
+                type: "get",
+                url: "{% url lazy_load %}"
+            })
+        })
+
+
+    });
+</script>

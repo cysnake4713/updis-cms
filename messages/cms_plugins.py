@@ -27,15 +27,15 @@ def get_messages_categories(position, request):
     message_categories = message_category_obj.search_read([('display_position', '=', position)],
                                                           ['name', 'default_message_count', 'sequence'],
                                                           order='sequence')
-    for cat in message_categories:
-        messages = message_obj.search_read([('category_id', '=', cat['id'])],
-                                           ['category_message_title_meta_display', 'message_ids', 'name',
-                                            "create_date"],
-                                           limit=cat['default_message_count'] is not 0 and cat[
-                                               'default_message_count'] or 8)
-        cat.update({
-            'messages': messages
-        })
+    # for cat in message_categories:
+    #     messages = message_obj.search_read([('category_id', '=', cat['id'])],
+    #                                        ['category_message_title_meta_display', 'message_ids', 'name',
+    #                                         "create_date"],
+    #                                        limit=cat['default_message_count'] is not 0 and cat[
+    #                                            'default_message_count'] or 8)
+    #     cat.update({
+    #         'messages': messages
+    #     })
     return message_categories
 
 
@@ -99,11 +99,11 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
 
-        if cache.get('shortcut_category_cache'):
-            message_categories = cache.get('shortcut_category_cache')
-        else:
-            message_categories = get_messages_categories('shortcut', context.get('request'))
-            cache.set('shortcut_category_cache', message_categories, 60 * 100)
+        # if cache.get('shortcut_category_cache'):
+        #     message_categories = cache.get('shortcut_category_cache')
+        # else:
+        message_categories = get_messages_categories('shortcut', context.get('request'))
+            # cache.set('shortcut_category_cache', message_categories, 60 * 100)
         context.update({
             'object': instance,
             'placeholder': placeholder,
