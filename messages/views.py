@@ -263,7 +263,7 @@ def update_read_time(id):
     conn.close()
 
 
-if __name__ == '__main__':
-    t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")
-    v = t.timeit(1000)
-    print v
+# if __name__ == '__main__':
+#     t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")
+#     v = t.timeit(1000)
+#     print v

@@ -2,15 +2,17 @@
 import datetime
 
 import django.http
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from messages.forms import CommentForm
 
 
 def get_votes(request):
     erpsession = request.erpsession
     vote_obj = erpsession.get_model("updis.vote")
 
-    votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description'])
+    votes = vote_obj.search_read(domain=[('is_display', '=', True)], fields=['name', 'description', 'have_image'])
     return render_to_response("vote/vote.html", {'votes': votes},
                               context_instance=RequestContext(request))
 
@@ -20,10 +22,10 @@ def get_votes_record(request, vote__category_id):
     erpsession = request.erpsession
     vote_record_obj = erpsession.get_model("updis.vote.record")
     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                               fields=['author', 'name', 'description', 'vote_logs'])
+                                               fields=['author', 'name', 'description', 'vote_logs', 'have_image'])
     vote_obj = erpsession.get_model("updis.vote")
     votes = vote_obj.search_read(domain=[('id', '=', vote__category_id)],
-                                 fields=['name', 'start_time', 'end_time', 'allow_vote_time'])
+                                 fields=['name', 'start_time', 'end_time', 'allow_vote_time', 'comment', 'show_result'])
     if votes:
         votes = votes[0]
         start_time = datetime.datetime.strptime(votes['start_time'], "%Y-%m-%d")
@@ -49,8 +51,8 @@ def get_votes_record(request, vote__category_id):
                 error = u"已经投过票了!"
             else:
                 vote_record_list = request.REQUEST.getlist('vote_record')
-                if len(vote_record_list) > votes['allow_vote_time']:
-                    error = u"票数不可超过%s票" % votes['allow_vote_time']
+                if len(vote_record_list) != votes['allow_vote_time']:
+                    error = u"票数必须为%s票" % votes['allow_vote_time']
                 else:
                     vote_record_list = [int(v) for v in vote_record_list]
                     params = {
@@ -62,7 +64,8 @@ def get_votes_record(request, vote__category_id):
                     vote_logs_obj.create(params)
                     votes['is_voted'] = True
                     vote_records = vote_record_obj.search_read(domain=[('vote_category.id', '=', vote__category_id)],
-                                                               fields=['author', 'name', 'description', 'vote_logs'])
+                                                               fields=['author', 'name', 'description', 'vote_logs',
+                                                                       'have_image'])
 
     else:
         raise django.http.Http404
@@ -75,14 +78,37 @@ def get_votes_record(request, vote__category_id):
 def get_votes_detail(request, vote_record_id):
     erpsession = request.erpsession
     vote_record_obj = erpsession.get_model("updis.vote.record")
+    comment_obj = request.erpsession.get_model('mail.message')
     vote_records = vote_record_obj.search_read(
-        domain=[('id', '=', vote_record_id)], fields=['name', 'vote_category', 'author', 'content', 'description'])
+        domain=[('id', '=', vote_record_id)], fields=['name', 'vote_category', 'author', 'content', 'description', 'message_ids'])
     if vote_records:
         vote_record = vote_records[0]
+        comments = comment_obj.read(vote_record['message_ids'],
+                                    ['body', 'date', 'subject', 'author_id', 'is_anonymous', 'attachment_ids'])
     else:
         raise django.http.Http404
 
-    return render_to_response("vote/vote_detail.html", {'vote_record': vote_record},
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            erp_user = request.session['erp_user']
+            res_users_obj = request.erpsession.get_model('res.users')
+            partner_id = res_users_obj.search_read([('id', '=', erp_user['uid'])], ['partner_id'])[0]['partner_id'][0]
+            params = {
+                'body': form.cleaned_data['body'],
+                'type': 'comment',
+                'model': 'updis.vote.record',
+                'res_id': vote_record.get('id'),
+                'is_anonymous': form.cleaned_data['is_anonymous'],
+                'author_id': partner_id,
+            }
+            comment_obj = request.erpsession.get_model('mail.message')
+            comment_id = comment_obj.create(params)
+            return HttpResponseRedirect(request.path)
+    else:
+        form = CommentForm()
+
+    return render_to_response("vote/vote_detail.html", {'vote_record': vote_record, 'comments': comments},
                               context_instance=RequestContext(request))
 
 

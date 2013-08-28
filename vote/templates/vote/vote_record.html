@@ -19,35 +19,41 @@
     <br/>
 {% endblock %}
 {% block content %}
-    <div id="content" class="content_full_width portfolio_layout">
 
+    <div id="content" class="content_full_width portfolio_layout">
+        <div class="vote-record-head">
+            {{ vote_category.comment|default:""|safe }}
+        </div>
         {% if vote_records %}
             <div style="display: block;position: relative">
                 {% for vote_record in vote_records %}
                     <div class="{% cycle 'one_third' 'one_third' 'one_third_last' %}">
-                        <div class="portfolio_content_top_three">
-                            <div class="port_img_three" style="margin-left: 0">
-                                <div class="preload preload_three">
-                                    <a target="_blank"
-                                       href="{% url get_votes_detail vote_record_id=vote_record.id %}"><img
-                                            src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
-                                            style="position:absolute; display: none;"
-                                            alt="载入图像.."/><img
-                                            src="{% url get_image id=vote_record.id model='updis.vote.record' field='record_image' %}"
-                                            alt="载入图像.." width="275" height="145"/></a>
+                        {% if vote_record.have_image %}
+                            <div class="portfolio_content_top_three">
+                                <div class="port_img_three" style="margin-left: 0">
+                                    <div class="preload preload_three">
+                                        <a target="_blank"
+                                           href="{% url get_votes_detail vote_record_id=vote_record.id %}"><img
+                                                src="{{ STATIC_URL }}img/_global/img-zoom-3.png"
+                                                style="position:absolute; display: none;"
+                                                alt="载入图像.."/><img
+                                                src="{% url get_image id=vote_record.id model='updis.vote.record' field='record_image' %}"
+                                                alt="载入图像.." width="275" height="145"/></a>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        {% endif %}
 
                         <div class="portfolio_content">
                             <a target="_blank" href="{% url get_votes_detail vote_record_id=vote_record.id %}">
-                                <h3>{{ vote_record.name }}<span style="font-size: 12px">&nbsp;&nbsp;&nbsp;
-                                {% if vote_record.author %}
-                                    {{ vote_record.author|last }}{% endif %}</span></h3>
+                                <h3>{{ vote_record.name }}
+                                    {#                                    <span style="font-size: 12px">&nbsp;&nbsp;&nbsp;#}
+                                    {#                                {% if vote_record.author %}#}
+                                    {#                                    {{ vote_record.author|last }}{% endif %}</span>#}
+                                </h3>
                             </a>
 
-                            <p>{{ vote_record.description }}</p>
+                            <p>{{ vote_record.description|default:"" }}</p>
                         </div>
                         <!-- end portfolio_content -->
                     </div>
@@ -91,17 +97,17 @@
                 <h2>请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后投票</h2>
             {% endif %}
         </div>
+        {% if vote_category.show_result %}
+            <div style="position: relative;display: inline-block">
+                <a id="vote_result" href="" class="ka_button medium_button medium_purple"
+                   style="opacity: 1;"><span>查看投票結果</span></a>
+            </div>
+        {% endif %}
 
-        <div style="position: relative;display: inline-block">
-            <a id="vote_result" href="" class="ka_button medium_button medium_purple"
-               style="opacity: 1;"><span>查看投票結果</span></a>
-        </div>
 
 
         <div style="color: red;">
-            {% if error %}
-                {{ error }}
-            {% endif %}
+            {{ error|default:"" }}
         </div>
 
         <div id="dialog" title="投票">
@@ -109,8 +115,10 @@
                 {% csrf_token %}
                 <fieldset>
 
-                    <h1 style="margin-left: 20px;">每人可投<a style="color: red;">{{ vote_category.allow_vote_time }}</a>票
-                    </h1>
+                    <h2 style="margin-left: 20px;">注意:每人只能投票一次,一次投<a
+                            style="color: red;">{{ vote_category.allow_vote_time }}</a>票
+                    </h2>
+                    <br/>
                     <table>
                         <tbody>
                         {% for vote_record in vote_records %}
@@ -124,9 +132,9 @@
                                 {% endif %}
 
                                 <td>{{ vote_record.name }}
-                                <span
-                                        style="font-size: 12px"> {% if vote_record.author %}
-                                    &nbsp;&nbsp;({{ vote_record.author|last }}){% endif %}</span>
+                                    {#                                <span#}
+                                    {#                                        style="font-size: 12px"> {% if vote_record.author %}#}
+                                    {#                                    &nbsp;&nbsp;({{ vote_record.author|last }}){% endif %}</span>#}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -136,25 +144,27 @@
             </form>
         </div>
 
+        {% if vote_category.show_result %}
+            <div id="dialog_result" title="投票結果">
+                <table>
+                    <tbody>
 
-        <div id="dialog_result" title="投票結果">
-            <table>
-                <tbody>
+                    {% for vote_record in vote_records %}
+                        <tr>
+                            <td>{{ vote_record.name }}
+                                {#                            <span#}
+                                {#                                style="font-size: 12px"> {% if vote_record.author %}#}
+                                {#                            &nbsp;&nbsp;({{ vote_record.author|last }}#}
+                                {#                            ){% endif %}</span>#}
+                            </td>
+                            <td>{{ vote_record.vote_logs|length }}票</td>
+                        </tr>
+                    {% endfor %}
 
-                {% for vote_record in vote_records %}
-                    <tr>
-                        <td>{{ vote_record.name }} <span
-                                style="font-size: 12px"> {% if vote_record.author %}
-                            &nbsp;&nbsp;({{ vote_record.author|last }}
-                            ){% endif %}</span></td>
-                        <td>{{ vote_record.vote_logs|length }}票</td>
-                    </tr>
-                {% endfor %}
-
-                </tbody>
-            </table>
-
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -167,7 +177,7 @@
                 var length = $(".vote-checkbox:checked").length;
                 if (length >{{ vote_category.allow_vote_time }}) {
                     e.preventDefault();
-                    alert("每人最多只能投{{ vote_category.allow_vote_time }}票!");
+                    alert("每人只能投{{ vote_category.allow_vote_time }}票!");
                 }
             });
 
@@ -183,10 +193,10 @@
                             text: "投票",
                             click: function () {
                                 var length = $(".vote-checkbox:checked").length;
-                                if (length>0){
+                                if (length == {{ vote_category.allow_vote_time }} && length > 0) {
                                     $("#vote_form").submit();
-                                }else {
-                                    alert("投票条目不可为空!");
+                                } else {
+                                    alert("投票条目必须为{{ vote_category.allow_vote_time }}条");
                                 }
                             }
                         },
