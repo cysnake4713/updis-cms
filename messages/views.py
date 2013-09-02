@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 import base64
 import psycopg2
-import timeit
 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.cache import cache
+from django.utils import simplejson
 
 from upcms import settings
 from messages.forms import CommentForm
@@ -262,8 +262,17 @@ def update_read_time(id):
     cursor.close()
     conn.close()
 
-def lazy_load(request, attachment_id):
-    pass
+
+def lazy_load(request):
+    id =int( request.GET.get("id"))
+    default = int(request.GET.get("default")) if request.GET.has_key("default") else 8
+    erpsession = request.erpsession
+    message_obj = erpsession.get_model("message.message")
+    messages = message_obj.search_read([('category_id', '=', id)],
+                                       ['category_message_title_meta_display', 'message_ids', 'name',
+                                        "create_date_display"],
+                                       limit=default)
+    return HttpResponse(simplejson.dumps(messages, ensure_ascii=False))
 
 
 # if __name__ == '__main__':

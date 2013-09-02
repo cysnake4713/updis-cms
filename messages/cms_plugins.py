@@ -23,7 +23,6 @@ def _get_last_image(messages):
 def get_messages_categories(position, request):
     erpsession = request.erpsession
     message_category_obj = erpsession.get_model("message.category")
-    message_obj = erpsession.get_model("message.message")
     message_categories = message_category_obj.search_read([('display_position', '=', position)],
                                                           ['name', 'default_message_count', 'sequence'],
                                                           order='sequence')
