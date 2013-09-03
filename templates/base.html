@@ -16,6 +16,7 @@
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
+        <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
     {% endaddtoblock %}
     {% render_block "css" %}
 </head>
@@ -163,7 +164,6 @@
 </div>
 
 {% addtoblock "js" %}
-    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
     <script src="{{ STATIC_URL }}js/updis.js"></script>
     <script src="{{ STATIC_URL }}js/karma.js"></script>
     <script src="{{ STATIC_URL }}js/tab.js"></script>

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import re
+
 from cms.plugin_base import CMSPluginBase
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
+
 from messages.models import MessageCategories
-import re
+
 
 __author__ = 'Zhou Guangwen'
 from cms.plugin_pool import plugin_pool
@@ -98,16 +101,16 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
 
     def render(self, context, instance, placeholder):
 
-        # if cache.get('shortcut_category_cache'):
-        #     message_categories = cache.get('shortcut_category_cache')
-        # else:
-        message_categories = get_messages_categories('shortcut', context.get('request'))
-            # cache.set('shortcut_category_cache', message_categories, 60 * 100)
-        context.update({
-            'object': instance,
-            'placeholder': placeholder,
-            'message_categories': message_categories
-        })
+        if cache.get('shortcut_category_cache'):
+            message_categories = cache.get('shortcut_category_cache')
+        else:
+            message_categories = get_messages_categories('shortcut', context.get('request'))
+            cache.set('shortcut_category_cache', message_categories, 60 * 100)
+            context.update({
+                'object': instance,
+                'placeholder': placeholder,
+                'message_categories': message_categories
+            })
         return context
 
 
