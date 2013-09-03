@@ -264,11 +264,15 @@ def update_read_time(id):
 
 
 def lazy_load(request):
-    id =int( request.GET.get("id"))
+    id = int(request.GET.get("id"))
     default = int(request.GET.get("default")) if request.GET.has_key("default") else 8
+    department_id = int(request.GET.get("dep_id")) if request.GET.has_key("dep_id") else None
     erpsession = request.erpsession
     message_obj = erpsession.get_model("message.message")
-    messages = message_obj.search_read([('category_id', '=', id)],
+    domain = [('category_id', '=', id)]
+    if department_id:
+        domain.append(('department_id', '=', department_id))
+    messages = message_obj.search_read(domain,
                                        ['category_message_title_meta_display', 'message_ids', 'name',
                                         "create_date_display"],
                                        limit=default)

@@ -80,15 +80,6 @@ def get_department_message_categories(request):
         message_categories = message_category_obj.search_read([('display_in_departments', '=', dep['id'])],
                                                               ['name', 'default_message_count', 'sequence',
                                                                'display_fbbm'], order='sequence')
-        for cat in message_categories:
-            messages = message_obj.search_read([('category_id', '=', cat['id']), ('department_id', '=', dep['id'])],
-                                               ['name', 'write_date', 'write_uid', 'sequence', 'department_id', 'fbbm',
-                                                'category_message_title_meta_display', 'create_date'],
-                                               limit=cat['default_message_count'] is not 0 and cat[
-                                                   'default_message_count'] or 8)
-            cat.update({
-                'messages': messages
-            })
         dep['message_categories'] = message_categories
     return departments
 
