@@ -40,16 +40,57 @@
                     <a class="message_more" target="_blank" href="{% url category_messages category_id=cat.id %}"><span>更多</span></a>
                     {% message_publish_url name=cat.name %}
 
-                    {% for msg in cat.messages %}
-                        <p style="padding: 0">
-                            <a target="_blank" class="page-item"
-                               href="{% url messages_detail message_id=msg.id %}" {% is_today date=msg.create_date %}>
-                                {{ msg.category_message_title_meta_display|safe }}
-                            </a>
-                        </p>
-                    {% endfor %}
+                    <div name="right_placeholder" id="{{ cat.id }}"
+                         default="{% if cat.top_message %} 3 {% else %} 8 {% endif %}"></div>
                 </div>
             </li>
         {% endfor %}
     </ul>
 </div>
+
+<script>
+    $(function () {
+        var right_cache = [];
+        var tab = $("#tabs2");
+        tab.find("li").bind("mouseover", function () {
+            var activeindex = tab.find("li").index(this);
+            if (right_cache[activeindex] == undefined) {
+                $("#tab_conbox2").children().eq(activeindex).find("div[name='right_placeholder']").each(function () {
+                    var div_item = $(this);
+                    $(this).text("");
+                    $.ajax({
+                        url: "{% url lazy_load %}",
+                        data: {id: $(this).attr("id"), default: $(this).attr("default")},
+                        dataType: 'json',
+                        success: function (json) {
+                            div_item.text("");
+                            for (var i = 0; i < json.length; i++) {
+                                var content = json[i];
+                                var style = "";
+                                var today = new Date();
+                                var create_date = new Date(Date.parse(content.create_date_display.replace(/-/g, "/")));
+                                if (today - create_date < 86400000) {
+                                    style = "font-weight: bold";
+                                }
+                                var text = String.format('<p style="padding: 0;{3}"> <a target="_blank" class="page-item" title="{0}"' +
+                                        ' href="/message/message/{1}/">{2}</a> </p>', content.name, content.id, content.category_message_title_meta_display, style);
+                                div_item.append(text);
+
+                            }
+                        },
+                        beforeSend: function () {
+                            div_item.append('<img style="margin-left:100px" src="{{ STATIC_URL }}img/index_loading.gif"  />');
+                        }
+
+                    });
+
+
+                });
+            }
+            right_cache[activeindex] = true;
+
+        });
+        tab.find("li:first").mouseover();
+
+    });
+</script>

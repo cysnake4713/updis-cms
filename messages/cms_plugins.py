@@ -57,14 +57,6 @@ def get_messages_categories_with_image(position, request):
         if top_message:
             top_message[1]['content'] = top_message[1]['content']
             cat['top_message'] = top_message
-        if top_message:
-            cat.update({
-                'messages': messages[:3]
-            })
-        else:
-            cat.update({
-                'messages': messages[:8]
-            })
     return message_categories
 
 
