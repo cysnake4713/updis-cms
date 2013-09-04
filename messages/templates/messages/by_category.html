@@ -34,7 +34,7 @@
         <thead>
         <tr>
             <th>标题</th>
-            <th>发布人</th>
+            <th>发布者</th>
             <th>发布时间</th>
             <th>回复/查看</th>
             {#                <th>分类</th>#}
@@ -48,11 +48,17 @@
             <tr>
                 <td>
                     <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
-                       title="{{ msg.name }}" {% is_today date=msg.create_date_display %}> <span style='color: #ba2636'>·&nbsp;</span>{{ msg.name }} </a>
+                       title="{{ msg.name }}" {% is_today date=msg.create_date_display %}> <span style='color: #ba2636'>·&nbsp;</span>{{ msg.name }}
+                    </a>
                 </td>
                 <td style="text-align: center">
-                    {% if msg.name_for_display %}
-                        {{ msg.name_for_display|safe }}
+                    {% if category.name != "通知" %}
+                        {% if msg.name_for_display %}
+                            {{ msg.name_for_display|safe }}
+                        {% endif %}
+
+                    {% else %}
+                        {{ msg.fbbm }}
                     {% endif %}
 
                 </td>
