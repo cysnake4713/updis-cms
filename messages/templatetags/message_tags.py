@@ -24,28 +24,31 @@ def get_erp_address(context):
     return str(path)
 
 
-def _get_menu(context):
-    request = context['request']
-    menu_obj = request.erpsession.get_model("internal.home.menu")
-    ir_action_obj = request.erpsession.get_model("ir.actions.act_url")
-    menu_items = menu_obj.search_read([], ['name', 'sequence', 'parent_id',
-                                           'action', 'needaction_enabled', 'needaction_counter'])
-    for menu_item in menu_items:
+def _get_menu_detail(menu_obj, ir_action_obj, menu_ids):
+    menu_ids = menu_obj.search_read([('id', 'in', menu_ids)], ['name', 'child_id', 'action'], order='sequence')
+
+    for menu_item in menu_ids:
         if menu_item['action']:
             url = ir_action_obj.search_read([('id', '=', menu_item['action'].split(',')[1])],
                                             ['name', 'url'])
             menu_item['action'] = url[0]
-    menu_items_map = dict((menu_item['id'], menu_item) for menu_item in menu_items)
-    for menu_item in menu_items:
-        if menu_item['parent_id']:
-            parent = menu_item['parent_id'][0]
-        else:
-            parent = False
-        if parent in menu_items_map:
-            menu_items_map[parent].setdefault('children', []).append(menu_item)
-    for menu_item in menu_items:
-        menu_item.setdefault('children', []).sort(key=operator.itemgetter('sequence'))
-    return menu_items_map
+        if menu_item['child_id']:
+            menu_item['child_id'] = _get_menu_detail(menu_obj, ir_action_obj, menu_item['child_id'])
+
+    return menu_ids
+
+
+def _get_menu(context):
+    request = context['request']
+    menu_obj = request.erpsession.get_model("internal.home.menu")
+    ir_action_obj = request.erpsession.get_model("ir.actions.act_url")
+    menu_items = {
+        'top_menu': menu_obj.search_read([('name', '=', 'Top menu')], ['name', 'child_id', ])[0]['child_id'],
+        'bottom_menu': menu_obj.search_read([('name', '=', 'Footer Menu')], ['name', 'child_id', ])[0]['child_id'],
+    }
+    menu_items['top_menu'] = _get_menu_detail(menu_obj, ir_action_obj, menu_items['top_menu'])
+    menu_items['bottom_menu'] = _get_menu_detail(menu_obj, ir_action_obj, menu_items['bottom_menu'])
+    return menu_items
 
 
 @register.assignment_tag(takes_context=True)
