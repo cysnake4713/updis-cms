@@ -161,17 +161,13 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
     render_template = "messages/plugins/contentright.html"
     admin_preview = False
 
-
     def _get_special_group(self, request):
-        if cache.get('special_group'):
-            return cache.get('special_group')
+        groups_obj = request.erpsession.get_model("res.groups")
+        groups = groups_obj.search_read([('name', '=', 'Special')])
+        if groups:
+            return groups[0]['users']
         else:
-            groups_obj = request.erpsession.get_model("res.groups")
-            groups = groups_obj.search_read([('name', '=', 'Special')])
-            if groups:
-                return groups[0]['users']
-            else:
-                return None
+            return None
 
     def render(self, context, instance, placeholder):
         request = context['request']
