@@ -21,6 +21,8 @@
         {#        <h1 style="text-align: center">{{ message.name }}</h1>#}
     </div>
     <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
+    <!--如果你看着这个点赞很眼熟,我只能很不好意思的说:天王盖地虎-->
+    <!--客户催的急,盗用糗百的点赞UI了,好在是公司内部使用的东西,不算太侵权吧,自我安慰一下先-->
     <div style="text-align: center">
         <a class="vote-like" href="{% url vote_like message_id=message.id %}" title="{{ message.vote_like }}个赞">{{ message.vote_like }}</a>
         <a class="vote-unlike" href="{% url vote_unlike message_id=message.id %}" title="{{ message.vote_unlike }}个拍">{{ message.vote_unlike }}</a>
