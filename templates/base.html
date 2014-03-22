@@ -46,10 +46,10 @@
                     <ul>
                         {% if request.session.erp_user %}
                             <li><strong>{{ request.session.erp_user.username }}</strong>
-                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a></li>
+                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">用户登出</a></li>
                         {% else %}
                             <li><strong><a
-                                    href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong></li>
+                                    href="{% url erp_login redirect_url=request.get_full_path %}">用户登录</a></strong></li>
                         {% endif %}
                         <li><a id="link_home" target="_blank " href="{{ erp_address }}">办公管理系统</a></li>
                     </ul>
