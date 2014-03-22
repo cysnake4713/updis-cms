@@ -38,7 +38,7 @@ def detail(req, message_id):
 
     messages = message_obj.search_read([('id', '=', message_id)],
                                        ['name', 'message_meta_display', 'content', 'message_ids',
-                                        'category_id', 'message_summary', 'read_times'])
+                                        'category_id', 'message_summary', 'read_times', 'vote_like', 'vote_unlike'])
     if messages:
         message = messages[0]
 
@@ -87,6 +87,27 @@ def detail(req, message_id):
                                                        'form': form,
     },
                               context_instance=RequestContext(req))
+
+
+def vote_like(req, message_id):
+    message_id = int(message_id)
+    erpsession = req.erpsession
+    erp_user = req.session['erp_user']
+    if erp_user:
+        user_id = erp_user['uid']
+        message_obj = erpsession.get_model('message.message')
+        is_voted = message_obj.vote_like(user_id, message_id)
+    return HttpResponseRedirect("/message/message/%s/" % message_id)
+
+def vote_unlike(req, message_id):
+    message_id = int(message_id)
+    erpsession = req.erpsession
+    erp_user = req.session['erp_user']
+    if erp_user:
+        user_id = erp_user['uid']
+        message_obj = erpsession.get_model('message.message')
+        is_voted = message_obj.vote_unlike(user_id, message_id)
+    return HttpResponseRedirect("/message/message/%s/" % message_id)
 
 
 # @cache_page(60 * 5)

@@ -23,6 +23,10 @@
     <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
     <br/>
     <br/>
+    <div>
+        喜欢的:{{ message.vote_like }}
+        不喜欢:{{ message.vote_unlike }}
+    </div>
     <p>
         {% if message.content %}
             {{ message.content|safe }}
@@ -99,8 +103,8 @@
                 </p>
 
                 <p>
-{#                    <label for="id_attachment"#}
-{#                           class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>#}
+                    {#                    <label for="id_attachment"#}
+                    {#                           class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>#}
                 </p>
 
                 <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
