@@ -1806,3 +1806,72 @@ border-radius: 5px;
 .footer-holder {
     font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
 }
+
+a.vote-like {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-clip: border-box;
+    background: #fff url("../img/vote_icon.png") no-repeat 0 -720px;
+    background-origin: padding-box;
+    background-size: auto;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-radius: 3px;
+    border: 1px solid rgb(223, 213, 203);
+    color: rgb(158, 140, 123);
+    cursor: auto;
+    display: inline-block;
+    font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+    font-size: 12px;
+    height: 28px;
+    line-height: 30px;
+    list-style: none outside none;
+    margin: 0px 10px 0px 0px;
+    text-align: left;
+    text-decoration: none solid rgb(158, 140, 123);
+    text-indent: 36px;
+    padding-left: 10px;
+    width: 65px;
+}
+
+a.vote-like:hover {
+    border-color: #9e8c7b !important;
+}
+
+a.vote-unlike {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-clip: border-box;
+    background: #fff url("../img/vote_icon.png") no-repeat -80px -750px;
+    background-origin: padding-box;
+    background-size: auto;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-radius: 3px;
+    border: 1px solid rgb(223, 213, 203);
+    color: rgb(158, 140, 123);
+    cursor: auto;
+    display: inline-block;
+    font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+    font-size: 12px;
+    height: 28px;
+    line-height: 30px;
+    list-style: none outside none;
+    margin: 0px 10px 0px 0px;
+    text-align: left;
+    text-decoration: none solid rgb(158, 140, 123);
+    text-indent: 36px;
+    padding-left: 10px;
+    width: 65px;
+
+}
+
+a.vote-unlike:hover {
+    border-color: #9e8c7b  !important;
+}
