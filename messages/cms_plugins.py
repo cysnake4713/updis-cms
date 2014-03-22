@@ -2,7 +2,7 @@
 from cms.plugin_base import CMSPluginBase
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
-from messages.models import MessageCategories
+from messages.models import MessageCategories, BirthdayWish
 import re
 
 __author__ = 'Zhou Guangwen'
@@ -229,8 +229,37 @@ class Android2DImagePlugin(CMSPluginBase):
         return context
 
 
+class BirthdayWishPlugin(CMSPluginBase):
+    model = BirthdayWish
+    name = _("Birthday Wish")
+    render_template = "messages/plugins/birthday_wish.html"
+    admin_preview = False
+
+    def render(self, context, instance, placeholder):
+
+        if cache.get('birthday_wish_cache'):
+            birthday_wish = cache.get('birthday_wish_cache')
+        else:
+            erp_session = context.get('request').erpsession
+            wish_obj = erp_session.get_model("hr.birthday.wish")
+            birthday_wish = wish_obj.get_today_birthday()
+            cache.set('birthday_wish_cache', birthday_wish, 60 * 100)
+
+        wish_people = instance.people % ','.join(birthday_wish[0])
+        wish_string = instance.wish % birthday_wish[1]
+        context.update({
+            'object': instance,
+            'placeholder': placeholder,
+            'wish_people': wish_people,
+            'wish_string': wish_string,
+            'help': instance.help,
+        })
+        return context
+
+
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentLeftMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentRightMessageCategoriesPlugin)
 plugin_pool.register_plugin(DepartmentMessageCategoriesPlugin)
 plugin_pool.register_plugin(Android2DImagePlugin)
+plugin_pool.register_plugin(BirthdayWishPlugin)
