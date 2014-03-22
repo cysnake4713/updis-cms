@@ -243,7 +243,7 @@ class BirthdayWishPlugin(CMSPluginBase):
             erp_session = context.get('request').erpsession
             wish_obj = erp_session.get_model("hr.birthday.wish")
             birthday_wish = wish_obj.get_today_birthday()
-            cache.set('birthday_wish_cache', birthday_wish, 60 * 100)
+            cache.set('birthday_wish_cache', birthday_wish, 60 * 60 * 8)
 
         wish_people = instance.people % ','.join(birthday_wish[0])
         wish_string = instance.wish % birthday_wish[1]
