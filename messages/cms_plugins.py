@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from cms.plugin_base import CMSPluginBase
+from cms.plugins.text.cms_plugins import TextPlugin
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
 from messages.models import MessageCategories, BirthdayWish
@@ -225,11 +226,8 @@ class Android2DImagePlugin(CMSPluginBase):
         return context
 
 
-class BirthdayWishPlugin(CMSPluginBase):
-    model = BirthdayWish
+class BirthdayWishPlugin(TextPlugin):
     name = _("Birthday Wish")
-    render_template = "messages/plugins/birthday_wish.html"
-    admin_preview = False
 
     def render(self, context, instance, placeholder):
 
@@ -241,16 +239,9 @@ class BirthdayWishPlugin(CMSPluginBase):
             birthday_wish = wish_obj.get_today_birthday()
             cache.set('birthday_wish_cache', birthday_wish, 60 * 60 * 8)
 
-        wish_people = instance.people % ','.join(birthday_wish[0])
-        wish_string = instance.wish % birthday_wish[1]
-        context.update({
-            'object': instance,
-            'placeholder': placeholder,
-            'wish_people': wish_people,
-            'wish_string': wish_string,
-            'help': instance.help,
-        })
-        return context
+        body = instance.body.format(name=','.join(birthday_wish[0]), wish=birthday_wish[1])
+        instance.body = body
+        return super(BirthdayWishPlugin,self).render(context, instance, placeholder)
 
 
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
