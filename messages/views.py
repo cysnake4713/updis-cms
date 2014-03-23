@@ -99,6 +99,7 @@ def vote_like(req, message_id):
         is_voted = message_obj.vote_like(user_id, message_id)
     return HttpResponseRedirect("/message/message/%s/" % message_id)
 
+
 def vote_unlike(req, message_id):
     message_id = int(message_id)
     erpsession = req.erpsession
@@ -130,7 +131,7 @@ def by_category(req, category_id):
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
                                       ['name', 'message_ids', 'write_uid', 'fbbm',
                                        'write_date_display', 'create_date', 'read_times', 'create_date_display',
-                                       'category_id',
+                                       'category_id', 'vote_like', 'vote_unlike',
                                        'is_display_name',
                                        'name_for_display']), per_page)
     page = req.GET.get('page')
@@ -178,7 +179,7 @@ def search(request, search_context):
     paginator = Paginator(MessageList(erpsession, fields,
                                       ['name', 'message_ids', 'write_uid', 'fbbm', 'read_times',
                                        'write_date_display', 'create_date_display', 'create_date',
-                                       'name_for_display',
+                                       'name_for_display', 'vote_like', 'vote_unlike',
                                        'category_id',
                                        'is_display_name']), per_page)
 

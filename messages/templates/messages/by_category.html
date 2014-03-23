@@ -37,7 +37,7 @@
             <th>发布人</th>
             <th>发布时间</th>
             <th>回复/查看</th>
-            {#                <th>分类</th>#}
+            <th>顶/踩</th>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +48,8 @@
             <tr>
                 <td>
                     <a target="_blank" href="{% url messages_detail message_id=msg.id %}"
-                       title="{{ msg.name }}" {% is_today date=msg.create_date_display %}> <span style='color: #ba2636'>·&nbsp;</span>{{ msg.name }} </a>
+                       title="{{ msg.name }}" {% is_today date=msg.create_date_display %}> <span style='color: #ba2636'>·&nbsp;</span>{{ msg.name }}
+                    </a>
                 </td>
                 <td style="text-align: center">
                     {% if msg.name_for_display %}
@@ -68,9 +69,12 @@
                     {% endif %}/
                     {{ msg.read_times }}
                 </td>
-                {#                    <td>#}
-                {#                        <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>#}
-                {#                    </td>#}
+                {#                <td>#}
+                {#                    <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>#}
+                {#                </td>#}
+                <td>
+                    {{ msg.vote_like }}/{{ msg.vote_unlike }}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
