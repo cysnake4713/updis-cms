@@ -248,15 +248,9 @@ class BirthdayWishPlugin(TextPlugin):
         return TextPluginForm
 
     def render(self, context, instance, placeholder):
-
-
-        if cache.get('birthday_wish_cache'):
-            birthday_wish = cache.get('birthday_wish_cache')
-        else:
-            erp_session = context.get('request').erpsession
-            wish_obj = erp_session.get_model("hr.birthday.wish")
-            birthday_wish = wish_obj.get_today_birthday()
-            cache.set('birthday_wish_cache', birthday_wish, 60 * 60 * 8)
+        erp_session = context.get('request').erpsession
+        wish_obj = erp_session.get_model("hr.birthday.wish")
+        birthday_wish = wish_obj.get_today_birthday()
         if birthday_wish[0]:
             body = instance.body.format(name=','.join(birthday_wish[0]), wish=birthday_wish[1])
         else:
