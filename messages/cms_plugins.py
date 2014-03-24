@@ -3,8 +3,10 @@ from cms.plugin_base import CMSPluginBase
 from cms.plugins.text.cms_plugins import TextPlugin
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
-from messages.models import MessageCategories, BirthdayWish
+from messages.forms import BirthDayForm
+from messages.models import MessageCategories, BirthdayWishModel
 import re
+from django.forms.fields import CharField
 
 __author__ = 'Zhou Guangwen'
 from cms.plugin_pool import plugin_pool
@@ -228,8 +230,25 @@ class Android2DImagePlugin(CMSPluginBase):
 
 class BirthdayWishPlugin(TextPlugin):
     name = _("Birthday Wish")
+    admin_preview = False
+    model = BirthdayWishModel
+    form = BirthDayForm
+
+    def get_form_class(self, request, plugins):
+        """
+        Returns a subclass of Form to be used by this plugin
+        """
+        # We avoid mutating the Form declared above by subclassing
+        class TextPluginForm(self.form):
+            pass
+
+        widget = self.get_editor_widget(request, plugins)
+        TextPluginForm.declared_fields["body"] = CharField(widget=widget, required=False)
+        TextPluginForm.declared_fields["no_wish"] = CharField(widget=widget, required=False)
+        return TextPluginForm
 
     def render(self, context, instance, placeholder):
+
 
         if cache.get('birthday_wish_cache'):
             birthday_wish = cache.get('birthday_wish_cache')
@@ -238,10 +257,12 @@ class BirthdayWishPlugin(TextPlugin):
             wish_obj = erp_session.get_model("hr.birthday.wish")
             birthday_wish = wish_obj.get_today_birthday()
             cache.set('birthday_wish_cache', birthday_wish, 60 * 60 * 8)
-
-        body = instance.body.format(name=','.join(birthday_wish[0]), wish=birthday_wish[1])
+        if birthday_wish[0]:
+            body = instance.body.format(name=','.join(birthday_wish[0]), wish=birthday_wish[1])
+        else:
+            body = instance.no_wish
         instance.body = body
-        return super(BirthdayWishPlugin,self).render(context, instance, placeholder)
+        return super(BirthdayWishPlugin, self).render(context, instance, placeholder)
 
 
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
