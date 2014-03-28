@@ -21,10 +21,10 @@
         {#        <h1 style="text-align: center">{{ message.name }}</h1>#}
     </div>
     <div style="text-align: center"><span>{{ message.message_meta_display|safe }}</span></div>
-{#    <div style="text-align: center">#}
-{#        <a class="vote-like" href="{% url vote_like message_id=message.id %}" title="{{ message.vote_like }}个赞">{{ message.vote_like }}</a>#}
-{#        <a class="vote-unlike" href="{% url vote_unlike message_id=message.id %}" title="{{ message.vote_unlike }}个拍">{{ message.vote_unlike }}</a>#}
-{#    </div>#}
+    {#    <div style="text-align: center">#}
+    {#        <a class="vote-like" href="{% url vote_like message_id=message.id %}" title="{{ message.vote_like }}个赞">{{ message.vote_like }}</a>#}
+    {#        <a class="vote-unlike" href="{% url vote_unlike message_id=message.id %}" title="{{ message.vote_unlike }}个拍">{{ message.vote_unlike }}</a>#}
+    {#    </div>#}
     <br/>
     <br/>
     <p>
@@ -153,5 +153,21 @@
                 alert("请输入评论内容！");
             }
         });
+{#        $("a.vote-like").bind("click", function (event) {#}
+{#            if ({% if  request.session.erp_user %} false {% else %} true {% endif %}#}
+{#            )#}
+{#            {#}
+{#                event.preventDefault();#}
+{#                alert("请登录后发表心情!");#}
+{#            }#}
+{#        });#}
+{#        $("a.vote-unlike").bind("click", function (event) {#}
+{#            if ({% if  request.session.erp_user %} false {% else %} true {% endif %}#}
+{#            )#}
+{#            {#}
+{#                event.preventDefault();#}
+{#                alert("请登录后发表心情!");#}
+{#            }#}
+{#        });#}
     </script>
 {% endblock %}

@@ -15,6 +15,19 @@ from messages.forms import CommentForm
 import cms_plugins
 
 
+def update_read_time(id):
+    conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
+                            password=settings.DB_PASSWORD)
+
+    cursor = conn.cursor()
+    cursor.execute(
+        """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
+            id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
 class MessageList(object):
     def __init__(self, erpsession, domain, fields):
         self.message_obj = erpsession.get_model('message.message')
@@ -97,7 +110,9 @@ def vote_like(req, message_id):
         user_id = erp_user['uid']
         message_obj = erpsession.get_model('message.message')
         is_voted = message_obj.vote_like(user_id, message_id)
-    return HttpResponseRedirect("/message/message/%s/" % message_id)
+        return HttpResponseRedirect("/message/message/%s/" % message_id)
+    else:
+        return HttpResponseRedirect("/account/login/%s" % req.path)
 
 
 def vote_unlike(req, message_id):
@@ -108,7 +123,9 @@ def vote_unlike(req, message_id):
         user_id = erp_user['uid']
         message_obj = erpsession.get_model('message.message')
         is_voted = message_obj.vote_unlike(user_id, message_id)
-    return HttpResponseRedirect("/message/message/%s/" % message_id)
+        return HttpResponseRedirect("/message/message/%s/" % message_id)
+    else:
+        return HttpResponseRedirect("/account/login/%s" % req.path)
 
 
 # @cache_page(60 * 5)
@@ -270,19 +287,6 @@ def reload_cache(request, TYPE):
     if TYPE == '3':
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
-
-
-def update_read_time(id):
-    conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
-                            password=settings.DB_PASSWORD)
-
-    cursor = conn.cursor()
-    cursor.execute(
-        """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
-            id))
-    conn.commit()
-    cursor.close()
-    conn.close()
 
 
 # if __name__ == '__main__':
