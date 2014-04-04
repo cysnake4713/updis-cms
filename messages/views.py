@@ -15,6 +15,19 @@ from messages.forms import CommentForm
 import cms_plugins
 
 
+def update_read_time(id):
+    conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
+                            password=settings.DB_PASSWORD)
+
+    cursor = conn.cursor()
+    cursor.execute(
+        """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
+            id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
 class MessageList(object):
     def __init__(self, erpsession, domain, fields):
         self.message_obj = erpsession.get_model('message.message')
@@ -38,7 +51,7 @@ def detail(req, message_id):
 
     messages = message_obj.search_read([('id', '=', message_id)],
                                        ['name', 'message_meta_display', 'content', 'message_ids',
-                                        'category_id', 'message_summary', 'read_times'])
+                                        'category_id', 'message_summary', 'read_times', 'vote_like', 'vote_unlike'])
     if messages:
         message = messages[0]
 
@@ -89,6 +102,32 @@ def detail(req, message_id):
                               context_instance=RequestContext(req))
 
 
+def vote_like(req, message_id):
+    message_id = int(message_id)
+    erpsession = req.erpsession
+    erp_user = req.session['erp_user']
+    if erp_user:
+        user_id = erp_user['uid']
+        message_obj = erpsession.get_model('message.message')
+        is_voted = message_obj.vote_like(user_id, message_id)
+        return HttpResponseRedirect("/message/message/%s/" % message_id)
+    else:
+        return HttpResponseRedirect("/account/login/%s" % req.path)
+
+
+def vote_unlike(req, message_id):
+    message_id = int(message_id)
+    erpsession = req.erpsession
+    erp_user = req.session['erp_user']
+    if erp_user:
+        user_id = erp_user['uid']
+        message_obj = erpsession.get_model('message.message')
+        is_voted = message_obj.vote_unlike(user_id, message_id)
+        return HttpResponseRedirect("/message/message/%s/" % message_id)
+    else:
+        return HttpResponseRedirect("/account/login/%s" % req.path)
+
+
 # @cache_page(60 * 5)
 def index(req):
     response = render_to_response("messages/index.html", context_instance=RequestContext(req))
@@ -109,7 +148,7 @@ def by_category(req, category_id):
     paginator = Paginator(MessageList(erpsession, [('category_id', '=', category_id)],
                                       ['name', 'message_ids', 'write_uid', 'fbbm',
                                        'write_date_display', 'create_date', 'read_times', 'create_date_display',
-                                       'category_id',
+                                       'category_id', 'vote_like', 'vote_unlike',
                                        'is_display_name',
                                        'name_for_display']), per_page)
     page = req.GET.get('page')
@@ -157,7 +196,7 @@ def search(request, search_context):
     paginator = Paginator(MessageList(erpsession, fields,
                                       ['name', 'message_ids', 'write_uid', 'fbbm', 'read_times',
                                        'write_date_display', 'create_date_display', 'create_date',
-                                       'name_for_display',
+                                       'name_for_display', 'vote_like', 'vote_unlike',
                                        'category_id',
                                        'is_display_name']), per_page)
 
@@ -248,19 +287,6 @@ def reload_cache(request, TYPE):
     if TYPE == '3':
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
-
-
-def update_read_time(id):
-    conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
-                            password=settings.DB_PASSWORD)
-
-    cursor = conn.cursor()
-    cursor.execute(
-        """update message_message set read_times = case when read_times is null then 1 else read_times + 1 end where id = %s""" % (
-            id))
-    conn.commit()
-    cursor.close()
-    conn.close()
 
 
 # if __name__ == '__main__':
