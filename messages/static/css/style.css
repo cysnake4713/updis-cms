@@ -1812,7 +1812,7 @@ a.vote-like {
     -webkit-background-origin: padding-box;
     -webkit-background-size: auto;
     background-clip: border-box;
-    background: #fff url("../img/vote_icon.png") no-repeat 0 -720px;
+    background: #fff url("../img/follow/79.gif") no-repeat;
     background-origin: padding-box;
     background-size: auto;
     border-image-repeat: stretch;
@@ -1846,7 +1846,7 @@ a.vote-unlike {
     -webkit-background-origin: padding-box;
     -webkit-background-size: auto;
     background-clip: border-box;
-    background: #fff url("../img/vote_icon.png") no-repeat -80px -750px;
+    background: #fff url("../img/follow/80.gif") no-repeat;
     background-origin: padding-box;
     background-size: auto;
     border-image-repeat: stretch;
