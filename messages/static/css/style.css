@@ -1872,17 +1872,23 @@ a.vote-unlike {
 
 }
 
+.adv-area {
+    width: 980px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 a.vote-unlike:hover {
     border-color: #9e8c7b  !important;
 }
 
 div.timer {
     width: 940px;
-    height: 10px;
 }
 
 div.timer-content {
-    float: left;
     padding-top: 30px;
 }
 
