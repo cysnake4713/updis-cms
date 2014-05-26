@@ -1,11 +1,12 @@
 <div class="timer">
 
     <div class="timer-content">
-        {{ body|safe}}
-        {{ end_time }}
+        <a href="/message/category/313/"><img src="{{ STATIC_URL }}img/2014_sport.png"/></a>
     </div>
     <div class="timer-clock">
-        <div class="count-down-timer"></div>
+        <a href="/message/category/313/">
+            <div class="count-down-timer"></div>
+        </a>
     </div>
 </div>
 
@@ -17,7 +18,7 @@
         var currentDate = new Date();
 
         // Set some date in the future. In this case, it's always Jan 1
-        var futureDate = new Date("2014-06-28 12:00:00");
+        var futureDate = new Date("2014-06-27 13:00:00");
 
         // Calculate the difference in seconds between the future and current date
         var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
@@ -29,10 +30,10 @@
         });
 
         $('.flip-clock-divider').find('.flip-clock-label').each(function () {
-            if ($(this).html()== 'Days') $(this).html('天数');
-            if ($(this).html()== 'Hours') $(this).html('小时');
-            if ($(this).html()== 'Minutes') $(this).html('分钟');
-            if ($(this).html()== 'Seconds') $(this).html('秒钟');
+            if ($(this).html() == 'Days') $(this).html('天数');
+            if ($(this).html() == 'Hours') $(this).html('小时');
+            if ($(this).html() == 'Minutes') $(this).html('分钟');
+            if ($(this).html() == 'Seconds') $(this).html('秒钟');
         })
     });
 </script>
