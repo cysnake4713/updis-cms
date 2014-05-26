@@ -1,6 +1,6 @@
 #encoding:utf-8
 from django.forms.models import ModelForm
-from messages.models import BirthdayWishModel
+from messages.models import BirthdayWishModel, TimerModel
 from openerplib import AuthenticationError
 
 __author__ = 'Zhou Guangwen'
@@ -28,4 +28,12 @@ class BirthDayForm(ModelForm):
 
     class Meta:
         model = BirthdayWishModel
+        exclude = ('page', 'position', 'placeholder', 'language', 'plugin_type')
+
+
+class TimerForm(ModelForm):
+    body = forms.CharField()
+
+    class Meta:
+        model = TimerModel
         exclude = ('page', 'position', 'placeholder', 'language', 'plugin_type')

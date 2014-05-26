@@ -4,7 +4,7 @@ from cms.plugins.text.utils import plugin_admin_html_to_tags, plugin_tags_to_adm
 from django.db import models
 from django.utils.text import truncate_words
 from django.utils.translation import ugettext_lazy as _
-from cms.plugins.text.utils import (  plugin_tags_to_id_list, replace_plugin_tags)
+from cms.plugins.text.utils import (plugin_tags_to_id_list, replace_plugin_tags)
 from cms.utils.html import clean_html
 from django.utils.html import strip_tags
 
@@ -42,23 +42,13 @@ class BirthdayWishModel(AbstractText):
         self.body = clean_html(self.body, full=False)
         self.no_wish = clean_html(self.no_wish, full=False)
 
-    #def clean_plugins(self):
-    #    ids = plugin_tags_to_id_list(self.body) + plugin_tags_to_id_list(self.no_wish)
-    #    plugins = CMSPlugin.objects.filter(parent=self)
-    #    for plugin in plugins:
-    #        if not plugin.pk in ids:
-    #            plugin.delete() #delete plugins that are not referenced in the text anymore
-    #
-    #
-    #def post_copy(self, old_instance, ziplist):
-    #    """
-    #    Fix references to plugins
-    #    """
-    #
-    #    replace_ids = {}
-    #    for new, old in ziplist:
-    #        replace_ids[old.pk] = new.pk
-    #
-    #    self.body = replace_plugin_tags(old_instance.get_plugin_instance()[0].body, replace_ids)
-    #    self.no_wish = replace_plugin_tags(old_instance.get_plugin_instance()[0].no_wish, replace_ids)
-    #    self.save()
+
+class TimerModel(AbstractText):
+    """Abstract Text Plugin Class"""
+
+
+    search_fields = ('body')
+
+    def clean(self):
+        self.body = clean_html(self.body, full=False)
+

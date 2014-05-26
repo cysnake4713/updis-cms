@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
+import re
+
 from cms.plugin_base import CMSPluginBase
 from cms.plugins.text.cms_plugins import TextPlugin
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
-from messages.forms import BirthDayForm
-from messages.models import MessageCategories, BirthdayWishModel
-import re
 from django.forms.fields import CharField
+
+from messages.forms import BirthDayForm, TimerForm
+from messages.models import MessageCategories, BirthdayWishModel, TimerModel
+
 
 __author__ = 'Zhou Guangwen'
 from cms.plugin_pool import plugin_pool
@@ -228,13 +231,27 @@ class Android2DImagePlugin(CMSPluginBase):
         return context
 
 
-class TimerPlugin(CMSPluginBase):
+class TimerPlugin(TextPlugin):
     name = _("Timer")
     render_template = "messages/plugins/timer.html"
     admin_preview = False
+    model = TimerModel
+    form = TimerForm
 
-    def render(self, context, instance, placeholder):
-        return context
+    def get_form_class(self, request, plugins):
+        """
+        Returns a subclass of Form to be used by this plugin
+        """
+        # We avoid mutating the Form declared above by subclassing
+        class TimerPlugin(self.form):
+            pass
+
+        widget = self.get_editor_widget(request, plugins)
+        TimerPlugin.declared_fields["body"] = CharField(widget=widget, required=False)
+        return TimerPlugin
+
+        # def render(self, context, instance, placeholder):
+        #     return super(TimerPlugin, self).render(context, instance, placeholder)
 
 
 class BirthdayWishPlugin(TextPlugin):
