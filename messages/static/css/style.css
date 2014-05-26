@@ -1877,7 +1877,7 @@ a.vote-unlike:hover {
 }
 
 div.timer-content {
-
+    display: inline;
 }
 
 div.timer-clock {
