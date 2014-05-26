@@ -1876,8 +1876,13 @@ a.vote-unlike:hover {
     border-color: #9e8c7b  !important;
 }
 
+div.timer {
+    height: 150px;
+    width: 940px;
+}
+
 div.timer-content {
-    display: inline;
+    float: left;
 }
 
 div.timer-clock {
