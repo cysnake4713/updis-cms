@@ -1886,6 +1886,7 @@ a.vote-unlike:hover {
 
 div.timer {
     width: 940px;
+    height: 100px;
 }
 
 div.timer-content {
