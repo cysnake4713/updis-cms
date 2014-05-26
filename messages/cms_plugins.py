@@ -228,6 +228,15 @@ class Android2DImagePlugin(CMSPluginBase):
         return context
 
 
+class TimerPlugin(CMSPluginBase):
+    name = _("Timer")
+    render_template = "messages/plugins/timer.html"
+    admin_preview = False
+
+    def render(self, context, instance, placeholder):
+        return context
+
+
 class BirthdayWishPlugin(TextPlugin):
     name = _("Birthday Wish")
     admin_preview = False
@@ -265,3 +274,4 @@ plugin_pool.register_plugin(ContentRightMessageCategoriesPlugin)
 plugin_pool.register_plugin(DepartmentMessageCategoriesPlugin)
 plugin_pool.register_plugin(Android2DImagePlugin)
 plugin_pool.register_plugin(BirthdayWishPlugin)
+plugin_pool.register_plugin(TimerPlugin)

@@ -16,6 +16,7 @@
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/flipclock.css">
     {% endaddtoblock %}
     {% render_block "css" %}
 </head>
@@ -158,6 +159,7 @@
     <script src="{{ STATIC_URL }}js/updis.js"></script>
     <script src="{{ STATIC_URL }}js/karma.js"></script>
     <script src="{{ STATIC_URL }}js/tab.js"></script>
+    <script src="{{ STATIC_URL }}js/flipclock.min.js"></script>
     <script>
         $(function () {
             $("#searchsubmit").bind("click", function (event) {
