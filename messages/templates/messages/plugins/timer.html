@@ -1,11 +1,36 @@
-<div class="count-down-timer"></div>
-<script>
+<div class="timer">
+
+    <div class="timer-content">
+    </div>
+    <div class="timer-clock">
+        <div class="count-down-timer"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
     $(function () {
-        var clock = $('.count-down-timer').FlipClock(3600 * 24 * 3, {
+
+        // Grab the current date
+        var currentDate = new Date();
+
+        // Set some date in the future. In this case, it's always Jan 1
+        var futureDate = new Date(currentDate.getFullYear() + 1, 0, 1);
+
+        // Calculate the difference in seconds between the future and current date
+        var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+        // Instantiate a coutdown FlipClock
+        var clock = $('.count-down-timer').FlipClock(diff, {
             clockFace: 'DailyCounter',
-            countdown: true,
-            showSeconds: false,
-            defaultLanguage: 'chinese'
+            countdown: true
         });
-    }
+
+        $('.flip-clock-divider').find('.flip-clock-label').each(function () {
+            if ($(this).html()== 'Days') $(this).html('天数');
+            if ($(this).html()== 'Hours') $(this).html('小时');
+            if ($(this).html()== 'Minutes') $(this).html('分钟');
+            if ($(this).html()== 'Seconds') $(this).html('秒钟');
+        })
+    });
 </script>

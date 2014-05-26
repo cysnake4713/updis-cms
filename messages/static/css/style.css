@@ -1875,3 +1875,16 @@ a.vote-unlike {
 a.vote-unlike:hover {
     border-color: #9e8c7b  !important;
 }
+
+div.timer-content {
+
+}
+
+div.timer-clock {
+    float: right;
+}
+
+div.timer-clock .count-down-timer {
+    zoom: 0.7;
+    -moz-transform: scale(0.7)
+}

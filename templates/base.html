@@ -18,6 +18,12 @@
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/flipclock.css">
     {% endaddtoblock %}
+    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/updis.js"></script>
+    <script src="{{ STATIC_URL }}js/karma.js"></script>
+    <script src="{{ STATIC_URL }}js/tab.js"></script>
+    {#    <script src="{{ STATIC_URL }}js/flipclock.min.js"></script>#}
+    <script src="{{ STATIC_URL }}js/flipclock.js"></script>
     {% render_block "css" %}
 </head>
 <body>
@@ -155,11 +161,6 @@
 </div>
 
 {% addtoblock "js" %}
-    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
-    <script src="{{ STATIC_URL }}js/updis.js"></script>
-    <script src="{{ STATIC_URL }}js/karma.js"></script>
-    <script src="{{ STATIC_URL }}js/tab.js"></script>
-    <script src="{{ STATIC_URL }}js/flipclock.min.js"></script>
     <script>
         $(function () {
             $("#searchsubmit").bind("click", function (event) {
