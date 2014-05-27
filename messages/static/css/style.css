@@ -1886,20 +1886,23 @@ a.vote-unlike:hover {
 
 div.timer {
     width: 940px;
-    height: 100px;
+    height: 83px;
+    display: block;
 }
 
 div.timer-content {
-    padding-top: 30px;
+    display: block;
 }
 
 div.timer-clock {
     position: relative;
-    left: 350px;
+    left: 660px;
     top: -85px;
+    display: block;
 }
 
 div.timer-clock .count-down-timer {
-    zoom: 0.8;
-    -moz-transform: scale(0.8)
+    zoom: 0.4;
+    -moz-transform: scale(0.4);
+    -moz-transform-origin: top left;
 }
