@@ -25,6 +25,13 @@ def _get_last_image(messages):
                 return match.group(1), message
     return None
 
+def get_messages_categories_no_cache(position, request):
+    erpsession = request.erpsession
+    message_category_obj = erpsession.get_model("message.category")
+    message_categories = message_category_obj.search_read([('display_position', '=', position)],
+                                                          ['name', 'default_message_count', 'sequence'],
+                                                          order='sequence')
+    return message_categories
 
 def get_messages_categories(position, request):
     erpsession = request.erpsession
@@ -108,7 +115,7 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
         if cache.get('shortcut_category_cache'):
             message_categories = cache.get('shortcut_category_cache')
         else:
-            message_categories = get_messages_categories('shortcut', context.get('request'))
+            message_categories = get_messages_categories_no_cache('shortcut', context.get('request'))
             cache.set('shortcut_category_cache', message_categories, 60 * 100)
         context.update({
             'object': instance,

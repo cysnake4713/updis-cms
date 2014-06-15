@@ -216,4 +216,5 @@ ERP_HOME = 'http://localhost:8069'
 DB_HOST = "localhost"
 DB_NAME = "develop"
 DB_USER = "openerp_updis"
+DB_PORT = "5433"
 DB_PASSWORD = "openerpupdis2013"

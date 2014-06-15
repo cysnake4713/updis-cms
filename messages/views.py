@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.cache import cache
+from django.utils import simplejson
 
 from upcms import settings
 from messages.forms import CommentForm
@@ -17,7 +18,7 @@ import cms_plugins
 
 def update_read_time(id):
     conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
-                            password=settings.DB_PASSWORD)
+                            password=settings.DB_PASSWORD,port=settings.DB_PORT)
 
     cursor = conn.cursor()
     cursor.execute(
@@ -287,6 +288,21 @@ def reload_cache(request, TYPE):
     if TYPE == '3':
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
+
+def lazy_load(request):
+    id = int(request.GET.get("id"))
+    default = int(request.GET.get("default")) if request.GET.has_key("default") else 8
+    department_id = int(request.GET.get("dep_id")) if request.GET.has_key("dep_id") else None
+    erpsession = request.erpsession
+    message_obj = erpsession.get_model("message.message")
+    domain = [('category_id', '=', id)]
+    if department_id:
+        domain.append(('department_id', '=', department_id))
+    messages = message_obj.search_read(domain,
+                                       ['category_message_title_meta_display', 'message_ids', 'name',
+                                        "create_date_display"],
+                                       limit=default)
+    return HttpResponse(simplejson.dumps(messages, ensure_ascii=False))
 
 
 # if __name__ == '__main__':
