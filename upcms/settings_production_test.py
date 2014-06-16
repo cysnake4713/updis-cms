@@ -13,7 +13,7 @@ settings.DB_HOST = "10.100.100.172"
 settings.DB_NAME = "develop"
 settings.DB_USER = "openerp_updis"
 settings.DB_PASSWORD = "openerpupdis2013"
-DB_PORT = "5432"
+settings.DB_PORT = "5432"
 
 CACHES = {
     'default': {
