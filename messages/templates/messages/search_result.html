@@ -38,6 +38,7 @@
                 <th>发布人</th>
                 <th>发布时间</th>
                 <th>回复/查看</th>
+                <th>顶/踩</th>
             </tr>
             </thead>
             <tbody>
@@ -71,7 +72,9 @@
                         {% endif %}/
                         {{ msg.read_times }}
                     </td>
-
+                    <td>
+                        {{ msg.vote_like }} / {{ msg.vote_unlike }}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

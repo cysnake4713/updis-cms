@@ -1,0 +1,128 @@
+{% load cms_tags sekizai_tags menu_tags placeholder_tags message_tags %}
+{% load_menu as menus %}
+{% get_erp_address as erp_address %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"　"http://w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <!--[if lte IE 8]><meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" /><![endif]-->
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% addtoblock "css" %}
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/style.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/internal-home.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/karma-purple.css">
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/custom-theme/jquery-ui-1.10.3.custom.css">
+    {% endaddtoblock %}
+    {% render_block "css" %}
+    {% block head_js %}
+    {% endblock %}
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+        <div class="top-block">
+            <div class="top-holder">
+                <!-- ***************** - Top Toolbar Left Side - ***************** -->
+                <div class="sub-nav">
+
+                    <ul>
+                        <div class="mail-login">
+                            <script type="text/javascript"
+                                    src="http://exmail.qq.com/zh_CN/htmledition/js_biz/outerlogin.js"
+                                    charset="gb18030"></script>
+                            <script type="text/javascript">
+                                writeLoginPanel({domainlist: "upr.cn", mode: "vertical"});
+                            </script>
+                        </div>
+                    </ul>
+                </div>
+
+
+                <!-- ***************** - END Top Toolbar Left Side - ***************** -->
+                <!-- ***************** - Top Toolbar Right Side - ***************** -->
+                <div class="sub-nav2" style="margin-right: 30px">
+                    <ul>
+                        {% if request.session.erp_user %}
+                            <li><strong>{{ request.session.erp_user.username }}</strong>
+                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a></li>
+                        {% else %}
+                            <li><strong><a
+                                    href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong></li>
+                        {% endif %}
+                        <li><a id="link_home" target="_blank " href="{{ erp_address }}">办公管理系统</a></li>
+                    </ul>
+                </div>
+                <!-- end sub-nav2 -->
+            </div>
+        </div>
+        <div class="header-holder">
+            <div class="rays">
+                <div class="header-area">
+                    <a class="logo" href="{% page_url 'cms_home' %}">
+                        <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="search-holder">
+            {% block search %}
+            {% endblock %}
+
+
+        </div>
+        <div class="main-area">
+            {% block tools %}
+            {% endblock %}
+
+
+            <div class="main-holder">
+                <div id="content" class="{% block content_class %} content_full_width {% endblock %}">
+
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                {% block sidebar %}
+
+                {% endblock %}
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footer-area">
+                <div class="footer-wrapper">
+                    <div class="footer-holder">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer_bottom">
+            <div class="info">
+                <div id="foot_left" style="margin-left: 230px"><p>Copyright &copy; 2013 <a target="_blank"
+                                                                                           href="http://upr.cn">深圳市城市规划设计研究院</a>.保留所有权利
+                    v1.6</p>
+                </div>
+                <!-- end foot_left -->
+
+                <!-- end foot_right -->
+            </div>
+            <!-- end info -->
+        </div>
+    </div>
+</div>
+
+{% addtoblock "js" %}
+    <script src="{{ STATIC_URL }}js/jquery-1.9.0.min.js"></script>
+{% endaddtoblock %}
+{% render_block "js" %}
+{% block custom_js %}
+{% endblock %}
+</body>
+</html>
+

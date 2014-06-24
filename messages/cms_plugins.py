@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
+import re
+
 from cms.plugin_base import CMSPluginBase
+from cms.plugins.text.cms_plugins import TextPlugin
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
-from messages.models import MessageCategories
-import re
+from django.forms.fields import CharField
+
+from messages.forms import BirthDayForm, TimerForm
+from messages.models import MessageCategories, BirthdayWishModel, TimerModel
+
 
 __author__ = 'Zhou Guangwen'
 from cms.plugin_pool import plugin_pool
@@ -19,6 +25,13 @@ def _get_last_image(messages):
                 return match.group(1), message
     return None
 
+def get_messages_categories_no_cache(position, request):
+    erpsession = request.erpsession
+    message_category_obj = erpsession.get_model("message.category")
+    message_categories = message_category_obj.search_read([('display_position', '=', position)],
+                                                          ['name', 'default_message_count', 'sequence'],
+                                                          order='sequence')
+    return message_categories
 
 def get_messages_categories(position, request):
     erpsession = request.erpsession
@@ -73,7 +86,7 @@ def get_department_message_categories(request):
 
     departments = hr_department_obj.search_read(
         [('display_in_front', '=', True), ('deleted', '=', False), ('is_in_use', '=', True)],
-        ['name', 'sequence', 'have_image'], order="sequence")
+        ['name', 'short_name', 'sequence', 'have_image'], order="sequence")
     for dep in departments:
         message_categories = message_category_obj.search_read([('display_in_departments', '=', dep['id'])],
                                                               ['name', 'default_message_count', 'sequence',
@@ -102,7 +115,7 @@ class ShortcutMessageCategoriesPlugin(CMSPluginBase):
         if cache.get('shortcut_category_cache'):
             message_categories = cache.get('shortcut_category_cache')
         else:
-            message_categories = get_messages_categories('shortcut', context.get('request'))
+            message_categories = get_messages_categories_no_cache('shortcut', context.get('request'))
             cache.set('shortcut_category_cache', message_categories, 60 * 100)
         context.update({
             'object': instance,
@@ -161,17 +174,13 @@ class ContentRightMessageCategoriesPlugin(CMSPluginBase):
     render_template = "messages/plugins/contentright.html"
     admin_preview = False
 
-
     def _get_special_group(self, request):
-        if cache.get('special_group'):
-            return cache.get('special_group')
+        groups_obj = request.erpsession.get_model("res.groups")
+        groups = groups_obj.search_read([('name', '=', 'Special')])
+        if groups:
+            return groups[0]['users']
         else:
-            groups_obj = request.erpsession.get_model("res.groups")
-            groups = groups_obj.search_read([('name', '=', 'Special')])
-            if groups:
-                return groups[0]['users']
-            else:
-                return None
+            return None
 
     def render(self, context, instance, placeholder):
         request = context['request']
@@ -229,8 +238,64 @@ class Android2DImagePlugin(CMSPluginBase):
         return context
 
 
+class TimerPlugin(TextPlugin):
+    name = _("Timer")
+    render_template = "messages/plugins/timer.html"
+    admin_preview = False
+    model = TimerModel
+    form = TimerForm
+
+    def get_form_class(self, request, plugins):
+        """
+        Returns a subclass of Form to be used by this plugin
+        """
+        # We avoid mutating the Form declared above by subclassing
+        class TimerPlugin(self.form):
+            pass
+
+        widget = self.get_editor_widget(request, plugins)
+        TimerPlugin.declared_fields["body"] = CharField(widget=widget, required=False)
+        return TimerPlugin
+
+        # def render(self, context, instance, placeholder):
+        #     return super(TimerPlugin, self).render(context, instance, placeholder)
+
+
+class BirthdayWishPlugin(TextPlugin):
+    name = _("Birthday Wish")
+    admin_preview = False
+    model = BirthdayWishModel
+    form = BirthDayForm
+
+    def get_form_class(self, request, plugins):
+        """
+        Returns a subclass of Form to be used by this plugin
+        """
+        # We avoid mutating the Form declared above by subclassing
+        class TextPluginForm(self.form):
+            pass
+
+        widget = self.get_editor_widget(request, plugins)
+        TextPluginForm.declared_fields["body"] = CharField(widget=widget, required=False)
+        TextPluginForm.declared_fields["no_wish"] = CharField(widget=widget, required=False)
+        return TextPluginForm
+
+    def render(self, context, instance, placeholder):
+        erp_session = context.get('request').erpsession
+        wish_obj = erp_session.get_model("hr.birthday.wish")
+        birthday_wish = wish_obj.get_today_birthday()
+        if birthday_wish[0]:
+            body = instance.body.format(name=','.join(birthday_wish[0]), wish=birthday_wish[1])
+        else:
+            body = instance.no_wish
+        instance.body = body
+        return super(BirthdayWishPlugin, self).render(context, instance, placeholder)
+
+
 plugin_pool.register_plugin(ShortcutMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentLeftMessageCategoriesPlugin)
 plugin_pool.register_plugin(ContentRightMessageCategoriesPlugin)
 plugin_pool.register_plugin(DepartmentMessageCategoriesPlugin)
 plugin_pool.register_plugin(Android2DImagePlugin)
+plugin_pool.register_plugin(BirthdayWishPlugin)
+plugin_pool.register_plugin(TimerPlugin)

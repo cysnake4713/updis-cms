@@ -1,0 +1,39 @@
+<div class="timer">
+
+    <div class="timer-content">
+        <a href="/message/category/313/"><img src="{{ STATIC_URL }}img/2014_sport.png"/></a>
+    </div>
+    <div class="timer-clock">
+        <a href="/message/category/313/">
+            <div class="count-down-timer"></div>
+        </a>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        // Grab the current date
+        var currentDate = new Date();
+
+        // Set some date in the future. In this case, it's always Jan 1
+        var futureDate = new Date("2014-06-27 13:00:00");
+
+        // Calculate the difference in seconds between the future and current date
+        var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+        // Instantiate a coutdown FlipClock
+        var clock = $('.count-down-timer').FlipClock(diff, {
+            clockFace: 'DailyCounter',
+            countdown: true
+        });
+
+        $('.flip-clock-divider').find('.flip-clock-label').each(function () {
+            if ($(this).html() == 'Days') $(this).html('天');
+            if ($(this).html() == 'Hours') $(this).html('时');
+            if ($(this).html() == 'Minutes') $(this).html('分');
+            if ($(this).html() == 'Seconds') $(this).html('秒');
+        })
+    });
+</script>

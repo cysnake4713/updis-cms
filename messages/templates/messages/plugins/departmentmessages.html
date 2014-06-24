@@ -9,7 +9,7 @@
     <ul class="tabs" id="tabs3">
         {% for dep in department_message_categories %}
             <li>
-                <a href="#">{{ dep.name }}</a>
+                <a href="#">{{ dep.short_name }}</a>
             </li>
         {% endfor %}
     </ul>
@@ -31,6 +31,7 @@
                                     </div>
                                     <!-- end preload_four -->
                                 </div>
+
                                 <!-- end port_img_four -->
                             </div>
                         </dl>
@@ -38,6 +39,7 @@
                     {% for cat in dep.message_categories %}
                         <dl style="margin-right: 9px !important; padding-left: 9px !important;"
                             class="
+
                                     {% if  dep.have_image %}{% cycle 'one_third' 'one_third' 'one_third' %}{% else %}{% cycle 'one_third' 'one_third' 'one_third' %}{% endif %}">
                             <dt>{{ cat.name }}
                                 <a style="font-size: 12px;font-weight: normal;" class="message_more" target="_blank"

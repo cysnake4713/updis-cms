@@ -16,7 +16,13 @@
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/jquery.cleditor.css">
         <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/fileuploader.css">
+        <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}css/flipclock.css">
     {% endaddtoblock %}
+    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/karma.js"></script>
+    <script src="{{ STATIC_URL }}js/tab.js"></script>
+    {#    <script src="{{ STATIC_URL }}js/flipclock.min.js"></script>#}
+    <script src="{{ STATIC_URL }}js/flipclock.js"></script>
     {% render_block "css" %}
 </head>
 <body>
@@ -46,10 +52,10 @@
                     <ul>
                         {% if request.session.erp_user %}
                             <li><strong>{{ request.session.erp_user.username }}</strong>
-                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">登出</a></li>
+                                <a href="{% url erp_logout redirect_url=request.get_full_path %}">用户登出</a></li>
                         {% else %}
                             <li><strong><a
-                                    href="{% url erp_login redirect_url=request.get_full_path %}">登录</a></strong></li>
+                                    href="{% url erp_login redirect_url=request.get_full_path %}">用户登录</a></strong></li>
                         {% endif %}
                         <li><a id="link_home" target="_blank " href="{{ erp_address }}">办公管理系统</a></li>
                     </ul>
@@ -64,20 +70,17 @@
                         <img alt="UPDIS" src="{{ STATIC_URL }}img/logo.gif">
                     </a>
                     <ul id="menu-main-nav" style="margin-right: 10px">
-                        {% for k, v in menus.items %}
-                            {% if  v.parent_id.1 == 'Top menu' %}
-                                <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
-                                    <ul class="sub-menu">
-                                        {% for cv in v.children %}
-                                            <li><a target="_blank" {% if cv.action %}
-                                                   href="{{ cv.action.url }}"{% endif %}>
-                                                <span {% if not cv.action %}
-                                                    style="text-align: right;" {% endif %}>{{ cv.name }}</span></a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% endif %}
+                        {% for v in menus.top_menu %}
+                            <li><a href="#"><span><strong>{{ v.name }}</strong></span></a>
+                                <ul class="sub-menu">
+                                    {% for cv in v.child_id %}
+                                        <li><a target="_blank" {% if cv.action %}
+                                               href="{{ cv.action.url }}"{% endif %}>
+                                            <span>{{ cv.name }}</span></a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -102,7 +105,10 @@
                 {% block searchother %}
                 {% endblock %}
             </div>
-
+        </div>
+        <div class="adv-area">
+            {% block adv-area %}
+            {% endblock %}
         </div>
         <div class="main-area">
             {% block tools %}
@@ -124,22 +130,16 @@
             <div class="footer-area">
                 <div class="footer-wrapper">
                     <div class="footer-holder">
-                        {% for k, v in menus.items %}
-                            {% if  v.parent_id.1 == 'Footer Menu' %}
-                                <div class="one_fifth" style="width: 167px !important;">
-                                    <h3>{{ v.name }}</h3>
-                                    <ul>
-                                        {% for cv in v.children %}
-                                            <li><a target="_blank"
-                                                    {% if cv.action %}
-                                                   href="{{ cv.action.url }}"
-                                                   {% else %}class="oe_menu_leaf"{% endif %}>{{ cv.name }}</a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-
-                            {% endif %}
+                        {% for v in menus.bottom_menu %}
+                            <div class="one_fifth" style="width: 167px !important;">
+                                <h3>{{ v.name }}</h3>
+                                <ul>
+                                    {% for cv in v.child_id %}
+                                        <li><a target="_blank" {% if cv.action %}href="{{ cv.action.url }}"{% endif %}>{{ cv.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -150,7 +150,7 @@
             <div class="info">
                 <div id="foot_left" style="margin-left: 230px"><p>Copyright &copy; 2013 <a target="_blank"
                                                                                            href="http://upr.cn">深圳市城市规划设计研究院</a>.保留所有权利
-                    v1.0</p>
+                    v1.6</p>
                 </div>
                 <!-- end foot_left -->
 
@@ -163,10 +163,6 @@
 </div>
 
 {% addtoblock "js" %}
-    <script src="{{ STATIC_URL }}js/jquery-1.4.2.min.js"></script>
-    <script src="{{ STATIC_URL }}js/updis.js"></script>
-    <script src="{{ STATIC_URL }}js/karma.js"></script>
-    <script src="{{ STATIC_URL }}js/tab.js"></script>
     <script>
         $(function () {
             $("#searchsubmit").bind("click", function (event) {

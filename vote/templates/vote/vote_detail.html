@@ -1,0 +1,125 @@
+{% extends "base_vote.html" %}
+{% load cms_tags sekizai_tags menu_tags message_tags %}
+{% block head_js %}
+    <script src="http://jwpsrv.com/library/vJME8sm1EeKzYhIxOQulpA.js"></script>
+{% endblock %}
+{% block tools %}
+    <div class="tools">
+        <div class="holder">
+            <div class="frame">
+                <h1>{{ vote_record.name|safe }}</h1>
+
+                <p class="breadcrumb">
+                    <a href="{% page_url 'cms_home' %}">首页</a>
+                    <a href="{% url get_votes %}">投票</a>
+                    <a href="{% url get_votes_record vote__category_id=vote_record.vote_category|first %}">
+                        {{ vote_record.vote_category|last }}</a>
+                    <span class="current_crumb">{{ vote_record.name|safe }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br/>
+{% endblock %}
+{% block content %}
+    <div id="content" class="content_full_width portfolio_layout">
+        {#        <h1>作者: {% if vote_record.author %}{{ vote_record.author|last }}{% endif %}</h1>#}
+        {% if vote_record.content %}
+            {{ vote_record.content|safe }}
+        {% else %}
+            无相关内容
+        {% endif %}
+
+        <div class="post_footer">
+            <div class="post-cats">
+                <p>
+                </p>
+            </div>
+        </div>
+
+        <div class="blog-tab-box">
+            <ol id="post-comments" class="comment-ol">
+                {% for comment in comments %}
+                    <li>
+                        <div class="comment-wrap">
+                            <div class="comment-content">
+                                <div class="comment-gravatar">
+                                    {% if comment.is_anonymous %}
+                                        <img width="60" height="60" class="avatar avatar-60 photo"
+                                             src="{{ STATIC_URL }}img/anonymous.png"/>
+                                    {% else %}
+                                        <img width="60" height="60" class="avatar avatar-60 photo"
+                                             src="{% url get_employee_image employee_id=comment.author_id.0 %}"/>
+                                    {% endif %}
+                                </div>
+                                <div class="comment-text">
+                                <span class="comment-author">
+                                    {% if comment.is_anonymous %}匿名用户 {% else %}{{ comment.author_id|last }}{% endif %}
+                                </span>&nbsp;&nbsp;
+                                    <span class="comment-date">{{ comment.date|to_date }}</span>
+                                    <br>
+                                    {{ comment.body|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% if comment.subject %}
+                        <h2>{{ comment.subject }}</h2>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </div>
+        <div id="respond">
+            <div class="comments-rss">
+
+            </div>
+            {% if  request.session.erp_user %}
+                <form action="" method="POST" enctype="multipart/form-data" class="ka-form">
+                    {% csrf_token %}
+                    <p class="">
+                        <label for="id_body" class="comment-label">评论内容 &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox"
+                                   tabindex="2"
+                                   id="id_is_anonymous"
+                                   name="is_anonymous"/>
+                            <label for="id_is_anonymous">
+                                匿名评论
+                            </label> </label>
+                        <textarea style="border-style: solid; border-color: #d8d8d6; border-width: 1px" id="id_body"
+                                  rows="5"
+                                  cols="70" name="body" class="comment-textarea"></textarea>
+                    </p>
+
+                    <p>
+                        {#                    <label for="id_attachment"#}
+                        {#                           class="comment-label">添加附件&nbsp;&nbsp;&nbsp; {{ form.attachment }}</label>#}
+                    </p>
+
+                    <p><input type="submit" id="ka-submit" value="发布评论" style="opacity: 1;"></p>
+                </form>
+            {% else %}
+                请<a href="{% url erp_login redirect_url=request.get_full_path %}">登录</a>后发表评论
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+
+        $(function () {
+            $("div.video_block").each(function (index) {
+                var id = $(this).attr("id");
+                var file = $(this).attr("src");
+                jwplayer(id).setup({
+                    file: file,
+                    {#                    image: 'http://www.longtailvideo.com/content/images/jw-player/lWMJeVvV-876.jpg',#}
+                    width: '640',
+                    height: '360'
+                });
+            })
+
+        })
+
+    </script>
+{% endblock %}

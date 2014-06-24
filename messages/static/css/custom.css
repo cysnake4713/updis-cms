@@ -302,7 +302,7 @@ div.bizmail_LoginBox h3 {
 }
 
 /*body {*/
-    /*zoom: 110%;*/
+/*zoom: 110%;*/
 /*}*/
 
 /*.category_table {*/
@@ -381,3 +381,11 @@ tbody td a:hover, tbody th a:hover {
     /*text-decoration: none;*/
     color: #ba2636 !important;
 }
+
+div#tabbox_c .tabs li a {
+    padding: 0 4px !important;
+}
+
+/*.department-container .tabs {*/
+    /*margin-left: 0 !important;*/
+/*}*/

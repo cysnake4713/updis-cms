@@ -94,7 +94,7 @@ Stylesheet Guide
 /* 01. GLOBAL
 /* *********************************************************************************** */
 
-* {font-size: 100%;}
+/** {font-size: 100%;}*/
 html {font-size: 62.5%;margin:0;padding:0;}
 body {margin:0;background:#f4f4f2;font:1.2em/19px "SimSun", "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;color:#666;min-width:1003px;}
 
@@ -1805,4 +1805,104 @@ border-radius: 5px;
 
 .footer-holder {
     font-family: "Microsoft YaHei", "Lucida Grande","helvetica neue",Helvetica,Arial,Verdana,sans-serif;
+}
+
+a.vote-like {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-clip: border-box;
+    background: #fff url("../img/follow/79.gif") no-repeat;
+    background-origin: padding-box;
+    background-size: auto;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-radius: 3px;
+    border: 1px solid rgb(223, 213, 203);
+    color: rgb(158, 140, 123);
+    cursor: auto;
+    display: inline-block;
+    font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+    font-size: 12px;
+    height: 28px;
+    line-height: 30px;
+    list-style: none outside none;
+    margin: 0px 10px 0px 0px;
+    text-align: left;
+    text-decoration: none solid rgb(158, 140, 123);
+    text-indent: 36px;
+    padding-left: 10px;
+    width: 65px;
+}
+
+a.vote-like:hover {
+    border-color: #9e8c7b !important;
+}
+
+a.vote-unlike {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    background-clip: border-box;
+    background: #fff url("../img/follow/80.gif") no-repeat;
+    background-origin: padding-box;
+    background-size: auto;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-radius: 3px;
+    border: 1px solid rgb(223, 213, 203);
+    color: rgb(158, 140, 123);
+    cursor: auto;
+    display: inline-block;
+    font-family: 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+    font-size: 12px;
+    height: 28px;
+    line-height: 30px;
+    list-style: none outside none;
+    margin: 0px 10px 0px 0px;
+    text-align: left;
+    text-decoration: none solid rgb(158, 140, 123);
+    text-indent: 36px;
+    padding-left: 10px;
+    width: 65px;
+
+}
+
+.adv-area {
+    width: 980px;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a.vote-unlike:hover {
+    border-color: #9e8c7b  !important;
+}
+
+div.timer {
+    width: 940px;
+    height: 83px;
+    display: block;
+}
+
+div.timer-content {
+    display: block;
+}
+
+div.timer-clock {
+    position: relative;
+    left: 660px;
+    top: -85px;
+    display: block;
+}
+
+div.timer-clock .count-down-timer {
+    zoom: 0.4;
+    -moz-transform: scale(0.4);
+    -moz-transform-origin: top left;
 }
