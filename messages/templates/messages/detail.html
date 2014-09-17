@@ -125,6 +125,7 @@
     <script src="{{ STATIC_URL }}js/clupload.js"></script>
     <script src="{{ STATIC_URL }}js/fileuploader.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script src="http://jwpsrv.com/library/vJME8sm1EeKzYhIxOQulpA.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -167,5 +168,22 @@
 {#                alert("请登录后发表心情!");#}
 {#            }#}
 {#        });#}
+    </script>
+    <script>
+
+        $(function () {
+            $("div.video_block").each(function (index) {
+                var id = $(this).attr("id");
+                var file = $(this).attr("src");
+                jwplayer(id).setup({
+                    file: file,
+                    {#                    image: 'http://www.longtailvideo.com/content/images/jw-player/lWMJeVvV-876.jpg',#}
+                    width: '640',
+                    height: '360'
+                });
+            })
+
+        })
+
     </script>
 {% endblock %}
