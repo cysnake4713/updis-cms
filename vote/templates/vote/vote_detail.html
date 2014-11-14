@@ -1,7 +1,7 @@
 {% extends "base_vote.html" %}
 {% load cms_tags sekizai_tags menu_tags message_tags %}
 {% block head_js %}
-    <script type="text/javascript" src="/jwplayer/jwplayer.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jwplayer/jwplayer.js"></script>
     <script type="text/javascript">jwplayer.key="vJME8sm1EeKzYhIxOQulpA";</script>
 {% endblock %}
 {% block tools %}
