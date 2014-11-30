@@ -5,6 +5,8 @@
         <div class="holder">
             <div class="frame">
                 <h1>搜索结果:{{ search_context }}</h1>
+                <div id="is_project_search" style="display: none">1</div>
+                <div style="display: none" id="search_result">{{ search_context }}</div>
 
                 <p class="breadcrumb">
                     <a href="{% page_url 'cms_home' %}">首页</a>
@@ -18,8 +20,8 @@
     {% if messages %}
         <div id="horizontal_nav">
             <ul class="sub-menu">
-                <li class="current_page_item"><a><span style="font-size: 18px">消息</span></a></li>
-                <li><a href="{% url project_search search_context=search_context %}"><span style="font-size: 18px">项目</span></a></li>
+                <li><a href="{% url search search_context=search_context %}"><span style="font-size: 18px">消息</span></a></li>
+                <li class="current_page_item"><a><span style="font-size: 18px">项目</span></a></li>
             </ul>
         </div>
         <div class="karma-pages-top">
@@ -40,11 +42,9 @@
             <thead>
             <tr>
                 <th>标题</th>
-                <th>栏目</th>
-                <th>发布人</th>
-                <th>发布时间</th>
-                <th>回复/查看</th>
-                <th>顶/踩</th>
+                <th>状态</th>
+                <th>下达日期</th>
+                <th>归档日期</th>
             </tr>
             </thead>
             <tbody>
@@ -54,32 +54,23 @@
 
                 <tr>
                     <td>
-                        <a target="_blank" href="{% url messages_detail message_id=msg.id %}" {% is_today date=msg.create_date_display %}
+                        <a target="_blank" href="{{ erp_address }}#id={{ msg.id }}&view_type=form&model=project.project"
                            title="{{ msg.name }}"><span style='color: #ba2636'>·&nbsp;</span> {{ msg.name }} </a>
                     </td>
                     <td style="text-align: center">
-                        <a href="{% url category_messages category_id=msg.category_id|first %}">{{ msg.category_id|last }}</a>
-                    </td>
-                    <td style="text-align: center">
-                        {% if msg.name_for_display %}
-                            {{ msg.name_for_display|safe }}
+                        {% if msg.state %}
+                            {{ msg.state|safe }}
                         {% endif %}
-
                     </td>
                     <td style="text-align: center">
-                        {{ msg.create_date_display }}
+                        {% if msg.begin_date %}
+                            {{ msg.begin_date|safe }}
+                        {% endif %}
                     </td>
                     <td style="text-align: center">
-                        {% if  msg.message_ids %}
-                            <a href="{% url messages_detail message_id=msg.id %}#post-comments">
-                                <span>{{ msg.message_ids|length }}</span></a>
-                        {% else %}
-                            0
-                        {% endif %}/
-                        {{ msg.read_times }}
-                    </td>
-                    <td>
-                        {{ msg.vote_like }} / {{ msg.vote_unlike }}
+                        {% if msg.filed_project_end_date %}
+                            {{ msg.filed_project_end_date|safe }}
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
@@ -118,7 +109,7 @@
                 } else {
                     alert("请输入数字！")
                 }
-            });
+            })
             $('#jump_to_top').bind("click", function (event) {
                 var reg = new RegExp("^[0-9]+$");
                 event.preventDefault();
@@ -128,8 +119,7 @@
                 } else {
                     alert("请输入数字！")
                 }
-            });
-
+            })
         })
     </script>
 {% endblock %}

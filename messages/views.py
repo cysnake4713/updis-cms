@@ -18,7 +18,7 @@ import cms_plugins
 
 def update_read_time(id):
     conn = psycopg2.connect(host=settings.DB_HOST, database=settings.DB_NAME, user=settings.DB_USER,
-                            password=settings.DB_PASSWORD,port=settings.DB_PORT)
+                            password=settings.DB_PASSWORD, port=settings.DB_PORT)
 
     cursor = conn.cursor()
     cursor.execute(
@@ -42,6 +42,20 @@ class MessageList(object):
         if isinstance(item, slice):
             count = item.stop - item.start
             return self.message_obj.search_read(self.domain, self.fields, offset=item.start, limit=count)
+
+
+class ProjectList(object):
+    def __init__(self, erpsession, domain):
+        self.project_obj = erpsession.get_model('project.project')
+        self.domain = domain
+
+    def count(self):
+        return self.project_obj.search_count(self.domain)
+
+    def __getitem__(self, item):
+        if isinstance(item, slice):
+            count = item.stop - item.start
+            return self.project_obj.cms_search(self.domain, offset=item.start, limit=count)
 
 
 def detail(req, message_id):
@@ -161,7 +175,7 @@ def by_category(req, category_id):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         messages = paginator.page(paginator.num_pages)
-        #    messages = message_obj.search_read([],['name','category_message_title_meta_display'],limit=10)
+        # messages = message_obj.search_read([],['name','category_message_title_meta_display'],limit=10)
     return render_to_response("messages/by_category.html", {'category': message_category, 'messages': messages},
                               context_instance=RequestContext(req))
 
@@ -212,6 +226,26 @@ def search(request, search_context):
         # If page is out of range (e.g. 9999), deliver last page of results.
         messages = paginator.page(paginator.num_pages)
     return render_to_response("messages/search_result.html", {'messages': messages, 'search_context': search_context},
+                              context_instance=RequestContext(request))
+
+
+def project_search(request, search_context):
+    erpsession = request.erpsession
+    per_page = int(request.GET.get('per_page', 20))
+
+    fields = [('name', 'like', search_context.replace(' ', '%')), ('state', 'not in', ['project_active'])]
+    paginator = Paginator(ProjectList(erpsession, fields), per_page)
+
+    page = request.GET.get('page')
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        projects = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        projects = paginator.page(paginator.num_pages)
+    return render_to_response("messages/search_project_result.html", {'messages': projects, 'search_context': search_context},
                               context_instance=RequestContext(request))
 
 
@@ -289,6 +323,7 @@ def reload_cache(request, TYPE):
         cache.set('department_message_category_cache', cms_plugins.get_department_message_categories(request), 60 * 100)
     return HttpResponse("")
 
+
 def lazy_load(request):
     id = int(request.GET.get("id"))
     default = int(request.GET.get("default")) if request.GET.has_key("default") else 8
@@ -306,6 +341,6 @@ def lazy_load(request):
 
 
 # if __name__ == '__main__':
-#     t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")
-#     v = t.timeit(1000)
+# t = timeit.Timer('update_read_time(40834)', "from __main__ import update_read_time")
+# v = t.timeit(1000)
 #     print v
