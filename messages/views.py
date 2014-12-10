@@ -58,6 +58,20 @@ class ProjectList(object):
             return self.project_obj.cms_search(self.domain, offset=item.start, limit=count)
 
 
+class AttachmentList(object):
+    def __init__(self, erpsession, domain):
+        self.attachment_obj = erpsession.get_model('ir.attachment')
+        self.domain = domain
+
+    def count(self):
+        return self.attachment_obj.search_count(self.domain)
+
+    def __getitem__(self, item):
+        if isinstance(item, slice):
+            count = item.stop - item.start
+            return self.attachment_obj.cms_search(self.domain, offset=item.start, limit=count)
+
+
 def detail(req, message_id):
     update_read_time(message_id)
     message_obj = req.erpsession.get_model('message.message')
@@ -246,6 +260,26 @@ def project_search(request, search_context):
         # If page is out of range (e.g. 9999), deliver last page of results.
         projects = paginator.page(paginator.num_pages)
     return render_to_response("messages/search_project_result.html", {'messages': projects, 'search_context': search_context},
+                              context_instance=RequestContext(request))
+
+
+def attachment_search(request, search_context):
+    erpsession = request.erpsession
+    per_page = int(request.GET.get('per_page', 20))
+
+    fields = [('name', 'like', search_context.replace(' ', '%'))]
+    paginator = Paginator(AttachmentList(erpsession, fields), per_page)
+
+    page = request.GET.get('page')
+    try:
+        attachments = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        attachments = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        attachments = paginator.page(paginator.num_pages)
+    return render_to_response("messages/search_attachment_result.html", {'messages': attachments, 'search_context': search_context},
                               context_instance=RequestContext(request))
 
 

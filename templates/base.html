@@ -173,6 +173,8 @@
                     event.preventDefault();
                     if ($('div#is_project_search').length > 0) {
                         window.location.href = '/message/project_search/' + encodeURIComponent(searchtext);
+                    } else if ($('div#is_attachment_search').length > 0) {
+                        window.location.href = '/message/attachment_search/' + encodeURIComponent(searchtext);
                     } else {
                         window.location.href = '/message/search/' + encodeURIComponent(searchtext);
                     }
@@ -187,6 +189,8 @@
                         event.preventDefault();
                         if ($('div#is_project_search').length > 0) {
                             window.location.href = '/message/project_search/' + encodeURIComponent(searchtext);
+                        } else if ($('div#is_attachment_search').length > 0) {
+                            window.location.href = '/message/attachment_search/' + encodeURIComponent(searchtext);
                         } else {
                             window.location.href = '/message/search/' + encodeURIComponent(searchtext);
                         }

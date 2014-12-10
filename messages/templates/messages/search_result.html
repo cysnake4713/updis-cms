@@ -15,13 +15,14 @@
     <br/>
 {% endblock %}
 {% block content %}
+    <div id="horizontal_nav">
+        <ul class="sub-menu">
+            <li class="current_page_item"><a><span style="font-size: 18px">消息</span></a></li>
+            <li><a href="{% url project_search search_context=search_context %}"><span style="font-size: 18px">项目</span></a></li>
+            <li><a href="{% url attachment_search search_context=search_context %}"><span style="font-size: 18px">文档</span></a></li>
+        </ul>
+    </div>
     {% if messages %}
-        <div id="horizontal_nav">
-            <ul class="sub-menu">
-                <li class="current_page_item"><a><span style="font-size: 18px">消息</span></a></li>
-                <li><a href="{% url project_search search_context=search_context %}"><span style="font-size: 18px">项目</span></a></li>
-            </ul>
-        </div>
         <div class="karma-pages-top">
             <span class="pages"> 第<strong> {{ messages.number }} </strong>页/ 共{{ messages.paginator.num_pages }}页</span>
             每页20条&nbsp;&nbsp;&nbsp;&nbsp;共{{ messages.paginator.count }}条&nbsp;&nbsp;&nbsp;&nbsp;

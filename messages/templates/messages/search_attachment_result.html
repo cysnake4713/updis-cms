@@ -6,7 +6,7 @@
             <div class="frame">
                 <h1>搜索结果:{{ search_context }}</h1>
 
-                <div id="is_project_search" style="display: none">1</div>
+                <div id="is_attachment_search" style="display: none">1</div>
                 <div style="display: none" id="search_result">{{ search_context }}</div>
 
                 <p class="breadcrumb">
@@ -21,8 +21,8 @@
     <div id="horizontal_nav">
         <ul class="sub-menu">
             <li><a href="{% url search search_context=search_context %}"><span style="font-size: 18px">消息</span></a></li>
-            <li class="current_page_item"><a><span style="font-size: 18px">项目</span></a></li>
-            <li><a href="{% url attachment_search search_context=search_context %}"><span style="font-size: 18px">文档</span></a></li>
+            <li><a href="{% url project_search search_context=search_context %}"><span style="font-size: 18px">项目</span></a></li>
+            <li class="current_page_item"><a><span style="font-size: 18px">文档</span></a></li>
         </ul>
     </div>
     {% if messages %}
@@ -43,10 +43,9 @@
         <table class="category_table">
             <thead>
             <tr>
-                <th>标题</th>
-                <th>状态</th>
-                <th>下达日期</th>
-                <th>归档日期</th>
+                <th>名称</th>
+                <th>文件夹</th>
+                <th>创建日期</th>
             </tr>
             </thead>
             <tbody>
@@ -56,22 +55,17 @@
 
                 <tr>
                     <td>
-                        <a target="_blank" href="{{ erp_address }}#id={{ msg.id }}&view_type=form&model=project.project"
+                        <a target="_blank" href="{{ erp_address }}#id={{ msg.id }}&view_type=form&model=ir.attachment"
                            title="{{ msg.name }}"><span style='color: #ba2636'>·&nbsp;</span> {{ msg.name }} </a>
                     </td>
                     <td style="text-align: center">
-                        {% if msg.state %}
-                            {{ msg.state|safe }}
+                        {% if msg.parent_id %}
+                            {{ msg.parent_id|safe }}
                         {% endif %}
                     </td>
                     <td style="text-align: center">
-                        {% if msg.begin_date %}
-                            {{ msg.begin_date|safe }}
-                        {% endif %}
-                    </td>
-                    <td style="text-align: center">
-                        {% if msg.filed_project_end_date %}
-                            {{ msg.filed_project_end_date|safe }}
+                        {% if msg.create_date %}
+                            {{ msg.create_date|safe }}
                         {% endif %}
                     </td>
                 </tr>
